@@ -1,10 +1,7 @@
 library(mvtnorm)
 
 ### LOG LIKELIHOOD ###
-logLik <- function(Sigma, beta) {
-  #sum(sapply(subjs, function(i) {
-  #  dmvnorm(as.vector(newY[[i]]), as.vector(newX[[i]] %*% beta), Sigma, log = TRUE)
-  #})) * (n / m)
-  dmvnorm(as.vector(newY), as.vector(newX %*% beta), Sigma, log = TRUE) * (n / m)
+logLik <- function(Sigma, mu) {
+  dmvnorm(as.vector(Y), c(mu * J), Sigma, log = TRUE)
 }
 

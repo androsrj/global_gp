@@ -13,24 +13,24 @@ n <- nrow(train$X)
 nTest <- nrow(test$X)
 X <- train$X
 Y <- train$Y
-S <- train$S
+U <- train$U
 D <- train$D
 XTest <- test$X
 YTest <- test$Y
-STest <- test$S
+UTest <- test$U
 DTest <- test$D
-propSD <- list(sigma2 = seq(0.05, 0.12, length = K),
-               tau2 = 0.07)
 K <- 9
+propSD <- list(sigma2 = seq(0.1, 0.2, length = K),
+               tau2 = 0.05)
 
-results <- mcmc(X = X, Y = Y, D = D, S = S,
+results <- mcmc(X = X, Y = Y, D = D,
                 K = K,
                 theta = runif(9, 0.5, 3),
                 propSD = propSD,
-                nIter = 300, nBurn = 10, nThin=1,
-                model = "full_gp",
-                transform = FALSE)
+                nIter = 2000, nBurn = 100, nThin=2,
+                model = "full_gp")
 results$posteriorMeans
 results$acceptance
-plot(1:290, results$paramSamples[[1]][1,])
+nSamples <- length(results$paramSamples[[3]])
+plot(1:nSamples, results$paramSamples[[3]], type="l")
 

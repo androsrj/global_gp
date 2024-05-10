@@ -43,15 +43,15 @@ Bsplines_3D = function(X, df = NULL, knots = NULL, degree = 3)
 
 
 # 2D example
-X = matrix(runif(2000),1000,2)
-basis = Bsplines_2D(X, df = c(7,7))
-z = apply(X,1,function(x) sin(x[1]) + tan(x[2]^2))
-lmod = lm(z ~ basis)
-summary(lmod)
+#X = matrix(runif(2000),1000,2)
+#basis = Bsplines_2D(X, df = c(7,7))
+#z = apply(X,1,function(x) sin(x[1]) + tan(x[2]^2))
+#lmod = lm(z ~ basis)
+#summary(lmod)
 
 # 3D example
-X = matrix(runif(15000),5000,3)
-basis = Bsplines_3D(X, df = c(7,7,7))
-z = apply(X,1,function(x) sin(x[1]) + tan(x[2]^2) + cos(prod(x)))
-lmod = lm(z ~ basis)
-summary(lmod)
+#X = matrix(runif(15000),5000,3)
+#basis = Bsplines_3D(X, df = c(7,7,7))
+#z = apply(X,1,function(x) sin(x[1]) + tan(x[2]^2) + cos(prod(x)))
+#lmod = lm(z ~ basis)
+#summary(lmod)

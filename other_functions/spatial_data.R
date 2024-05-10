@@ -3,25 +3,25 @@ library(splines2)
 
 # Function to simulate spatial data
 spatialData <- function(n, X, K,
-                        sigma2, tau2, theta, beta,
-                        S = NULL, range = c(0, 10), dims = 2, 
+                        sigma2, tau2, theta, mu,
+                        U = NULL, range = c(0, 10), dims = 2, 
                         covariance = "exponential") {
   
   # Sample the locations and put them into an n-by-dims matrix
   # Unless the coordinates are pre-supplied
-  if (is.null(S)) {
+  if (is.null(U)) {
     locations <- runif(n * dims, range[1], range[2])
-    S <- matrix(locations, nrow = n, ncol = dims)
+    U <- matrix(locations, nrow = n, ncol = dims)
   }
   
-  # Order S by sum of coordinates
-  S <- S[order(rowSums(S)), ]
+  # Order U by sum of coordinates
+  U <- U[order(rowSums(U)), ]
   
   # Compute the covariance matrix (symmetric)
   if (covariance == "exponential") {
-    D <- rdist(S)
+    D <- rdist(U)
   } else if (covariance == "exp_squared") {
-    D <- rdist(S)^2
+    D <- rdist(U)^2
   } else {
     stop("Covariance function must be either exponential or exp_squared.")
   }
@@ -35,14 +35,12 @@ spatialData <- function(n, X, K,
     t(rmvnorm(1, sigma = C[[k]]))
   })
   basis <- Bsplines_2D(X, df = c(sqrt(K), sqrt(K)))
-  h <- rowSums(basis * eta)
+  S <- nrow(X)
+  h <- c(sapply(1:S, \(i) rowSums(sapply(1:K, \(k) basis[i, k] * eta[ , k]))))
   
   # Generate Y
-  n <- nrow(X)
-  #Y <- lapply(1:nSubj, \(i) X %*% beta + rep(Z[i], n) * gamma + W + eps)
-  #X <- lapply(1:nSubj, \(i) cbind(rep(Z[i], n), X))
-  Y <- X %*% beta + h + rnorm(n, 0, sqrt(tau2))
+  Y <- mu * matrix(1, nrow = n * S) + h + rnorm(n * S, 0, sqrt(tau2))
   
   # Return data
-  return(list(X = X, Y = Y, h = as.vector(h), D = D, S = S))
+  return(list(X = X, Y = Y, h = as.vector(h), D = D, U = U))
 }

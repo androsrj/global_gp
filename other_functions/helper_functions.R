@@ -33,9 +33,7 @@ energy_score = function(y, z){
 
 # Calculates the base of the covariance matrix for likelihood function
 baseVariance <- function(theta, D) {
-  #C <- exp(- theta * D)
-  C <- lapply(1:K, \(k) basis[[k]] %*% exp(-theta[k] * D) %*% basis[[k]])
-  B <- C
+  B <- lapply(1:K, \(k) tcrossprod(basis[[k]] %*% exp(-theta[k] * D), basis[[k]]))
   return(B)
   
 }
