@@ -10,7 +10,7 @@ STest <- 5
 K <- 9
 
 # True parameter values
-trueSigma2 <- 1:K
+trueSigma2 <- seq(1, 3, length = K)
 trueTau2 <- 0.2
 trueTheta <- runif(K, 1, 10)
 trueMu <- 8

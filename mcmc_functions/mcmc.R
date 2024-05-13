@@ -40,13 +40,13 @@ mcmc <- function(X, Y, D, K,
   acceptSigma2 <- acceptTau2 <- 0 # Track acceptance rates
   
   # Initial values of transformed parameters (except for mu, not transformed)
-  trSigma2[, 1] <- log(1:K)
+  trSigma2[, 1] <- rep(log(1), K)
   trTau2[1] <- log(0.2)
   mu[1] <- 0
   
   # Base of covariance matrix for updating sigma2 and tau2 (only need to compute once)
   B <<- baseVariance(theta, D = D)
-  Sigma <<- Reduce("+", lapply(1:K, \(k) exp(trSigma2[k, 1] * B[[k]]))) + exp(trTau2[1]) * diag(n * S)
+  Sigma <<- Reduce("+", lapply(1:K, \(k) exp(trSigma2[k, 1]) * B[[k]])) + exp(trTau2[1]) * diag(n * S)
     
   # Base of covariance matrix for predictions
   BTest <- lapply(1:K, \(k) tcrossprod(basisTest[[k]] %*% exp(-theta[k] * DTest), basisTest[[k]]))
@@ -73,6 +73,7 @@ mcmc <- function(X, Y, D, K,
     
     if(runif(1) < exp(MHratio)) {
       trSigma2[, i] <- propTrSigma2
+      SigmaOld <<- Sigma
       Sigma <<- SigmaProp
       acceptSigma2 <- acceptSigma2 + 1
     } else {
@@ -87,9 +88,9 @@ mcmc <- function(X, Y, D, K,
                             propTrTau2,
                             trTau2[i - 1],
                             mu[i - 1])
-    #if (is.na(MHratio)) {
-    #  break
-    #}
+    if (is.na(MHratio)) {
+      break
+    }
     if (runif(1) < exp(MHratio)) { 
       trTau2[i] <- propTrTau2
       Sigma <<-  SigmaProp
@@ -114,11 +115,11 @@ mcmc <- function(X, Y, D, K,
     })) + exp(trTau2[i]) * diag(STest * nTest)
     YPreds[ , i] <- t(rmvnorm(1, mean = rep(mu[i], nTest * STest), sigma = SigmaTest))
   }
-  #cat(paste0("MH Ratio is ", exp(MHratio), "\n"))
-  #cat(paste0("Last TrTau2 was ", trTau2[i-1]), "\n")
-  #cat(paste0("Proposed TrTau2 is ", propTrTau2), "\n")
-  #cat(paste0("Mu is ", mu[i-1]), "\n")
-  #return(trSigma2 = trSigma2[,i])
+  cat(paste0("MH Ratio is ", exp(MHratio), "\n"))
+  cat(paste0("Last TrTau2 was ", trTau2[i-1]), "\n")
+  cat(paste0("Proposed TrTau2 is ", propTrTau2), "\n")
+  cat(paste0("Mu is ", mu[i-1]), "\n")
+  return(list(prevTrSigma2 = trSigma2[,i-1], trSigma2 = trSigma2[,i]))
   
   # Acceptance rates (for Metropolis-sampled parameters)
   acceptance <- c(sigma2 = acceptSigma2, 
