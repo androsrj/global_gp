@@ -79,7 +79,7 @@ mcmc <- function(X, Y, D, K,
     } else {
       trSigma2[, i] <- trSigma2[, i - 1]
     }
-    cat("Sigma2 updated \n")
+    #cat("Sigma2 updated \n")
     
     ### Metropolis update (tau2) ###
     
@@ -88,9 +88,9 @@ mcmc <- function(X, Y, D, K,
                             propTrTau2,
                             trTau2[i - 1],
                             mu[i - 1])
-    if (is.na(MHratio)) {
-      break
-    }
+    #if (is.na(MHratio)) {
+    #  break
+    #}
     if (runif(1) < exp(MHratio)) { 
       trTau2[i] <- propTrTau2
       Sigma <<-  SigmaProp
@@ -98,7 +98,7 @@ mcmc <- function(X, Y, D, K,
     } else {
       trTau2[i] <- trTau2[i - 1]
     }
-    cat("Tau2 updated \n")
+    #cat("Tau2 updated \n")
     
     ### Gibbs update (mu) ###
     
@@ -107,7 +107,7 @@ mcmc <- function(X, Y, D, K,
     meanMu <- SigmaMu * crossprod(J, SigmaInv %*% Y)
     mu[i] <- t(rmvnorm(1, meanMu, SigmaMu))
     
-    cat("Mu updated \n")
+    #cat("Mu updated \n")
     
     ### Posterior predictive sampling for test subjects ###
     SigmaTest <<- Reduce("+", lapply(1:K, function(k) {
@@ -115,11 +115,11 @@ mcmc <- function(X, Y, D, K,
     })) + exp(trTau2[i]) * diag(STest * nTest)
     YPreds[ , i] <- t(rmvnorm(1, mean = rep(mu[i], nTest * STest), sigma = SigmaTest))
   }
-  cat(paste0("MH Ratio is ", exp(MHratio), "\n"))
-  cat(paste0("Last TrTau2 was ", trTau2[i-1]), "\n")
-  cat(paste0("Proposed TrTau2 is ", propTrTau2), "\n")
-  cat(paste0("Mu is ", mu[i-1]), "\n")
-  return(list(prevTrSigma2 = trSigma2[,i-1], trSigma2 = trSigma2[,i]))
+  #cat(paste0("MH Ratio is ", exp(MHratio), "\n"))
+  #cat(paste0("Last TrTau2 was ", trTau2[i-1]), "\n")
+  #cat(paste0("Proposed TrTau2 is ", propTrTau2), "\n")
+  #cat(paste0("Mu is ", mu[i-1]), "\n")
+  #return(list(prevTrSigma2 = trSigma2[,i-1], trSigma2 = trSigma2[,i]))
   
   # Acceptance rates (for Metropolis-sampled parameters)
   acceptance <- c(sigma2 = acceptSigma2, 

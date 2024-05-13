@@ -3,9 +3,9 @@ source("other_functions/bsplines_2_3D.R")
 mySeed <- 321
 
 # Sample sizes
-n <- 100
-nTest <- 10
-S <- 5
+n <- 300
+nTest <- 50
+S <- 10
 STest <- 5
 K <- 9
 
@@ -38,3 +38,6 @@ test <- spatialData(n = nTest,
                     theta = trueTheta,
                     mu = trueMu)
 save(test, file = "data/test.RData")
+
+trueSigma2
+trueTheta

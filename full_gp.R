@@ -20,18 +20,20 @@ YTest <- test$Y
 UTest <- test$U
 DTest <- test$D
 K <- 9
-propSD <- list(sigma2 = seq(0.5, 0.8, length = K),
+propSD <- list(sigma2 = seq(0.1, 0.3, length = K),
                tau2 = 0.2)
+theta <- runif(9, 0.5, 3)
 
 results <- mcmc(X = X, Y = Y, D = D,
                 K = K,
-                theta = runif(9, 0.5, 3),
+                theta = theta,
                 propSD = propSD,
-                nIter = 2000, nBurn = 100, nThin=2,
+                nIter = 1000, nBurn = 200, nThin=2,
                 model = "full_gp")
-results
-#results$posteriorMeans
-#results$acceptance
-#nSamples <- length(results$paramSamples[[3]])
-#plot(1:nSamples, results$paramSamples[[3]], type="l")
+
+theta
+results$posteriorMeans
+results$acceptance
+nSamples <- length(results$paramSamples[[3]])
+plot(1:nSamples, results$paramSamples[[3]], type="l")
 
