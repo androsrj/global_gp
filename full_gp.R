@@ -21,7 +21,7 @@ YTest <- test$Y
 UTest <- test$U
 DTest <- test$D
 K <- 9
-propSD <- list(sigma2 = seq(0.4, 0.8, length = K),
+propSD <- list(sigma2 = seq(0.1, 0.3, length = K),
                tau2 = 0.3)
 #theta <- runif(9, 0.5, 3)
 theta <- trueTheta

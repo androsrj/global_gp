@@ -17,6 +17,8 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
+[Previously saved workspace restored]
+
 > # SOURCES
 > source("mcmc_functions/mcmc.R") # Metropolis-Gibbs Sampler
 > source("mcmc_functions/priors.R")
@@ -40,7 +42,7 @@ Type 'q()' to quit R.
 > UTest <- test$U
 > DTest <- test$D
 > K <- 9
-> propSD <- list(sigma2 = seq(0.4, 0.8, length = K),
+> propSD <- list(sigma2 = seq(0.1, 0.3, length = K),
 +                tau2 = 0.3)
 > #theta <- runif(9, 0.5, 3)
 > theta <- trueTheta
@@ -456,18 +458,18 @@ Beginning iteration 400.
 [9] 4.433668
 > results$posteriorMeans
 $sigma2
-[1]    0.3648582 1788.2046990  137.3445862  439.5337886  479.1405864
-[6]    0.3196027    2.5552174  280.0007469 1054.3449325
+[1]  1.8253165  2.3081763  0.3022562  5.1641576  0.5461977  0.8523325  0.8103962
+[8]  0.3418340 16.6460408
 
 $tau2
-[1] 0.1863475
+[1] 0.2070574
 
 $mu
-[1] 8.005762
+[1] 8.019415
 
 > results$acceptance
 sigma2   tau2 
- 0.145  0.140 
+ 0.125  0.135 
 > nSamples <- length(results$paramSamples[[3]])
 > plot(1:nSamples, results$paramSamples[[3]], type="l")
 > 
@@ -522,4 +524,4 @@ pdf
 > 
 > proc.time()
     user   system  elapsed 
-1532.845  321.064 1853.979 
+1534.745  311.397 1846.271 
