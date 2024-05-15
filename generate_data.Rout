@@ -52,9 +52,6 @@ Try help(fields) to get started.
 > trueTau2 <- 0.2
 > trueTheta <- runif(K, 1, 10)
 > trueMu <- 8
-> trueTheta
-[1] 8.176499 4.713335 8.587394 1.879004 6.831813 6.445126 9.313328 6.076582
-[9] 1.032779
 > 
 > # Generate training data
 > set.seed(mySeed)
@@ -79,7 +76,14 @@ Try help(fields) to get started.
 +                     theta = trueTheta,
 +                     mu = trueMu)
 > save(test, file = "data/test.RData")
+> save(trueTheta, file = "data/theta.RData")
+> 
+> trueSigma2
+[1] 1.00 1.25 1.50 1.75 2.00 2.25 2.50 2.75 3.00
+> trueTheta
+[1] 5.360697 2.626463 1.713591 8.542201 3.063538 4.252881 9.119098 1.036751
+[9] 4.433668
 > 
 > proc.time()
    user  system elapsed 
-  2.010   0.299   2.770 
+  6.838   0.709   8.136 

@@ -40,7 +40,7 @@ mcmc <- function(X, Y, D, K,
   acceptSigma2 <- acceptTau2 <- 0 # Track acceptance rates
   
   # Initial values of transformed parameters (except for mu, not transformed)
-  trSigma2[, 1] <- rep(log(1), K)
+  trSigma2[, 1] <- rep(log(2), K)
   trTau2[1] <- log(0.2)
   mu[1] <- 0
   
@@ -103,7 +103,7 @@ mcmc <- function(X, Y, D, K,
     ### Gibbs update (mu) ###
     
     SigmaInv <- solve(Sigma)
-    SigmaMu <- 1 / crossprod(J, SigmaInv %*% J) + 1
+    SigmaMu <- 1 / (crossprod(J, SigmaInv %*% J) + 1)
     meanMu <- SigmaMu * crossprod(J, SigmaInv %*% Y)
     mu[i] <- t(rmvnorm(1, meanMu, SigmaMu))
     

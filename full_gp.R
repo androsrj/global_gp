@@ -9,6 +9,7 @@ source("other_functions/bsplines_2_3D.R")
 
 load("data/train.RData")
 load("data/test.RData")
+load("data/theta.RData")
 n <- nrow(train$X)
 nTest <- nrow(test$X)
 X <- train$X
@@ -20,15 +21,16 @@ YTest <- test$Y
 UTest <- test$U
 DTest <- test$D
 K <- 9
-propSD <- list(sigma2 = seq(0.1, 0.3, length = K),
-               tau2 = 0.2)
-theta <- runif(9, 0.5, 3)
+propSD <- list(sigma2 = seq(0.4, 0.8, length = K),
+               tau2 = 0.3)
+#theta <- runif(9, 0.5, 3)
+theta <- trueTheta
 
 results <- mcmc(X = X, Y = Y, D = D,
                 K = K,
                 theta = theta,
                 propSD = propSD,
-                nIter = 1000, nBurn = 200, nThin=2,
+                nIter = 200, nBurn = 200, nThin=2,
                 model = "full_gp")
 
 theta
@@ -36,4 +38,26 @@ results$posteriorMeans
 results$acceptance
 nSamples <- length(results$paramSamples[[3]])
 plot(1:nSamples, results$paramSamples[[3]], type="l")
+
+library(MBA)
+
+pdf("figures/subj1.pdf")
+pred.surf <-  mba.surf(cbind(UTest, YTest[1:10]), no.X=100, no.Y=100, extend=T)$xyz.est
+image.plot(pred.surf, xaxs ="r", yaxs = "r", main="True Surface, Subject 1", col = hcl.colors(12, "YlOrRd", rev=TRUE))
+contour(pred.surf, add=T)
+
+pred.surf <-  mba.surf(cbind(UTest, results$preds[2,1:10]), no.X=100, no.Y=100, extend=T)$xyz.est
+image.plot(pred.surf, xaxs ="r", yaxs = "r", main="Predicted Surface, Subject 1"", col = hcl.colors(12, "YlOrRd", rev=TRUE))
+contour(pred.surf, add=T)
+dev.off()
+
+pdf("figures/subj2.pdf")
+pred.surf <-  mba.surf(cbind(UTest, YTest[11:20]), no.X=100, no.Y=100, extend=T)$xyz.est
+image.plot(pred.surf, xaxs ="r", yaxs = "r", main="True Surface, Subject 2", col = hcl.colors(12, "YlOrRd", rev=TRUE))
+contour(pred.surf, add=T)
+
+pred.surf <-  mba.surf(cbind(UTest, results$preds[2,11:20]), no.X=100, no.Y=100, extend=T)$xyz.est
+image.plot(pred.surf, xaxs ="r", yaxs = "r", main="Predicted Surface, Subject 2"", col = hcl.colors(12, "YlOrRd", rev=TRUE))
+contour(pred.surf, add=T)
+dev.off()
 

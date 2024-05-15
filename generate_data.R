@@ -38,6 +38,7 @@ test <- spatialData(n = nTest,
                     theta = trueTheta,
                     mu = trueMu)
 save(test, file = "data/test.RData")
+save(trueTheta, file = "data/theta.RData")
 
 trueSigma2
 trueTheta
