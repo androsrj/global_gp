@@ -47,7 +47,7 @@ image.plot(pred.surf, xaxs ="r", yaxs = "r", main="True Surface, Subject 1", col
 contour(pred.surf, add=T)
 
 pred.surf <-  mba.surf(cbind(UTest, results$preds[2,1:10]), no.X=100, no.Y=100, extend=T)$xyz.est
-image.plot(pred.surf, xaxs ="r", yaxs = "r", main="Predicted Surface, Subject 1"", col = hcl.colors(12, "YlOrRd", rev=TRUE))
+image.plot(pred.surf, xaxs ="r", yaxs = "r", main="Predicted Surface, Subject 1", col = hcl.colors(12, "YlOrRd", rev=TRUE))
 contour(pred.surf, add=T)
 dev.off()
 
@@ -57,7 +57,7 @@ image.plot(pred.surf, xaxs ="r", yaxs = "r", main="True Surface, Subject 2", col
 contour(pred.surf, add=T)
 
 pred.surf <-  mba.surf(cbind(UTest, results$preds[2,11:20]), no.X=100, no.Y=100, extend=T)$xyz.est
-image.plot(pred.surf, xaxs ="r", yaxs = "r", main="Predicted Surface, Subject 2"", col = hcl.colors(12, "YlOrRd", rev=TRUE))
+image.plot(pred.surf, xaxs ="r", yaxs = "r", main="Predicted Surface, Subject 2", col = hcl.colors(12, "YlOrRd", rev=TRUE))
 contour(pred.surf, add=T)
 dev.off()
 
