@@ -40,6 +40,7 @@ nSamples <- length(results$paramSamples[[3]])
 plot(1:nSamples, results$paramSamples[[3]], type="l")
 
 library(MBA)
+library(fields)
 
 pdf("figures/subj1.pdf")
 pred.surf <-  mba.surf(cbind(UTest, YTest[1:10]), no.X=100, no.Y=100, extend=T)$xyz.est
