@@ -3,11 +3,11 @@ source("other_functions/bsplines_2_3D.R")
 mySeed <- 321
 
 # Sample sizes
-n <- 300
-nTest <- 50
-S <- 10
+n <- 100
+nTest <- 10
+S <- 5
 STest <- 5
-K <- 4
+K <- 9
 
 # True parameter values
 trueSigma2 <- seq(1, 3, length = K)

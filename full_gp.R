@@ -30,7 +30,7 @@ results <- mcmc(X = X, Y = Y, D = D,
                 K = K,
                 theta = theta,
                 propSD = propSD,
-                nIter = 200, nBurn = 200, nThin=2,
+                nIter = 50, nBurn = 10, nThin=2,
                 model = "full_gp")
 
 theta
