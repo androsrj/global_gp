@@ -7,7 +7,7 @@ n <- 300
 nTest <- 50
 S <- 10
 STest <- 5
-K <- 9
+K <- 4
 
 # True parameter values
 trueSigma2 <- seq(1, 3, length = K)
