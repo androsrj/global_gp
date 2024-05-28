@@ -2,8 +2,8 @@ library(fields)
 library(splines2)
 
 # Function to simulate spatial data
-spatialData <- function(n, X, K,
-                        sigma2, tau2, theta, mu,
+spatialData <- function(n, X, Z, K,
+                        sigma2, tau2, theta, beta,
                         U = NULL, range = c(0, 10), dims = 2, 
                         covariance = "exponential") {
   
@@ -34,13 +34,16 @@ spatialData <- function(n, X, K,
   eta <- sapply(1:K, function(k) {
     t(rmvnorm(1, sigma = C[[k]]))
   })
-  basis <- Bsplines_2D(X, df = c(sqrt(K), sqrt(K)))
-  S <- nrow(X)
+  basis <- Bsplines_2D(Z, df = c(sqrt(K), sqrt(K)))
+  S <- nrow(Z)
   h <- c(sapply(1:S, \(i) rowSums(sapply(1:K, \(k) basis[i, k] * eta[ , k]))))
   
+  # Compute A from X using Kronecker product
+  A <- matrix(1, nrow = S) %x% X
+  
   # Generate Y
-  Y <- mu * matrix(1, nrow = n * S) + h + rnorm(n * S, 0, sqrt(tau2))
+  Y <- A %*% beta + h + rnorm(n * S, 0, sqrt(tau2))
   
   # Return data
-  return(list(X = X, Y = Y, h = as.vector(h), D = D, U = U))
+  return(list(X = X, Z = Z, Y = Y, h = as.vector(h), D = D, U = U))
 }

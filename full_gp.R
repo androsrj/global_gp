@@ -13,10 +13,12 @@ load("data/theta.RData")
 n <- nrow(train$X)
 nTest <- nrow(test$X)
 X <- train$X
+Z <- train$Z
 Y <- train$Y
 U <- train$U
 D <- train$D
 XTest <- test$X
+ZTest <- test$Z
 YTest <- test$Y
 UTest <- test$U
 DTest <- test$D
@@ -26,11 +28,10 @@ propSD <- list(sigma2 = seq(0.1, 0.3, length = K),
 #theta <- runif(9, 0.5, 3)
 theta <- trueTheta
 
-results <- mcmc(X = X, Y = Y, D = D,
-                K = K,
+results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 theta = theta,
                 propSD = propSD,
-                nIter = 50, nBurn = 10, nThin=2,
+                nIter = 100, nBurn = 10, nThin=2,
                 model = "full_gp")
 
 theta
