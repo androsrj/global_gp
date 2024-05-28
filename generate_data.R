@@ -16,7 +16,7 @@ trueTheta <- runif(K, 1, 10)
 trueMu <- 8
 
 # Generate training data
-set.seed(mySeed)
+#set.seed(mySeed)
 X <- matrix(sort(runif(2 * S)), ncol = 2)
 train <- spatialData(n = n, 
                      X = X,
@@ -28,7 +28,7 @@ train <- spatialData(n = n,
 save(train, file = "data/train.RData")
 
 # Generate testing data
-set.seed(mySeed)
+#set.seed(mySeed)
 X <- matrix(sort(runif(2 * STest)), ncol = 2)
 test <- spatialData(n = nTest, 
                     X = X, 
