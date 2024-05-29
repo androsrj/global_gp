@@ -17,8 +17,6 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
-[Previously saved workspace restored]
-
 > # SOURCES
 > source("mcmc_functions/mcmc.R") # Metropolis-Gibbs Sampler
 > source("mcmc_functions/priors.R")
@@ -34,10 +32,12 @@ Type 'q()' to quit R.
 > n <- nrow(train$X)
 > nTest <- nrow(test$X)
 > X <- train$X
+> Z <- train$Z
 > Y <- train$Y
 > U <- train$U
 > D <- train$D
 > XTest <- test$X
+> ZTest <- test$Z
 > YTest <- test$Y
 > UTest <- test$U
 > DTest <- test$D
@@ -47,11 +47,10 @@ Type 'q()' to quit R.
 > #theta <- runif(9, 0.5, 3)
 > theta <- trueTheta
 > 
-> results <- mcmc(X = X, Y = Y, D = D,
-+                 K = K,
+> results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
 +                 theta = theta,
 +                 propSD = propSD,
-+                 nIter = 200, nBurn = 200, nThin=2,
++                 nIter = 500, nBurn = 100, nThin=2,
 +                 model = "full_gp")
 Beginning iteration 2.
 Beginning iteration 3.
@@ -452,24 +451,229 @@ Beginning iteration 397.
 Beginning iteration 398.
 Beginning iteration 399.
 Beginning iteration 400.
+Beginning iteration 401.
+Beginning iteration 402.
+Beginning iteration 403.
+Beginning iteration 404.
+Beginning iteration 405.
+Beginning iteration 406.
+Beginning iteration 407.
+Beginning iteration 408.
+Beginning iteration 409.
+Beginning iteration 410.
+Beginning iteration 411.
+Beginning iteration 412.
+Beginning iteration 413.
+Beginning iteration 414.
+Beginning iteration 415.
+Beginning iteration 416.
+Beginning iteration 417.
+Beginning iteration 418.
+Beginning iteration 419.
+Beginning iteration 420.
+Beginning iteration 421.
+Beginning iteration 422.
+Beginning iteration 423.
+Beginning iteration 424.
+Beginning iteration 425.
+Beginning iteration 426.
+Beginning iteration 427.
+Beginning iteration 428.
+Beginning iteration 429.
+Beginning iteration 430.
+Beginning iteration 431.
+Beginning iteration 432.
+Beginning iteration 433.
+Beginning iteration 434.
+Beginning iteration 435.
+Beginning iteration 436.
+Beginning iteration 437.
+Beginning iteration 438.
+Beginning iteration 439.
+Beginning iteration 440.
+Beginning iteration 441.
+Beginning iteration 442.
+Beginning iteration 443.
+Beginning iteration 444.
+Beginning iteration 445.
+Beginning iteration 446.
+Beginning iteration 447.
+Beginning iteration 448.
+Beginning iteration 449.
+Beginning iteration 450.
+Beginning iteration 451.
+Beginning iteration 452.
+Beginning iteration 453.
+Beginning iteration 454.
+Beginning iteration 455.
+Beginning iteration 456.
+Beginning iteration 457.
+Beginning iteration 458.
+Beginning iteration 459.
+Beginning iteration 460.
+Beginning iteration 461.
+Beginning iteration 462.
+Beginning iteration 463.
+Beginning iteration 464.
+Beginning iteration 465.
+Beginning iteration 466.
+Beginning iteration 467.
+Beginning iteration 468.
+Beginning iteration 469.
+Beginning iteration 470.
+Beginning iteration 471.
+Beginning iteration 472.
+Beginning iteration 473.
+Beginning iteration 474.
+Beginning iteration 475.
+Beginning iteration 476.
+Beginning iteration 477.
+Beginning iteration 478.
+Beginning iteration 479.
+Beginning iteration 480.
+Beginning iteration 481.
+Beginning iteration 482.
+Beginning iteration 483.
+Beginning iteration 484.
+Beginning iteration 485.
+Beginning iteration 486.
+Beginning iteration 487.
+Beginning iteration 488.
+Beginning iteration 489.
+Beginning iteration 490.
+Beginning iteration 491.
+Beginning iteration 492.
+Beginning iteration 493.
+Beginning iteration 494.
+Beginning iteration 495.
+Beginning iteration 496.
+Beginning iteration 497.
+Beginning iteration 498.
+Beginning iteration 499.
+Beginning iteration 500.
+Beginning iteration 501.
+Beginning iteration 502.
+Beginning iteration 503.
+Beginning iteration 504.
+Beginning iteration 505.
+Beginning iteration 506.
+Beginning iteration 507.
+Beginning iteration 508.
+Beginning iteration 509.
+Beginning iteration 510.
+Beginning iteration 511.
+Beginning iteration 512.
+Beginning iteration 513.
+Beginning iteration 514.
+Beginning iteration 515.
+Beginning iteration 516.
+Beginning iteration 517.
+Beginning iteration 518.
+Beginning iteration 519.
+Beginning iteration 520.
+Beginning iteration 521.
+Beginning iteration 522.
+Beginning iteration 523.
+Beginning iteration 524.
+Beginning iteration 525.
+Beginning iteration 526.
+Beginning iteration 527.
+Beginning iteration 528.
+Beginning iteration 529.
+Beginning iteration 530.
+Beginning iteration 531.
+Beginning iteration 532.
+Beginning iteration 533.
+Beginning iteration 534.
+Beginning iteration 535.
+Beginning iteration 536.
+Beginning iteration 537.
+Beginning iteration 538.
+Beginning iteration 539.
+Beginning iteration 540.
+Beginning iteration 541.
+Beginning iteration 542.
+Beginning iteration 543.
+Beginning iteration 544.
+Beginning iteration 545.
+Beginning iteration 546.
+Beginning iteration 547.
+Beginning iteration 548.
+Beginning iteration 549.
+Beginning iteration 550.
+Beginning iteration 551.
+Beginning iteration 552.
+Beginning iteration 553.
+Beginning iteration 554.
+Beginning iteration 555.
+Beginning iteration 556.
+Beginning iteration 557.
+Beginning iteration 558.
+Beginning iteration 559.
+Beginning iteration 560.
+Beginning iteration 561.
+Beginning iteration 562.
+Beginning iteration 563.
+Beginning iteration 564.
+Beginning iteration 565.
+Beginning iteration 566.
+Beginning iteration 567.
+Beginning iteration 568.
+Beginning iteration 569.
+Beginning iteration 570.
+Beginning iteration 571.
+Beginning iteration 572.
+Beginning iteration 573.
+Beginning iteration 574.
+Beginning iteration 575.
+Beginning iteration 576.
+Beginning iteration 577.
+Beginning iteration 578.
+Beginning iteration 579.
+Beginning iteration 580.
+Beginning iteration 581.
+Beginning iteration 582.
+Beginning iteration 583.
+Beginning iteration 584.
+Beginning iteration 585.
+Beginning iteration 586.
+Beginning iteration 587.
+Beginning iteration 588.
+Beginning iteration 589.
+Beginning iteration 590.
+Beginning iteration 591.
+Beginning iteration 592.
+Beginning iteration 593.
+Beginning iteration 594.
+Beginning iteration 595.
+Beginning iteration 596.
+Beginning iteration 597.
+Beginning iteration 598.
+Beginning iteration 599.
+Beginning iteration 600.
 > 
 > theta
-[1] 5.360697 2.626463 1.713591 8.542201 3.063538 4.252881 9.119098 1.036751
-[9] 4.433668
+[1] 8.939577 2.616381 1.633759 4.064567 1.053953 1.607369 9.596520 5.486409
+[9] 2.611401
 > results$posteriorMeans
 $sigma2
-[1]  1.8253165  2.3081763  0.3022562  5.1641576  0.5461977  0.8523325  0.8103962
-[8]  0.3418340 16.6460408
+[1] 2.8953126 1.8261053 3.1538766 2.6377617 3.8915416 0.8402118 2.3970872
+[8] 1.8520116 2.1212111
 
 $tau2
-[1] 0.2070574
+[1] 0.2156053
 
-$mu
-[1] 8.019415
+$beta
+[1]  7.994718 -2.000904
 
 > results$acceptance
-sigma2   tau2 
- 0.125  0.135 
+$sigma2
+[1] 0.11166667 0.10833333 0.10333333 0.10666667 0.11166667 0.10333333 0.09666667
+[8] 0.10833333 0.10833333
+
+$tau2
+[1] 0.105
+
 > nSamples <- length(results$paramSamples[[3]])
 > plot(1:nSamples, results$paramSamples[[3]], type="l")
 > 
@@ -523,5 +727,5 @@ pdf
 > 
 > 
 > proc.time()
-    user   system  elapsed 
-1534.745  311.397 1846.271 
+     user    system   elapsed 
+42543.714  8261.779 50809.816 

@@ -23,15 +23,15 @@ YTest <- test$Y
 UTest <- test$U
 DTest <- test$D
 K <- 9
-propSD <- list(sigma2 = seq(0.1, 0.3, length = K),
-               tau2 = 0.3)
+propSD <- list(sigma2 = seq(0.05, 0.15, length = K),
+               tau2 = 0.15)
 #theta <- runif(9, 0.5, 3)
 theta <- trueTheta
 
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 theta = theta,
                 propSD = propSD,
-                nIter = 100, nBurn = 10, nThin=2,
+                nIter = 500, nBurn = 100, nThin=2,
                 model = "full_gp")
 
 theta
