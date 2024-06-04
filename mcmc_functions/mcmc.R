@@ -72,22 +72,32 @@ mcmc <- function(X, Z, Y, D, K,
     ### Metropolis update (sigma2) ###
     
     propTrSigma2 <- trSigma2[ , i - 1]
-    for (j in 1:K) {
-      lastTrSigma2 <- propTrSigma2
-      propTrSigma2[j] <- rnorm(1, mean = trSigma2[j , i - 1], sd = sdSigma2)
+    #for (j in 1:K) {
+      #lastTrSigma2 <- propTrSigma2
+      #propTrSigma2[j] <- rnorm(1, mean = trSigma2[j , i - 1], sd = sdSigma2)
+      #MHratio <- logRatioSigma2(propTrSigma2, 
+      #                           lastTrSigma2, 
+      #                           trTau2[i - 1],
+      #                           beta[ , i - 1])
+      
+      propTrSigma2 <- rnorm(K, mean = trSigma2[ , i - 1], sd = sdSigma2)
       MHratio <<- logRatioSigma2(propTrSigma2, 
-                                 lastTrSigma2, 
+                                 trSigma2[, i - 1], 
                                  trTau2[i - 1],
-                                 beta[ , i - 1])
+                                 mu[i - 1])
       
       if(runif(1) < exp(MHratio)) {
-        trSigma2[j, i] <- propTrSigma2[j]
+        #trSigma2[j, i] <- propTrSigma2[j]
+        #Sigma <<- SigmaProp
+        #acceptSigma2[j] <- acceptSigma2[j] + 1
+        trSigma2[, i] <- propTrSigma2
         Sigma <<- SigmaProp
-        acceptSigma2[j] <- acceptSigma2[j] + 1
+        acceptSigma2 <- acceptSigma2 + 1
       } else {
-        trSigma2[j, i] <- trSigma2[j, i - 1]
+        #trSigma2[j, i] <- trSigma2[j, i - 1]
+        trSigma2[, i] <- trSigma2[, i - 1]
       }
-    }
+    #}
     
     #cat("Sigma2 updated \n")
     
