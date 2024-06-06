@@ -43,8 +43,9 @@ mcmc <- function(X, Z, Y, D, K,
   trTau2 <- numeric(nIter) # Transformed parameters
   beta <- matrix(0, nrow = p, ncol = nIter)
   acceptTau2 <- 0 # Track acceptance rates
-  acceptSigma2 <- rep(0, K)
-  
+  #acceptSigma2 <- rep(0, K)
+  acceptSigma2 <- 0
+
   # Initial values of transformed parameters (except for beta, not transformed)
   trSigma2[, 1] <- rep(log(2), K)
   trTau2[1] <- log(0.1)
@@ -84,7 +85,7 @@ mcmc <- function(X, Z, Y, D, K,
       MHratio <<- logRatioSigma2(propTrSigma2, 
                                  trSigma2[, i - 1], 
                                  trTau2[i - 1],
-                                 mu[i - 1])
+                                 beta[ , i - 1])
       
       if(runif(1) < exp(MHratio)) {
         #trSigma2[j, i] <- propTrSigma2[j]
