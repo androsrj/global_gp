@@ -5,5 +5,5 @@
 module purge
 module load R
 Rscript generate_data.R
-Rscript full_gp.R
+Rscript only_local.R
 
