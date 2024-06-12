@@ -31,7 +31,7 @@ theta <- trueTheta
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 theta = theta,
                 propSD = propSD,
-                nIter = 500, nBurn = 100, nThin=2,
+                nIter = 200, nBurn = 100, nThin=2,
                 model = "full_gp")
 
 theta

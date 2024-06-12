@@ -1,0 +1,360 @@
+Loading required package: spam
+Spam version 2.10-0 (2023-10-23) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: ‘spam’
+
+The following objects are masked from ‘package:base’:
+
+    backsolve, forwardsolve
+
+Loading required package: viridisLite
+
+Try help(fields) to get started.
+[1] 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0
+[1] 3.212177 1.360020 4.070674 1.837567 5.673339 7.014193 8.620584 9.101932
+[9] 6.954898
+Beginning iteration 2.
+Beginning iteration 3.
+Beginning iteration 4.
+Beginning iteration 5.
+Beginning iteration 6.
+Beginning iteration 7.
+Beginning iteration 8.
+Beginning iteration 9.
+Beginning iteration 10.
+Beginning iteration 11.
+Beginning iteration 12.
+Beginning iteration 13.
+Beginning iteration 14.
+Beginning iteration 15.
+Beginning iteration 16.
+Beginning iteration 17.
+Beginning iteration 18.
+Beginning iteration 19.
+Beginning iteration 20.
+Beginning iteration 21.
+Beginning iteration 22.
+Beginning iteration 23.
+Beginning iteration 24.
+Beginning iteration 25.
+Beginning iteration 26.
+Beginning iteration 27.
+Beginning iteration 28.
+Beginning iteration 29.
+Beginning iteration 30.
+Beginning iteration 31.
+Beginning iteration 32.
+Beginning iteration 33.
+Beginning iteration 34.
+Beginning iteration 35.
+Beginning iteration 36.
+Beginning iteration 37.
+Beginning iteration 38.
+Beginning iteration 39.
+Beginning iteration 40.
+Beginning iteration 41.
+Beginning iteration 42.
+Beginning iteration 43.
+Beginning iteration 44.
+Beginning iteration 45.
+Beginning iteration 46.
+Beginning iteration 47.
+Beginning iteration 48.
+Beginning iteration 49.
+Beginning iteration 50.
+Beginning iteration 51.
+Beginning iteration 52.
+Beginning iteration 53.
+Beginning iteration 54.
+Beginning iteration 55.
+Beginning iteration 56.
+Beginning iteration 57.
+Beginning iteration 58.
+Beginning iteration 59.
+Beginning iteration 60.
+Beginning iteration 61.
+Beginning iteration 62.
+Beginning iteration 63.
+Beginning iteration 64.
+Beginning iteration 65.
+Beginning iteration 66.
+Beginning iteration 67.
+Beginning iteration 68.
+Beginning iteration 69.
+Beginning iteration 70.
+Beginning iteration 71.
+Beginning iteration 72.
+Beginning iteration 73.
+Beginning iteration 74.
+Beginning iteration 75.
+Beginning iteration 76.
+Beginning iteration 77.
+Beginning iteration 78.
+Beginning iteration 79.
+Beginning iteration 80.
+Beginning iteration 81.
+Beginning iteration 82.
+Beginning iteration 83.
+Beginning iteration 84.
+Beginning iteration 85.
+Beginning iteration 86.
+Beginning iteration 87.
+Beginning iteration 88.
+Beginning iteration 89.
+Beginning iteration 90.
+Beginning iteration 91.
+Beginning iteration 92.
+Beginning iteration 93.
+Beginning iteration 94.
+Beginning iteration 95.
+Beginning iteration 96.
+Beginning iteration 97.
+Beginning iteration 98.
+Beginning iteration 99.
+Beginning iteration 100.
+Beginning iteration 101.
+Beginning iteration 102.
+Beginning iteration 103.
+Beginning iteration 104.
+Beginning iteration 105.
+Beginning iteration 106.
+Beginning iteration 107.
+Beginning iteration 108.
+Beginning iteration 109.
+Beginning iteration 110.
+Beginning iteration 111.
+Beginning iteration 112.
+Beginning iteration 113.
+Beginning iteration 114.
+Beginning iteration 115.
+Beginning iteration 116.
+Beginning iteration 117.
+Beginning iteration 118.
+Beginning iteration 119.
+Beginning iteration 120.
+Beginning iteration 121.
+Beginning iteration 122.
+Beginning iteration 123.
+Beginning iteration 124.
+Beginning iteration 125.
+Beginning iteration 126.
+Beginning iteration 127.
+Beginning iteration 128.
+Beginning iteration 129.
+Beginning iteration 130.
+Beginning iteration 131.
+Beginning iteration 132.
+Beginning iteration 133.
+Beginning iteration 134.
+Beginning iteration 135.
+Beginning iteration 136.
+Beginning iteration 137.
+Beginning iteration 138.
+Beginning iteration 139.
+Beginning iteration 140.
+Beginning iteration 141.
+Beginning iteration 142.
+Beginning iteration 143.
+Beginning iteration 144.
+Beginning iteration 145.
+Beginning iteration 146.
+Beginning iteration 147.
+Beginning iteration 148.
+Beginning iteration 149.
+Beginning iteration 150.
+Beginning iteration 151.
+Beginning iteration 152.
+Beginning iteration 153.
+Beginning iteration 154.
+Beginning iteration 155.
+Beginning iteration 156.
+Beginning iteration 157.
+Beginning iteration 158.
+Beginning iteration 159.
+Beginning iteration 160.
+Beginning iteration 161.
+Beginning iteration 162.
+Beginning iteration 163.
+Beginning iteration 164.
+Beginning iteration 165.
+Beginning iteration 166.
+Beginning iteration 167.
+Beginning iteration 168.
+Beginning iteration 169.
+Beginning iteration 170.
+Beginning iteration 171.
+Beginning iteration 172.
+Beginning iteration 173.
+Beginning iteration 174.
+Beginning iteration 175.
+Beginning iteration 176.
+Beginning iteration 177.
+Beginning iteration 178.
+Beginning iteration 179.
+Beginning iteration 180.
+Beginning iteration 181.
+Beginning iteration 182.
+Beginning iteration 183.
+Beginning iteration 184.
+Beginning iteration 185.
+Beginning iteration 186.
+Beginning iteration 187.
+Beginning iteration 188.
+Beginning iteration 189.
+Beginning iteration 190.
+Beginning iteration 191.
+Beginning iteration 192.
+Beginning iteration 193.
+Beginning iteration 194.
+Beginning iteration 195.
+Beginning iteration 196.
+Beginning iteration 197.
+Beginning iteration 198.
+Beginning iteration 199.
+Beginning iteration 200.
+Beginning iteration 201.
+Beginning iteration 202.
+Beginning iteration 203.
+Beginning iteration 204.
+Beginning iteration 205.
+Beginning iteration 206.
+Beginning iteration 207.
+Beginning iteration 208.
+Beginning iteration 209.
+Beginning iteration 210.
+Beginning iteration 211.
+Beginning iteration 212.
+Beginning iteration 213.
+Beginning iteration 214.
+Beginning iteration 215.
+Beginning iteration 216.
+Beginning iteration 217.
+Beginning iteration 218.
+Beginning iteration 219.
+Beginning iteration 220.
+Beginning iteration 221.
+Beginning iteration 222.
+Beginning iteration 223.
+Beginning iteration 224.
+Beginning iteration 225.
+Beginning iteration 226.
+Beginning iteration 227.
+Beginning iteration 228.
+Beginning iteration 229.
+Beginning iteration 230.
+Beginning iteration 231.
+Beginning iteration 232.
+Beginning iteration 233.
+Beginning iteration 234.
+Beginning iteration 235.
+Beginning iteration 236.
+Beginning iteration 237.
+Beginning iteration 238.
+Beginning iteration 239.
+Beginning iteration 240.
+Beginning iteration 241.
+Beginning iteration 242.
+Beginning iteration 243.
+Beginning iteration 244.
+Beginning iteration 245.
+Beginning iteration 246.
+Beginning iteration 247.
+Beginning iteration 248.
+Beginning iteration 249.
+Beginning iteration 250.
+Beginning iteration 251.
+Beginning iteration 252.
+Beginning iteration 253.
+Beginning iteration 254.
+Beginning iteration 255.
+Beginning iteration 256.
+Beginning iteration 257.
+Beginning iteration 258.
+Beginning iteration 259.
+Beginning iteration 260.
+Beginning iteration 261.
+Beginning iteration 262.
+Beginning iteration 263.
+Beginning iteration 264.
+Beginning iteration 265.
+Beginning iteration 266.
+Beginning iteration 267.
+Beginning iteration 268.
+Beginning iteration 269.
+Beginning iteration 270.
+Beginning iteration 271.
+Beginning iteration 272.
+Beginning iteration 273.
+Beginning iteration 274.
+Beginning iteration 275.
+Beginning iteration 276.
+Beginning iteration 277.
+Beginning iteration 278.
+Beginning iteration 279.
+Beginning iteration 280.
+Beginning iteration 281.
+Beginning iteration 282.
+Beginning iteration 283.
+Beginning iteration 284.
+Beginning iteration 285.
+Beginning iteration 286.
+Beginning iteration 287.
+Beginning iteration 288.
+Beginning iteration 289.
+Beginning iteration 290.
+Beginning iteration 291.
+Beginning iteration 292.
+Beginning iteration 293.
+Beginning iteration 294.
+Beginning iteration 295.
+Beginning iteration 296.
+Beginning iteration 297.
+Beginning iteration 298.
+Beginning iteration 299.
+Beginning iteration 300.
+[1] 3.212177 1.360020 4.070674 1.837567 5.673339 7.014193 8.620584 9.101932
+[9] 6.954898
+$sigma2
+[1] 1.2112838 2.2926662 1.4400330 0.9817942 1.4431162 2.6291794 5.8220379
+[8] 1.9682147 3.8492682
+
+$tau2
+[1] 0.2075185
+
+$beta
+[1]  7.992329 -2.001644
+
+$sigma2
+[1] 0.23
+
+$tau2
+[1] 0.2333333
+
+Loading required package: spam
+Spam version 2.10-0 (2023-10-23) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: ‘spam’
+
+The following objects are masked from ‘package:mvtnorm’:
+
+    rmvnorm, rmvt
+
+The following objects are masked from ‘package:base’:
+
+    backsolve, forwardsolve
+
+Loading required package: viridisLite
+
+Try help(fields) to get started.
+pdf 
+  2 
+pdf 
+  2 
