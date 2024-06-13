@@ -19,7 +19,7 @@ trueBeta <- c(8, -2)
 #set.seed(mySeed)
 X <- cbind(matrix(1, nrow = n), 
            runif(n, -5, 5))
-Z <- matrix(sort(runif(2 * S)), ncol = 2)
+Z <- matrix(sort(runif(2 * S, -20, 20)), ncol = 2)
 train <- spatialData(n = n, 
                      X = X,
                      Z = Z,
@@ -34,7 +34,7 @@ save(train, file = "data/train.RData")
 #set.seed(mySeed)
 XTest <- cbind(matrix(1, nrow = nTest), 
                runif(nTest, -5, 5))
-ZTest <- matrix(sort(runif(2 * STest)), ncol = 2)
+ZTest <- matrix(sort(runif(2 * STest, 20, 20)), ncol = 2)
 test <- spatialData(n = nTest, 
                     X = XTest, 
                     Z = ZTest,
