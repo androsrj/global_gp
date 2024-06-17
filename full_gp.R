@@ -31,7 +31,7 @@ theta <- trueTheta
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 theta = theta,
                 propSD = propSD,
-                nIter = 200, nBurn = 100, nThin=2,
+                nIter = 150, nBurn = 100, nThin=2,
                 model = "full_gp")
 
 theta
@@ -44,21 +44,21 @@ library(MBA)
 library(fields)
 
 pdf("figures/subj1.pdf")
-pred.surf <-  mba.surf(cbind(UTest, YTest[1:10]), no.X=100, no.Y=100, extend=T)$xyz.est
+pred.surf <-  mba.surf(cbind(UTest, YTest[1:nTest]), no.X=100, no.Y=100, extend=T)$xyz.est
 image.plot(pred.surf, xaxs ="r", yaxs = "r", main="True Surface, Subject 1", col = hcl.colors(12, "YlOrRd", rev=TRUE))
 contour(pred.surf, add=T)
 
-pred.surf <-  mba.surf(cbind(UTest, results$preds[2,1:10]), no.X=100, no.Y=100, extend=T)$xyz.est
+pred.surf <-  mba.surf(cbind(UTest, results$preds[2,1:nTest]), no.X=100, no.Y=100, extend=T)$xyz.est
 image.plot(pred.surf, xaxs ="r", yaxs = "r", main="Predicted Surface, Subject 1", col = hcl.colors(12, "YlOrRd", rev=TRUE))
 contour(pred.surf, add=T)
 dev.off()
 
 pdf("figures/subj2.pdf")
-pred.surf <-  mba.surf(cbind(UTest, YTest[11:20]), no.X=100, no.Y=100, extend=T)$xyz.est
+pred.surf <-  mba.surf(cbind(UTest, YTest[(nTest+1):(2*nTest)]), no.X=100, no.Y=100, extend=T)$xyz.est
 image.plot(pred.surf, xaxs ="r", yaxs = "r", main="True Surface, Subject 2", col = hcl.colors(12, "YlOrRd", rev=TRUE))
 contour(pred.surf, add=T)
 
-pred.surf <-  mba.surf(cbind(UTest, results$preds[2,11:20]), no.X=100, no.Y=100, extend=T)$xyz.est
+pred.surf <-  mba.surf(cbind(UTest, results$preds[2, (nTest+1):(2*nTest)]), no.X=100, no.Y=100, extend=T)$xyz.est
 image.plot(pred.surf, xaxs ="r", yaxs = "r", main="Predicted Surface, Subject 2", col = hcl.colors(12, "YlOrRd", rev=TRUE))
 contour(pred.surf, add=T)
 dev.off()

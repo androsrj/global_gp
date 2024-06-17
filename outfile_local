@@ -1,22 +1,3 @@
-Loading required package: spam
-Spam version 2.10-0 (2023-10-23) is loaded.
-Type 'help( Spam)' or 'demo( spam)' for a short introduction 
-and overview of this package.
-Help for individual functions is also obtained by adding the
-suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
-
-Attaching package: ‘spam’
-
-The following objects are masked from ‘package:base’:
-
-    backsolve, forwardsolve
-
-Loading required package: viridisLite
-
-Try help(fields) to get started.
-[1] 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0
-[1] 5.795373 2.317629 5.377917 7.446538 1.870559 5.536796 7.203656 4.847246
-[9] 3.568745
 Beginning iteration 2.
 Beginning iteration 3.
 Beginning iteration 4.
@@ -266,45 +247,35 @@ Beginning iteration 247.
 Beginning iteration 248.
 Beginning iteration 249.
 Beginning iteration 250.
-[1] 5.795373 2.317629 5.377917 7.446538 1.870559 5.536796 7.203656 4.847246
-[9] 3.568745
-$sigma2
-[1]  1.6500274  1.3047489  1.8174783  1.5068833  2.3732086  2.4137553 10.9754756
-[8]  0.5588435  2.6959957
-
-$tau2
-[1] 0.2167356
-
-$beta
-[1]  7.990977 -1.995277
-
-$sigma2
-[1] 0.216
-
-$tau2
-[1] 0.216
-
-Loading required package: spam
-Spam version 2.10-0 (2023-10-23) is loaded.
-Type 'help( Spam)' or 'demo( spam)' for a short introduction 
-and overview of this package.
-Help for individual functions is also obtained by adding the
-suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
-
-Attaching package: ‘spam’
-
-The following objects are masked from ‘package:mvtnorm’:
-
-    rmvnorm, rmvt
-
-The following objects are masked from ‘package:base’:
-
-    backsolve, forwardsolve
-
-Loading required package: viridisLite
-
-Try help(fields) to get started.
-pdf 
-  2 
-pdf 
-  2 
+Beginning iteration 251.
+Beginning iteration 252.
+Beginning iteration 253.
+Beginning iteration 254.
+Beginning iteration 255.
+Beginning iteration 256.
+Beginning iteration 257.
+Beginning iteration 258.
+Beginning iteration 259.
+Beginning iteration 260.
+Beginning iteration 261.
+Beginning iteration 262.
+Beginning iteration 263.
+Beginning iteration 264.
+Beginning iteration 265.
+Beginning iteration 266.
+Beginning iteration 267.
+Beginning iteration 268.
+Beginning iteration 269.
+Beginning iteration 270.
+Beginning iteration 271.
+Beginning iteration 272.
+Beginning iteration 273.
+Beginning iteration 274.
+Beginning iteration 275.
+Beginning iteration 276.
+Beginning iteration 277.
+Beginning iteration 278.
+Beginning iteration 279.
+Beginning iteration 280.
+Beginning iteration 281.
+slurmstepd: error: *** JOB 169163 ON c04 CANCELLED AT 2024-06-17T13:37:19 DUE TO TIME LIMIT ***
