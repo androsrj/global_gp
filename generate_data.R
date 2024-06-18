@@ -10,10 +10,10 @@ STest <- 5
 K <- 9
 
 # True parameter values
-trueSigma2 <- seq(1, 5, length = K)
+trueSigma2 <- seq(50, 100, length = K)
 trueTau2 <- 0.2
-trueTheta <- runif(K, 1, 10)
-trueBeta <- c(8, -2)
+trueTheta <- runif(K, 0.1, 0.25)
+trueBeta <- c(3, -2)
 
 # Generate training data
 #set.seed(mySeed)
@@ -34,7 +34,7 @@ save(train, file = "data/train.RData")
 #set.seed(mySeed)
 XTest <- cbind(matrix(1, nrow = nTest), 
                runif(nTest, -5, 5))
-ZTest <- matrix(sort(runif(2 * STest, 20, 20)), ncol = 2)
+ZTest <- matrix(sort(runif(2 * STest, -20, 20)), ncol = 2)
 test <- spatialData(n = nTest, 
                     X = XTest, 
                     Z = ZTest,
