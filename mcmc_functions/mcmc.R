@@ -47,7 +47,7 @@ mcmc <- function(X, Z, Y, D, K,
   acceptSigma2 <- 0
 
   # Initial values of transformed parameters (except for beta, not transformed)
-  trSigma2[, 1] <- rep(log(2), K)
+  trSigma2[, 1] <- rep(log(50), K)
   trTau2[1] <- log(0.1)
   beta[ , 1] <- 0
   
