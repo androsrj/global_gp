@@ -31,7 +31,7 @@ theta <- trueTheta
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 theta = theta,
                 propSD = propSD,
-                nIter = 150, nBurn = 100, nThin=2,
+                nIter = 400, nBurn = 100, nThin=2,
                 model = "full_gp")
 
 theta
@@ -63,3 +63,35 @@ image.plot(pred.surf, xaxs ="r", yaxs = "r", main="Predicted Surface, Subject 2"
 contour(pred.surf, add=T)
 dev.off()
 
+nTestSubj <- nrow(test$Z)
+abs_error <- cvg <- width <- scores <- crps <- numeric(nTestSubj)
+a <- .05
+for (i in 1:nTestSubj) {
+  truth <- YTest[(nTest*(i-1)+1):(i*nTest)]
+  pred <- results$preds[2, (nTest*(i-1)+1):(i*nTest)]
+  abs_error[i] <- mean(abs(truth - pred))
+  lower <- results$preds[1, (nTest*(i-1)+1):(i*nTest)]
+  upper <- results$preds[3, (nTest*(i-1)+1):(i*nTest)]
+  cvg[i] <- mean(lower < truth & upper > truth)
+  width[i] <- mean(upper - lower)
+  scores[i] <- mean((upper - lower) + 
+		     2/a * (lower - truth) * (truth < lower) + 
+		     2/a * (truth - upper) * (truth > upper))
+  predSamples <- t(results$predSamples[(nTest*(i-1)+1):(i*nTest), ])
+  crps[i] <- mean(energy_score(truth, predSamples))
+}
+
+abs_error
+cat(paste0("Mean absolute error: ", round(mean(abs_error), 3), "\n"))
+
+cvg
+cat(paste0("Mean coverage: ", round(mean(cvg), 3), "\n"))
+
+width
+cat(paste0("Mean width: ", round(mean(width), 3), "\n"))
+
+scores
+cat(paste0("Mean interval score: ", round(mean(scores), 3), "\n"))
+
+crps
+cat(paste0("Mean CRPS: ", round(mean(crps), 3), "\n"))

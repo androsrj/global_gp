@@ -1,25 +1,25 @@
 source("other_functions/spatial_data.R")
 source("other_functions/bsplines_2_3D.R")
-mySeed <- 321
+mySeed <- 32158
 
 # Sample sizes
-n <- 500
+n <- 1000
 nTest <- 100
 S <- 10
-STest <- 5
+STest <- 10
 K <- 9
 
 # True parameter values
 trueSigma2 <- seq(50, 100, length = K)
 trueTau2 <- 0.2
-trueTheta <- runif(K, 0.1, 0.25)
+trueTheta <- runif(K, 0.01, 0.1)
 trueBeta <- c(3, -2)
 
 # Generate training data
 #set.seed(mySeed)
 X <- cbind(matrix(1, nrow = n), 
            runif(n, -5, 5))
-Z <- matrix(sort(runif(2 * S, -20, 20)), ncol = 2)
+Z <- matrix(runif(2 * S, 0, 100), ncol = 2)
 train <- spatialData(n = n, 
                      X = X,
                      Z = Z,
@@ -34,7 +34,7 @@ save(train, file = "data/train.RData")
 #set.seed(mySeed)
 XTest <- cbind(matrix(1, nrow = nTest), 
                runif(nTest, -5, 5))
-ZTest <- matrix(sort(runif(2 * STest, -20, 20)), ncol = 2)
+ZTest <- matrix(runif(2 * STest, 0, 100), ncol = 2)
 test <- spatialData(n = nTest, 
                     X = XTest, 
                     Z = ZTest,

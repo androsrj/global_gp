@@ -1,22 +1,3 @@
-Loading required package: spam
-Spam version 2.10-0 (2023-10-23) is loaded.
-Type 'help( Spam)' or 'demo( spam)' for a short introduction 
-and overview of this package.
-Help for individual functions is also obtained by adding the
-suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
-
-Attaching package: ‘spam’
-
-The following objects are masked from ‘package:base’:
-
-    backsolve, forwardsolve
-
-Loading required package: viridisLite
-
-Try help(fields) to get started.
-[1]  50.00  56.25  62.50  68.75  75.00  81.25  87.50  93.75 100.00
-[1] 0.2492107 0.2004316 0.2483424 0.1406514 0.1686441 0.1107820 0.2361866
-[8] 0.1743275 0.1741386
 Beginning iteration 2.
 Beginning iteration 3.
 Beginning iteration 4.
@@ -266,23 +247,273 @@ Beginning iteration 247.
 Beginning iteration 248.
 Beginning iteration 249.
 Beginning iteration 250.
-[1] 0.2492107 0.2004316 0.2483424 0.1406514 0.1686441 0.1107820 0.2361866
-[8] 0.1743275 0.1741386
+Beginning iteration 251.
+Beginning iteration 252.
+Beginning iteration 253.
+Beginning iteration 254.
+Beginning iteration 255.
+Beginning iteration 256.
+Beginning iteration 257.
+Beginning iteration 258.
+Beginning iteration 259.
+Beginning iteration 260.
+Beginning iteration 261.
+Beginning iteration 262.
+Beginning iteration 263.
+Beginning iteration 264.
+Beginning iteration 265.
+Beginning iteration 266.
+Beginning iteration 267.
+Beginning iteration 268.
+Beginning iteration 269.
+Beginning iteration 270.
+Beginning iteration 271.
+Beginning iteration 272.
+Beginning iteration 273.
+Beginning iteration 274.
+Beginning iteration 275.
+Beginning iteration 276.
+Beginning iteration 277.
+Beginning iteration 278.
+Beginning iteration 279.
+Beginning iteration 280.
+Beginning iteration 281.
+Beginning iteration 282.
+Beginning iteration 283.
+Beginning iteration 284.
+Beginning iteration 285.
+Beginning iteration 286.
+Beginning iteration 287.
+Beginning iteration 288.
+Beginning iteration 289.
+Beginning iteration 290.
+Beginning iteration 291.
+Beginning iteration 292.
+Beginning iteration 293.
+Beginning iteration 294.
+Beginning iteration 295.
+Beginning iteration 296.
+Beginning iteration 297.
+Beginning iteration 298.
+Beginning iteration 299.
+Beginning iteration 300.
+Beginning iteration 301.
+Beginning iteration 302.
+Beginning iteration 303.
+Beginning iteration 304.
+Beginning iteration 305.
+Beginning iteration 306.
+Beginning iteration 307.
+Beginning iteration 308.
+Beginning iteration 309.
+Beginning iteration 310.
+Beginning iteration 311.
+Beginning iteration 312.
+Beginning iteration 313.
+Beginning iteration 314.
+Beginning iteration 315.
+Beginning iteration 316.
+Beginning iteration 317.
+Beginning iteration 318.
+Beginning iteration 319.
+Beginning iteration 320.
+Beginning iteration 321.
+Beginning iteration 322.
+Beginning iteration 323.
+Beginning iteration 324.
+Beginning iteration 325.
+Beginning iteration 326.
+Beginning iteration 327.
+Beginning iteration 328.
+Beginning iteration 329.
+Beginning iteration 330.
+Beginning iteration 331.
+Beginning iteration 332.
+Beginning iteration 333.
+Beginning iteration 334.
+Beginning iteration 335.
+Beginning iteration 336.
+Beginning iteration 337.
+Beginning iteration 338.
+Beginning iteration 339.
+Beginning iteration 340.
+Beginning iteration 341.
+Beginning iteration 342.
+Beginning iteration 343.
+Beginning iteration 344.
+Beginning iteration 345.
+Beginning iteration 346.
+Beginning iteration 347.
+Beginning iteration 348.
+Beginning iteration 349.
+Beginning iteration 350.
+Beginning iteration 351.
+Beginning iteration 352.
+Beginning iteration 353.
+Beginning iteration 354.
+Beginning iteration 355.
+Beginning iteration 356.
+Beginning iteration 357.
+Beginning iteration 358.
+Beginning iteration 359.
+Beginning iteration 360.
+Beginning iteration 361.
+Beginning iteration 362.
+Beginning iteration 363.
+Beginning iteration 364.
+Beginning iteration 365.
+Beginning iteration 366.
+Beginning iteration 367.
+Beginning iteration 368.
+Beginning iteration 369.
+Beginning iteration 370.
+Beginning iteration 371.
+Beginning iteration 372.
+Beginning iteration 373.
+Beginning iteration 374.
+Beginning iteration 375.
+Beginning iteration 376.
+Beginning iteration 377.
+Beginning iteration 378.
+Beginning iteration 379.
+Beginning iteration 380.
+Beginning iteration 381.
+Beginning iteration 382.
+Beginning iteration 383.
+Beginning iteration 384.
+Beginning iteration 385.
+Beginning iteration 386.
+Beginning iteration 387.
+Beginning iteration 388.
+Beginning iteration 389.
+Beginning iteration 390.
+Beginning iteration 391.
+Beginning iteration 392.
+Beginning iteration 393.
+Beginning iteration 394.
+Beginning iteration 395.
+Beginning iteration 396.
+Beginning iteration 397.
+Beginning iteration 398.
+Beginning iteration 399.
+Beginning iteration 400.
+Beginning iteration 401.
+Beginning iteration 402.
+Beginning iteration 403.
+Beginning iteration 404.
+Beginning iteration 405.
+Beginning iteration 406.
+Beginning iteration 407.
+Beginning iteration 408.
+Beginning iteration 409.
+Beginning iteration 410.
+Beginning iteration 411.
+Beginning iteration 412.
+Beginning iteration 413.
+Beginning iteration 414.
+Beginning iteration 415.
+Beginning iteration 416.
+Beginning iteration 417.
+Beginning iteration 418.
+Beginning iteration 419.
+Beginning iteration 420.
+Beginning iteration 421.
+Beginning iteration 422.
+Beginning iteration 423.
+Beginning iteration 424.
+Beginning iteration 425.
+Beginning iteration 426.
+Beginning iteration 427.
+Beginning iteration 428.
+Beginning iteration 429.
+Beginning iteration 430.
+Beginning iteration 431.
+Beginning iteration 432.
+Beginning iteration 433.
+Beginning iteration 434.
+Beginning iteration 435.
+Beginning iteration 436.
+Beginning iteration 437.
+Beginning iteration 438.
+Beginning iteration 439.
+Beginning iteration 440.
+Beginning iteration 441.
+Beginning iteration 442.
+Beginning iteration 443.
+Beginning iteration 444.
+Beginning iteration 445.
+Beginning iteration 446.
+Beginning iteration 447.
+Beginning iteration 448.
+Beginning iteration 449.
+Beginning iteration 450.
+Beginning iteration 451.
+Beginning iteration 452.
+Beginning iteration 453.
+Beginning iteration 454.
+Beginning iteration 455.
+Beginning iteration 456.
+Beginning iteration 457.
+Beginning iteration 458.
+Beginning iteration 459.
+Beginning iteration 460.
+Beginning iteration 461.
+Beginning iteration 462.
+Beginning iteration 463.
+Beginning iteration 464.
+Beginning iteration 465.
+Beginning iteration 466.
+Beginning iteration 467.
+Beginning iteration 468.
+Beginning iteration 469.
+Beginning iteration 470.
+Beginning iteration 471.
+Beginning iteration 472.
+Beginning iteration 473.
+Beginning iteration 474.
+Beginning iteration 475.
+Beginning iteration 476.
+Beginning iteration 477.
+Beginning iteration 478.
+Beginning iteration 479.
+Beginning iteration 480.
+Beginning iteration 481.
+Beginning iteration 482.
+Beginning iteration 483.
+Beginning iteration 484.
+Beginning iteration 485.
+Beginning iteration 486.
+Beginning iteration 487.
+Beginning iteration 488.
+Beginning iteration 489.
+Beginning iteration 490.
+Beginning iteration 491.
+Beginning iteration 492.
+Beginning iteration 493.
+Beginning iteration 494.
+Beginning iteration 495.
+Beginning iteration 496.
+Beginning iteration 497.
+Beginning iteration 498.
+Beginning iteration 499.
+Beginning iteration 500.
+[1] 0.03471123 0.04377673 0.08057259 0.09233181 0.02383937 0.03870353 0.08689383
+[8] 0.08300275 0.01426569
 $sigma2
-[1] 3.031072 3.251449 9.056478 1.416540 0.890020 1.105679 1.553004 3.202265
-[9] 0.247907
+[1]  96.146800 101.965536  51.337584  84.242539  80.626715 179.227681  31.104153
+[8]  40.060400   3.401374
 
 $tau2
-[1] 3.783797
+[1] 0.2148537
 
 $beta
-[1]  2.788477 -2.015912
+[1]  3.011697 -2.003134
 
 $sigma2
-[1] 0.368
+[1] 0.138
 
 $tau2
-[1] 0.364
+[1] 0.146
 
 Loading required package: spam
 Spam version 2.10-0 (2023-10-23) is loaded.
@@ -308,3 +539,18 @@ pdf
   2 
 pdf 
   2 
+ [1] 0.3553652 5.4389655 4.4659427 5.0704689 5.7953894 3.7385234 0.4579630
+ [8] 3.0521121 1.4311752 2.5973467
+Mean absolute error: 3.24
+ [1] 0.97 0.57 0.95 0.99 1.00 1.00 1.00 0.83 1.00 0.94
+Mean coverage: 0.925
+ [1]  1.767389 11.949909 15.376993 16.827655 22.620755 12.041605  2.909138
+ [8] 10.743167 10.864152 12.033878
+Mean width: 11.713
+ [1]  1.826356 31.607866 16.667658 17.055813 22.620755 12.041605  2.909138
+ [8] 16.941722 10.864152 13.989703
+Mean interval score: 14.652
+ [1] 0.2500304 3.8691081 2.8468265 3.1456820 3.5199745 2.4028927 0.3289205
+ [8] 2.1717477 1.0084864 1.8126588
+Mean CRPS: 2.136
+Total time taken - 13 hours, 22 minutes, and 48 seconds.
