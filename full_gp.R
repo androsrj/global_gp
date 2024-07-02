@@ -43,21 +43,25 @@ plot(1:nSamples, results$paramSamples[[3]], type="l")
 library(MBA)
 library(fields)
 
-pdf("figures/subj1.pdf")
+pdf("figures/subj1_true.pdf")
 pred.surf <-  mba.surf(cbind(UTest, YTest[1:nTest]), no.X=100, no.Y=100, extend=T)$xyz.est
 image.plot(pred.surf, xaxs ="r", yaxs = "r", main="True Surface, Subject 1", col = hcl.colors(12, "YlOrRd", rev=TRUE))
 contour(pred.surf, add=T)
+dev.off()
 
+pdf("figures/subj1_global.pdf")
 pred.surf <-  mba.surf(cbind(UTest, results$preds[2,1:nTest]), no.X=100, no.Y=100, extend=T)$xyz.est
 image.plot(pred.surf, xaxs ="r", yaxs = "r", main="Predicted Surface, Subject 1", col = hcl.colors(12, "YlOrRd", rev=TRUE))
 contour(pred.surf, add=T)
 dev.off()
 
-pdf("figures/subj2.pdf")
+pdf("figures/subj2_true.pdf")
 pred.surf <-  mba.surf(cbind(UTest, YTest[(nTest+1):(2*nTest)]), no.X=100, no.Y=100, extend=T)$xyz.est
 image.plot(pred.surf, xaxs ="r", yaxs = "r", main="True Surface, Subject 2", col = hcl.colors(12, "YlOrRd", rev=TRUE))
 contour(pred.surf, add=T)
+dev.off()
 
+pdf("figures/subj2_global.pdf")
 pred.surf <-  mba.surf(cbind(UTest, results$preds[2, (nTest+1):(2*nTest)]), no.X=100, no.Y=100, extend=T)$xyz.est
 image.plot(pred.surf, xaxs ="r", yaxs = "r", main="Predicted Surface, Subject 2", col = hcl.colors(12, "YlOrRd", rev=TRUE))
 contour(pred.surf, add=T)
