@@ -41,9 +41,12 @@ results$posteriorMeans
 results$acceptance
 nSamples <- length(results$paramSamples[[3]])
 plot(1:nSamples, results$paramSamples[[3]], type="l")
+saveRDS(results, file = "objects/local.RDS")
 
 library(MBA)
 library(fields)
+
+lims <- c(-15, 15)
 
 #pdf("figures/subj1.pdf")
 #pred.surf <-  mba.surf(cbind(UTest, YTest[1:nTest]), no.X=100, no.Y=100, extend=T)$xyz.est
@@ -53,7 +56,7 @@ library(fields)
 
 pdf("figures/subj1_local.pdf")
 pred.surf <-  mba.surf(cbind(UTest, results$preds[2,1:nTest]), no.X=100, no.Y=100, extend=T)$xyz.est
-image.plot(pred.surf, xaxs ="r", yaxs = "r", main="Predicted Surface, Subject 1", col = hcl.colors(12, "YlOrRd", rev=TRUE))
+image.plot(pred.surf, xaxs ="r", yaxs = "r", zlim = lims, main="Predicted Surface, Subject 1", col = hcl.colors(12, "YlOrRd", rev=TRUE))
 contour(pred.surf, add=T)
 dev.off()
 
@@ -65,7 +68,7 @@ dev.off()
 
 pdf("figures/subj2_local.pdf")
 pred.surf <-  mba.surf(cbind(UTest, results$preds[2,(nTest+1):(2*nTest)]), no.X=100, no.Y=100, extend=T)$xyz.est
-image.plot(pred.surf, xaxs ="r", yaxs = "r", main="Predicted Surface, Subject 2", col = hcl.colors(12, "YlOrRd", rev=TRUE))
+image.plot(pred.surf, xaxs ="r", yaxs = "r", zlim = lims, main="Predicted Surface, Subject 2", col = hcl.colors(12, "YlOrRd", rev=TRUE))
 contour(pred.surf, add=T)
 dev.off()
 
