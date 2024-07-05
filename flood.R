@@ -24,7 +24,7 @@ Z <- inputs[stormsTrain,3:4]
 ZTest <- inputs[stormsTest,3:4]
 
 # Local covariates (X)
-n <- 100
+n <- 200
 nTest <- 20
 samp2 <- sample(1:nrow(coords))
 train <- samp2[1:n]
@@ -52,7 +52,7 @@ theta <- seq(10, 100, length = K)
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 theta = theta,
                 propSD = propSD,
-                nIter = 20, nBurn = 10, nThin=2,
+                nIter = 1000, nBurn = 500, nThin=2,
                 model = "full_gp")
 
 theta
