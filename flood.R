@@ -29,8 +29,8 @@ nTest <- 20
 samp2 <- sample(1:nrow(coords))
 train <- samp2[1:n]
 test <- samp2[(n+1):(n+nTest)]
-X <- as.matrix(rep(1, n), coords$elev_meters[train], ncol=2)
-XTest <- as.matrix(rep(1, nTest), coords$elev_meters[test], ncol=2)
+X <- matrix(c(rep(1, n), coords$elev_meters[train]), ncol=2)
+XTest <- matrix(c(rep(1, nTest), coords$elev_meters[test]), ncol=2)
 
 # Distance matrices (D)
 U <- coords[train, 1:2]
@@ -52,7 +52,7 @@ theta <- seq(10, 100, length = K)
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 theta = theta,
                 propSD = propSD,
-                nIter = 5, nBurn = 1, nThin=2,
+                nIter = 20, nBurn = 10, nThin=2,
                 model = "full_gp")
 
 theta
@@ -60,42 +60,39 @@ results$posteriorMeans
 results$acceptance
 nSamples <- length(results$paramSamples[[3]])
 plot(1:nSamples, results$paramSamples[[3]], type="l")
-saveRDS(results, file = "objects/global.RDS")
+#saveRDS(results, file = "objects/global.RDS")
 
-library(MBA)
-library(fields)
+lims <- c(0, 8)
 
-lims <- c(-15, 15)
-
-pdf("figures/subj1_true.pdf")
+pdf("figures/flood/subj1_true.pdf")
 pred.surf <-  mba.surf(cbind(UTest, YTest[1:nTest]), no.X=100, no.Y=100, extend=T)$xyz.est
-image.plot(pred.surf, xaxs ="r", yaxs = "r", zlim = lims, main="True Surface, Subject 1", 
+image.plot(pred.surf, xaxs ="r", yaxs = "r", zlim = lims, main="True Surface, Storm 1", 
            cex.main = 1.5, col = hcl.colors(12, "YlOrRd", rev=TRUE))
 contour(pred.surf, add=T)
 dev.off()
 
-pdf("figures/subj1_global.pdf")
+pdf("figures/flood/subj1_global.pdf")
 pred.surf <-  mba.surf(cbind(UTest, results$preds[2,1:nTest]), no.X=100, no.Y=100, extend=T)$xyz.est
-image.plot(pred.surf, xaxs ="r", yaxs = "r", zlim = lims, main="Global GP, Subject 1", 
+image.plot(pred.surf, xaxs ="r", yaxs = "r", zlim = lims, main="Global GP, Storm 1", 
            cex.main = 1.5, col = hcl.colors(12, "YlOrRd", rev=TRUE))
 contour(pred.surf, add=T)
 dev.off()
 
-pdf("figures/subj2_true.pdf")
+pdf("figures/flood/subj2_true.pdf")
 pred.surf <-  mba.surf(cbind(UTest, YTest[(nTest+1):(2*nTest)]), no.X=100, no.Y=100, extend=T)$xyz.est
-image.plot(pred.surf, xaxs ="r", yaxs = "r", zlim = lims, main="True Surface, Subject 2", 
+image.plot(pred.surf, xaxs ="r", yaxs = "r", zlim = lims, main="True Surface, Storm 2", 
            cex.main = 1.5, col = hcl.colors(12, "YlOrRd", rev=TRUE))
 contour(pred.surf, add=T)
 dev.off()
 
-pdf("figures/subj2_global.pdf")
+pdf("figures/flood/subj2_global.pdf")
 pred.surf <-  mba.surf(cbind(UTest, results$preds[2, (nTest+1):(2*nTest)]), no.X=100, no.Y=100, extend=T)$xyz.est
-image.plot(pred.surf, xaxs ="r", yaxs = "r", zlim = lims, main="Global GP, Subject 2", 
+image.plot(pred.surf, xaxs ="r", yaxs = "r", zlim = lims, main="Global GP, Storm 2", 
            cex.main = 1.5, col = hcl.colors(12, "YlOrRd", rev=TRUE))
 contour(pred.surf, add=T)
 dev.off()
 
-nTestSubj <- nrow(test$Z)
+nTestSubj <- nrow(ZTest)
 abs_error <- cvg <- width <- scores <- crps <- numeric(nTestSubj)
 a <- .05
 for (i in 1:nTestSubj) {
@@ -127,3 +124,4 @@ cat(paste0("Mean interval score: ", round(mean(scores), 3), "\n"))
 
 crps
 cat(paste0("Mean CRPS: ", round(mean(crps), 3), "\n"))
+

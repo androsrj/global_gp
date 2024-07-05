@@ -166,9 +166,9 @@ mcmc <- function(X, Z, Y, D, K,
   #plot(1:nSamples, beta[1,], type = 'l', ylab = "beta_0", main = "")
   #dev.off()  
   
-  if (class(beta) == "numeric") {
-    beta <- matrix(beta, nrow = 1)
-  }
+  #if (class(beta) == "numeric") {
+  #  beta <- matrix(beta, nrow = 1)
+  #}
   
   # Posterior mean estimates (can be somewhat skewed because of back-transformations)
   posteriorMeans <- list(sigma2 = apply(sigma2, 1, mean),
