@@ -24,7 +24,7 @@ Z <- inputs[stormsTrain,3:4]
 ZTest <- inputs[stormsTest,3:4]
 
 # Local covariates (X)
-n <- 200
+n <- 500
 nTest <- 20
 samp2 <- sample(1:nrow(coords))
 train <- samp2[1:n]
@@ -62,7 +62,9 @@ nSamples <- length(results$paramSamples[[3]])
 plot(1:nSamples, results$paramSamples[[3]], type="l")
 #saveRDS(results, file = "objects/global.RDS")
 
-lims <- c(0, 8)
+lwr <- min(c(YTest[1:(2*nTest)], results$preds[2,]))
+upr <- max(c(YTest[1:(2*nTest)], results$preds[2,]))
+lims <- c(lwr, upr)
 
 pdf("figures/flood/subj1_true.pdf")
 pred.surf <-  mba.surf(cbind(UTest, YTest[1:nTest]), no.X=100, no.Y=100, extend=T)$xyz.est
