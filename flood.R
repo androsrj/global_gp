@@ -25,12 +25,12 @@ Z <- inputs[stormsTrain,3:4]
 ZTest <- inputs[stormsTest,3:4]
 
 # Local covariates (X)
-n <- 500
 nTest <- 20
-samp2 <- sample(1:nrow(coords))
+#samp2 <- sample(1:nrow(coords))
 #train <- samp2[1:n]
-train <- which(coords$x > -74.85 & coords$x < -74.83 & coords$y > 39.075 & coords$y < 39.1)
+train <- which(coords$x > -74.87 & coords$x < -74.83 & coords$y > 39.15 & coords$y < 39.18)
 #test <- samp2[(n+1):(n+nTest)]
+n <- length(train)
 test <- sample(train, nTest)
 X <- matrix(c(rep(1, n), coords$elev_meters[train]), ncol=2)
 XTest <- matrix(c(rep(1, nTest), coords$elev_meters[test]), ncol=2)
