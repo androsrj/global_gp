@@ -28,7 +28,7 @@ ZTest <- inputs[stormsTest,3:4]
 nTest <- 20
 #samp2 <- sample(1:nrow(coords))
 #train <- samp2[1:n]
-train <- which(coords$x > -74.87 & coords$x < -74.83 & coords$y > 39.15 & coords$y < 39.18)
+train <- which(coords$x > -74.86 & coords$x < -74.83 & coords$y > 39.15 & coords$y < 39.175)
 #test <- samp2[(n+1):(n+nTest)]
 n <- length(train)
 test <- sample(train, nTest)
