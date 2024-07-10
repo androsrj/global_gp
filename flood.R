@@ -17,6 +17,7 @@ load("data/flood_data.RData")
 # Global covariates (Z)
 STrain <- 10
 STest <- 5
+set.seed(123)
 samp <- sample(1:nrow(inputs), STrain + STest)
 stormsTrain <- samp[1:STrain]
 stormsTest <- samp[(STrain+1):(STrain+STest)]
@@ -27,8 +28,10 @@ ZTest <- inputs[stormsTest,3:4]
 n <- 500
 nTest <- 20
 samp2 <- sample(1:nrow(coords))
-train <- samp2[1:n]
-test <- samp2[(n+1):(n+nTest)]
+#train <- samp2[1:n]
+train <- which(coords$x > -74.85 & coords$x < -74.83 & coords$y > 39.075 & coords$y < 39.1)
+#test <- samp2[(n+1):(n+nTest)]
+test <- sample(train, nTest)
 X <- matrix(c(rep(1, n), coords$elev_meters[train]), ncol=2)
 XTest <- matrix(c(rep(1, nTest), coords$elev_meters[test]), ncol=2)
 
@@ -60,7 +63,7 @@ results$posteriorMeans
 results$acceptance
 nSamples <- length(results$paramSamples[[3]])
 plot(1:nSamples, results$paramSamples[[3]], type="l")
-#saveRDS(results, file = "objects/global.RDS")
+saveRDS(results, file = "objects/flood.RDS")
 
 lwr <- min(c(YTest[1:(2*nTest)], results$preds[2,]))
 upr <- max(c(YTest[1:(2*nTest)], results$preds[2,]))
