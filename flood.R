@@ -55,7 +55,7 @@ theta <- seq(10, 100, length = K)
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 theta = theta,
                 propSD = propSD,
-                nIter = 1000, nBurn = 500, nThin=2,
+                nIter = 500, nBurn = 200, nThin=2,
                 model = "full_gp")
 
 theta
