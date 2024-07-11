@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --time=0-23:00:00
+#SBATCH --time=0-16:00:00
 #SBATCH --partition=medium
-#SBATCH --mem-per-cpu=64GB
+#SBATCH --mem-per-cpu=32GB
 #SBATCH --output=outfile_flood
 module purge
 module load R
