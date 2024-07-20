@@ -31,8 +31,8 @@ train <- spatialData(n = n,
 save(train, file = "data/train.RData")
 
 set.seed(mySeed)
-test <- sample(n, nTest)
-U <- train$U[test, ]
+indexTest <- sample(n, nTest)
+U <- train$U[indexTest, ]
 
 # Generate testing data
 #set.seed(mySeed)
@@ -48,7 +48,7 @@ test <- spatialData(n = nTest,
                     tau2 = trueTau2, 
                     theta = trueTheta,
                     beta = trueBeta)
-test$index <- test
+test$index <- indexTest
 save(test, file = "data/test.RData")
 save(trueTheta, file = "data/theta.RData")
 

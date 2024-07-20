@@ -1,0 +1,47 @@
+MCMC Start #-- Jul 20 06:27:52 PM --# nbasis: 0 
+MCMC iteration 1000 #-- Jul 20 06:27:53 PM --# nbasis: 1 
+MCMC iteration 2000 #-- Jul 20 06:27:53 PM --# nbasis: 0 
+MCMC iteration 3000 #-- Jul 20 06:27:54 PM --# nbasis: 1 
+MCMC iteration 4000 #-- Jul 20 06:27:54 PM --# nbasis: 2 
+MCMC iteration 5000 #-- Jul 20 06:27:54 PM --# nbasis: 2 
+MCMC iteration 6000 #-- Jul 20 06:27:55 PM --# nbasis: 2 
+MCMC iteration 7000 #-- Jul 20 06:27:55 PM --# nbasis: 2 
+MCMC iteration 8000 #-- Jul 20 06:27:56 PM --# nbasis: 1 
+MCMC iteration 9000 #-- Jul 20 06:27:56 PM --# nbasis: 1 
+MCMC iteration 10000 #-- Jul 20 06:27:56 PM --# nbasis: 1 
+MCMC Start #-- Jul 20 06:27:56 PM --# nbasis: 0 
+MCMC iteration 1000 #-- Jul 20 06:27:57 PM --# nbasis: 3 
+MCMC iteration 2000 #-- Jul 20 06:27:57 PM --# nbasis: 1 
+MCMC iteration 3000 #-- Jul 20 06:27:57 PM --# nbasis: 0 
+MCMC iteration 4000 #-- Jul 20 06:27:58 PM --# nbasis: 4 
+MCMC iteration 5000 #-- Jul 20 06:27:58 PM --# nbasis: 1 
+MCMC iteration 6000 #-- Jul 20 06:27:58 PM --# nbasis: 0 
+MCMC iteration 7000 #-- Jul 20 06:27:59 PM --# nbasis: 3 
+MCMC iteration 8000 #-- Jul 20 06:27:59 PM --# nbasis: 0 
+MCMC iteration 9000 #-- Jul 20 06:27:59 PM --# nbasis: 2 
+MCMC iteration 10000 #-- Jul 20 06:28:00 PM --# nbasis: 1 
+MCMC Start #-- Jul 20 06:28:00 PM --# nbasis: 0 
+MCMC iteration 1000 #-- Jul 20 06:28:00 PM --# nbasis: 2 
+MCMC iteration 2000 #-- Jul 20 06:28:00 PM --# nbasis: 1 
+MCMC iteration 3000 #-- Jul 20 06:28:01 PM --# nbasis: 0 
+MCMC iteration 4000 #-- Jul 20 06:28:01 PM --# nbasis: 1 
+MCMC iteration 5000 #-- Jul 20 06:28:01 PM --# nbasis: 1 
+MCMC iteration 6000 #-- Jul 20 06:28:02 PM --# nbasis: 0 
+MCMC iteration 7000 #-- Jul 20 06:28:02 PM --# nbasis: 1 
+MCMC iteration 8000 #-- Jul 20 06:28:02 PM --# nbasis: 1 
+MCMC iteration 9000 #-- Jul 20 06:28:03 PM --# nbasis: 1 
+MCMC iteration 10000 #-- Jul 20 06:28:03 PM --# nbasis: 0 
+ [1] 5.536070 5.241576 6.389956 5.919812 6.265248 5.649719 7.499773 9.461681
+ [9] 5.430189 5.165958
+Mean absolute error: 6.256
+ [1] 0.78 0.74 0.66 0.71 0.65 0.72 0.57 0.54 0.76 0.72
+Mean coverage: 0.685
+ [1] 17.90258 17.10396 17.07600 19.27993 16.60638 18.12434 16.09640 18.15435
+ [9] 19.87312 20.83277
+Mean width: 18.105
+ [1]  38.59540  43.53902  61.25240  50.63896  65.45864  62.05743  90.88899
+ [8] 139.33371  39.46098  50.56936
+Mean interval score: 64.179
+[1] 6.735986
+Mean CRPS: 6.736
+Total time taken - 0 hours, 0 minutes, and 13 seconds.
