@@ -74,10 +74,10 @@ image.plot(pred.surf, xaxs ="r", yaxs = "r", zlim = lims, main="Global GP, Subje
 contour(pred.surf, add=T)
 dev.off()
 
-nTestSubj <- nrow(test$Z)
-abs_error <- cvg <- width <- scores <- crps <- numeric(nTestSubj)
+STest <- nrow(test$Z)
+abs_error <- cvg <- width <- scores <- crps <- numeric(STest)
 a <- .05
-for (i in 1:nTestSubj) {
+for (i in 1:STest) {
   truth <- YTest[(nTest*(i-1)+1):(i*nTest)]
   pred <- results$preds[2, (nTest*(i-1)+1):(i*nTest)]
   abs_error[i] <- mean(abs(truth - pred))

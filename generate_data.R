@@ -1,10 +1,10 @@
 source("other_functions/spatial_data.R")
 source("other_functions/bsplines_2_3D.R")
-mySeed <- 32158
+mySeed <- 3215877
 
 # Sample sizes
-n <- 1000
-nTest <- 100
+n <-200
+nTest <- 50
 S <- 10
 STest <- 10
 K <- 9
@@ -27,7 +27,8 @@ train <- spatialData(n = n,
                      sigma2 = trueSigma2, 
                      tau2 = trueTau2, 
                      theta = trueTheta, 
-                     beta = trueBeta)
+                     beta = trueBeta,
+                     range = c(0, 100))
 save(train, file = "data/train.RData")
 
 set.seed(mySeed)
@@ -47,7 +48,8 @@ test <- spatialData(n = nTest,
                     sigma2 = trueSigma2, 
                     tau2 = trueTau2, 
                     theta = trueTheta,
-                    beta = trueBeta)
+                    beta = trueBeta,
+                    range = c(0, 100))
 test$index <- indexTest
 save(test, file = "data/test.RData")
 save(trueTheta, file = "data/theta.RData")
