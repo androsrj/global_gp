@@ -3,7 +3,7 @@ library(splines2)
 
 # Function to simulate spatial data
 spatialData <- function(n, X, Z, K,
-                        sigma2, tau2, theta, beta,
+                        sigf2, thf, sigma2, theta, tau2, beta,
                         U = NULL, range = c(0, 10), dims = 2, 
                         covariance = "exponential") {
   
@@ -29,6 +29,7 @@ spatialData <- function(n, X, Z, K,
   C <- lapply(1:K, function(k) {
     sigma2[k] * exp(- theta[k] * D)
   })
+  Cf <- sigf2 * exp(- thf * D)
   
   # Sample h
   eta <- sapply(1:K, function(k) {
@@ -38,11 +39,14 @@ spatialData <- function(n, X, Z, K,
   S <- nrow(Z)
   h <- c(sapply(1:S, \(i) rowSums(sapply(1:K, \(k) basis[i, k] * eta[ , k]))))
   
+  # Sample f
+  f <- t(rmvnorm(1, sigma = Cf))
+  
   # Compute A from X using Kronecker product
   A <- matrix(1, nrow = S) %x% X
   
   # Generate Y
-  Y <- A %*% beta + h + rnorm(n * S, 0, sqrt(tau2))
+  Y <- A %*% beta + rep(f, S) + h + rnorm(n * S, 0, sqrt(tau2))
   
   # Return data
   return(list(X = X, Z = Z, Y = Y, h = as.vector(h), D = D, U = U))

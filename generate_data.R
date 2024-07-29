@@ -3,30 +3,33 @@ source("other_functions/bsplines_2_3D.R")
 mySeed <- 3215877
 
 # Sample sizes
-n <-200
-nTest <- 50
+n <- 200
+nTest <- 10
 S <- 10
-STest <- 10
+STest <- 3
 K <- 9
 
 # True parameter values
+trueSigf2 <- 10
+trueThf <- 1
 trueSigma2 <- seq(50, 100, length = K)
-trueTau2 <- 0.2
 trueTheta <- runif(K, 0.01, 0.1)
-trueBeta <- c(3, -2)
+trueTau2 <- 0.2
+trueBeta <- 3
 
 # Generate training data
 #set.seed(mySeed)
-X <- cbind(matrix(1, nrow = n), 
-           runif(n, -5, 5))
+X <- matrix(1, ncol=1, nrow = n)
 Z <- matrix(runif(2 * S, 0, 100), ncol = 2)
 train <- spatialData(n = n, 
                      X = X,
                      Z = Z,
                      K = K,
+                     sigf2 = trueSigf2,
+                     thf = trueThf,
                      sigma2 = trueSigma2, 
-                     tau2 = trueTau2, 
                      theta = trueTheta, 
+                     tau2 = trueTau2, 
                      beta = trueBeta,
                      range = c(0, 100))
 save(train, file = "data/train.RData")
@@ -37,17 +40,18 @@ U <- train$U[indexTest, ]
 
 # Generate testing data
 #set.seed(mySeed)
-XTest <- cbind(matrix(1, nrow = nTest), 
-               runif(nTest, -5, 5))
+XTest <- matrix(1, ncol=1, nrow = nTest)
 ZTest <- matrix(runif(2 * STest, 0, 100), ncol = 2)
 test <- spatialData(n = nTest, 
                     X = XTest, 
                     Z = ZTest,
                     K = K,
                     U = U,
+                    sigf2 = trueSigf2,
+                    thf = trueThf,
                     sigma2 = trueSigma2, 
+                    theta = trueTheta, 
                     tau2 = trueTau2, 
-                    theta = trueTheta,
                     beta = trueBeta,
                     range = c(0, 100))
 test$index <- indexTest

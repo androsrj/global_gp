@@ -11,7 +11,7 @@ logPriorTau2 <- function(tau2, a = 1, b = 1) {
 }
 
 # Theta (uniform for now, could try discrete later)
-logPriorTheta <- function(theta, a = 0.5, b = 10) {
+logPriorTheta <- function(theta, a = 0.1, b = 10) {
   dunif(theta, a, b, log = TRUE)
 }
 

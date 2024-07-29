@@ -24,21 +24,26 @@ UTest <- test$U
 DTest <- test$D
 K <- 9
 propSD <- list(sigma2 = seq(0.05, 0.15, length = K),
-               tau2 = 0.15)
-#theta <- runif(9, 0.5, 3)
-theta <- trueTheta
+               tau2 = 0.15,
+               theta = seq(0.1, 0.25, length = K))
+starting <- list(sigma2 = seq(50, 100, length = K),
+                 theta = rep(0.5, K),
+                 sigf2 = 10,
+                 thf = 1, 
+                 tau2 = 0.1,
+                 beta = 2)
 
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
-                theta = theta,
+                starting = starting,
                 propSD = propSD,
-                nIter = 400, nBurn = 100, nThin=2,
+                nIter = 100, nBurn = 100, nThin=2,
                 model = "full_gp")
 
-theta
+#theta
 results$posteriorMeans
 results$acceptance
-nSamples <- length(results$paramSamples[[3]])
-plot(1:nSamples, results$paramSamples[[3]], type="l")
+nSamples <- length(results$paramSamples[[5]])
+plot(1:nSamples, results$paramSamples[[5]], type="l")
 saveRDS(results, file = "objects/global.RDS")
 
 library(MBA)
