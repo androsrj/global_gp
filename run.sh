@@ -7,7 +7,7 @@ module purge
 module load R
 
 ### Generate data, if necessary
-###Rscript generate_data.R
+Rscript generate_data.R
 
 ### Run simulation code and benchmark the start/end times
 start_time=$(date +%s)
