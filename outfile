@@ -15,12 +15,677 @@ Loading required package: viridisLite
 
 Try help(fields) to get started.
 [1]  50.00  56.25  62.50  68.75  75.00  81.25  87.50  93.75 100.00
-[1] 0.01219354 0.09572186 0.07561320 0.04147714 0.08723525 0.08656611 0.09533087
-[8] 0.04725549 0.06636558
+[1] 0.02327856 0.05330381 0.03701168 0.03784927 0.02276647 0.03141254 0.01884386
+[8] 0.07685582 0.05550410
 Beginning iteration 2.
-finished sigf2finished thffinished sigma2finishe thetaBeginning iteration 3.
-finished sigf2finished thffinished sigma2finishe thetaError in if (runif(1) < exp(MHratio)) { : 
-  missing value where TRUE/FALSE needed
-Calls: mcmc
-Execution halted
-Total time taken - 0 hours, 0 minutes, and 10 seconds.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 3.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 4.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 5.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 6.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 7.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 8.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 9.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 10.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 11.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 12.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 13.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 14.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 15.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 16.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 17.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 18.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 19.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 20.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 21.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 22.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 23.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 24.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 25.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 26.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 27.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 28.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 29.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 30.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 31.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 32.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 33.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 34.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 35.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 36.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 37.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 38.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 39.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 40.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 41.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 42.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 43.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 44.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 45.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 46.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 47.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 48.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 49.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 50.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 51.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 52.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 53.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 54.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 55.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 56.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 57.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 58.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 59.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 60.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 61.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 62.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 63.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 64.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 65.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 66.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 67.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 68.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 69.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 70.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 71.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 72.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 73.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 74.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 75.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 76.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 77.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 78.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 79.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 80.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 81.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 82.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 83.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 84.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 85.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 86.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 87.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 88.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 89.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 90.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 91.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 92.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 93.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 94.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 95.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 96.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 97.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 98.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 99.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 100.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 101.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 102.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 103.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 104.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 105.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 106.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 107.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 108.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 109.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 110.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 111.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 112.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 113.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 114.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 115.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 116.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 117.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 118.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 119.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 120.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 121.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 122.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 123.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 124.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 125.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 126.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 127.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 128.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 129.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 130.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 131.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 132.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 133.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 134.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 135.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 136.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 137.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 138.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 139.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 140.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 141.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 142.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 143.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 144.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 145.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 146.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 147.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 148.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 149.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 150.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 151.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 152.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 153.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 154.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 155.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 156.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 157.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 158.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 159.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 160.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 161.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 162.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 163.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 164.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 165.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 166.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 167.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 168.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 169.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 170.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 171.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 172.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 173.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 174.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 175.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 176.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 177.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 178.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 179.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 180.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 181.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 182.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 183.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 184.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 185.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 186.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 187.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 188.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 189.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 190.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 191.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 192.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 193.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 194.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 195.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 196.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 197.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 198.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 199.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 200.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 201.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 202.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 203.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 204.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 205.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 206.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 207.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 208.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 209.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 210.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 211.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 212.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 213.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 214.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 215.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 216.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 217.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 218.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 219.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 220.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 221.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 222.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 223.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 224.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 225.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 226.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 227.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 228.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 229.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 230.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 231.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 232.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 233.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 234.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 235.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 236.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 237.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 238.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 239.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 240.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 241.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 242.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 243.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 244.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 245.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 246.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 247.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 248.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 249.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 250.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 251.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 252.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 253.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 254.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 255.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 256.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 257.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 258.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 259.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 260.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 261.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 262.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 263.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 264.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 265.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 266.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 267.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 268.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 269.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 270.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 271.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 272.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 273.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 274.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 275.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 276.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 277.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 278.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 279.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 280.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 281.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 282.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 283.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 284.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 285.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 286.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 287.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 288.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 289.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 290.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 291.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 292.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 293.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 294.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 295.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 296.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 297.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 298.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 299.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 300.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 301.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 302.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 303.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 304.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 305.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 306.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 307.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 308.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 309.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 310.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 311.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 312.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 313.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 314.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 315.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 316.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 317.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 318.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 319.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 320.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 321.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 322.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 323.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 324.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 325.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 326.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 327.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 328.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 329.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 330.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 331.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 332.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 333.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 334.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 335.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 336.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 337.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 338.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 339.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 340.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 341.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 342.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 343.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 344.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 345.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 346.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 347.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 348.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 349.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 350.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 351.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 352.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 353.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 354.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 355.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 356.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 357.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 358.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 359.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 360.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 361.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 362.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 363.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 364.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 365.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 366.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 367.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 368.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 369.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 370.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 371.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 372.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 373.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 374.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 375.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 376.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 377.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 378.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 379.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 380.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 381.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 382.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 383.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 384.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 385.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 386.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 387.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 388.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 389.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 390.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 391.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 392.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 393.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 394.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 395.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 396.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 397.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 398.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 399.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 400.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 401.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 402.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 403.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 404.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 405.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 406.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 407.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 408.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 409.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 410.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 411.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 412.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 413.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 414.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 415.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 416.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 417.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 418.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 419.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 420.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 421.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 422.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 423.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 424.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 425.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 426.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 427.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 428.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 429.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 430.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 431.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 432.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 433.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 434.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 435.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 436.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 437.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 438.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 439.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 440.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 441.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 442.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 443.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 444.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 445.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 446.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 447.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 448.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 449.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 450.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 451.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 452.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 453.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 454.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 455.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 456.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 457.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 458.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 459.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 460.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 461.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 462.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 463.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 464.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 465.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 466.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 467.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 468.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 469.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 470.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 471.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 472.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 473.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 474.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 475.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 476.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 477.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 478.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 479.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 480.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 481.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 482.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 483.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 484.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 485.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 486.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 487.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 488.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 489.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 490.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 491.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 492.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 493.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 494.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 495.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 496.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 497.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 498.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 499.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 500.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 501.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 502.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 503.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 504.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 505.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 506.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 507.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 508.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 509.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 510.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 511.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 512.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 513.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 514.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 515.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 516.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 517.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 518.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 519.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 520.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 521.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 522.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 523.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 524.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 525.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 526.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 527.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 528.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 529.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 530.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 531.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 532.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 533.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 534.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 535.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 536.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 537.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 538.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 539.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 540.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 541.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 542.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 543.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 544.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 545.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 546.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 547.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 548.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 549.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 550.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 551.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 552.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 553.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 554.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 555.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 556.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 557.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 558.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 559.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 560.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 561.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 562.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 563.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 564.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 565.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 566.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 567.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 568.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 569.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 570.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 571.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 572.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 573.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 574.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 575.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 576.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 577.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 578.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 579.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 580.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 581.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 582.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 583.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 584.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 585.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 586.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 587.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 588.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 589.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 590.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 591.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 592.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 593.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 594.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 595.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 596.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 597.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 598.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 599.
+finished sigf2finished thffinished sigma2finished thetaBeginning iteration 600.
+finished sigf2finished thffinished sigma2finished theta$sigf2
+[1] 2.263842
+
+$thf
+[1] 0.8039603
+
+$sigma2
+[1]  27.78802  55.72795  94.34046  38.54588 104.18376  34.49418  44.53992
+[8]  87.08229 474.24698
+
+$theta
+[1] 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5
+
+$tau2
+[1] 0.4192675
+
+$beta
+[1] 2.744146
+
+$sigf2
+[1] 0.485
+
+$thf
+[1] 0.485
+
+$sigma2
+[1] 0.485
+
+$theta
+[1] 0.485
+
+$tau2
+[1] 0.4866667
+
+Loading required package: spam
+Spam version 2.10-0 (2023-10-23) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: ‘spam’
+
+The following objects are masked from ‘package:mvtnorm’:
+
+    rmvnorm, rmvt
+
+The following objects are masked from ‘package:base’:
+
+    backsolve, forwardsolve
+
+Loading required package: viridisLite
+
+Try help(fields) to get started.
+pdf 
+  2 
+pdf 
+  2 
+pdf 
+  2 
+pdf 
+  2 
+[1] 2.904267 7.314928 2.843475 2.833563 2.892157
+Mean absolute error: 3.758
+[1] 0.28 1.00 0.28 0.64 0.52
+Mean coverage: 0.544
+[1]  2.605799 87.009785  2.595300  5.582104  6.104741
+Mean width: 20.78
+[1] 74.54745 87.00978 70.70110 38.58963 40.00936
+Mean interval score: 62.171
+[1] 2.582247 5.933288 2.521639 2.207669 2.341016
+Mean CRPS: 3.117
+Total time taken - 0 hours, 23 minutes, and 50 seconds.

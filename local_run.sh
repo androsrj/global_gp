@@ -1,6 +1,6 @@
 #!/bin/bash
-#SBATCH --time=1-12:00:00
-#SBATCH --partition=long
+#SBATCH --time=0-02:00:00
+#SBATCH --partition=short
 #SBATCH --mem-per-cpu=64GB
 #SBATCH --output=outfile_local
 module purge

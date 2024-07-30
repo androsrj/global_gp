@@ -4,9 +4,9 @@ mySeed <- 3215877
 
 # Sample sizes
 n <- 200
-nTest <- 10
+nTest <- 25
 S <- 10
-STest <- 3
+STest <- 5
 K <- 9
 
 # True parameter values
@@ -18,7 +18,7 @@ trueTau2 <- 0.2
 trueBeta <- 3
 
 # Generate training data
-#set.seed(mySeed)
+set.seed(mySeed)
 X <- matrix(1, ncol=1, nrow = n)
 Z <- matrix(runif(2 * S, 0, 100), ncol = 2)
 train <- spatialData(n = n, 

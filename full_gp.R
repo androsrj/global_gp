@@ -24,11 +24,11 @@ UTest <- test$U
 DTest <- test$D
 K <- 9
 propSD <- list(sigma2 = seq(0.05, 0.15, length = K),
-               tau2 = 0.15,
+               tau2 = 0.01,
                theta = seq(0.1, 0.25, length = K))
 starting <- list(sigma2 = seq(50, 100, length = K),
                  theta = rep(0.5, K),
-                 sigf2 = 10,
+                 sigf2 = 5,
                  thf = 1, 
                  tau2 = 0.1,
                  beta = 2)

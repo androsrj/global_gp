@@ -162,11 +162,12 @@ mcmc <- function(X, Z, Y, D, K,
       trTheta[, i] <- trTheta[, i - 1]
     }
     
-    cat("finishe theta")
+    cat(paste0("finished theta, which is ", round(gInv(trTheta[,i]), 3), ". "))
     
     ### Metropolis update (tau2) ###
     
     propTrTau2 <- rnorm(1, mean = trTau2[i - 1], sd = sdTau2)
+    #cat(paste0("proposed tau2 is ", exp(propTrTau2)))
     MHratio <- logRatioTau2(propTrTau2,
                             trTau2[i - 1],
                             trSigf2[i], 
