@@ -26,7 +26,7 @@ logRatioSigma2 <- function(propTrSigma2, prevTrSigma2, trSigf2, trThf, trTheta, 
 logRatioSigf2 <- function(propTrSigf2, prevTrSigf2, trThf, trSigma2, trTheta, trTau2, beta) {
   propSigf2 <- exp(propTrSigf2)
   prevSigf2 <- exp(prevTrSigf2)
-  SigmaProp <<- Sigma + (propSigf2 - prevSigf2) * exp(-trThf * DFull)
+  SigmaProp <<- Sigma + (propSigf2 - prevSigf2) * exp(-gInv(trThf) * DXFull)
   
   logLik(SigmaProp, beta) - logLik(Sigma, beta) + # Log Likelihoods
     logPriorSigma2(propSigf2) - logPriorSigma2(prevSigf2) + # Log Priors
@@ -49,7 +49,7 @@ logRatioThf <- function(propTrThf, prevTrThf, trSigma2, trTheta, trSigf2, trTau2
   propThf <- gInv(propTrThf)
   prevThf <- gInv(prevTrThf)
   #SigmaProp <<- SigmaK + exp(trSigf2) * exp(-propThf * D)
-  SigmaProp <<- Sigma - exp(trSigf2) * exp(-prevThf * DFull) + exp(trSigf2) * exp(-propThf * DFull)
+  SigmaProp <<- Sigma - exp(trSigf2) * exp(-prevThf * DXFull) + exp(trSigf2) * exp(-propThf * DXFull)
   
   logLik(SigmaProp, beta) - logLik(Sigma, beta) + # Log Likelihoods
     logPriorTheta(propThf) - logPriorTheta(prevThf) + # Log Priors
@@ -60,9 +60,9 @@ logRatioTheta <- function(propTrTheta, prevTrTheta, trSigma2, trSigf2, trThf, tr
   propTheta <- gInv(propTrTheta)
   prevTheta <- gInv(prevTrTheta)
   BProp <<- baseVariance(propTheta, D)
-  SigmaProp <<- exp(trSigf2) * exp(-gInv(trThf) * DFull) +
-    #Reduce("+", lapply(1:K, \(k) exp(-propTheta[k] * D))) 
-    Reduce("+", lapply(1:K, \(k) exp(trSigma2[k]) * BProp[[k]]))
+  SigmaProp <<- exp(trSigf2) * exp(-gInv(trThf) * DXFull) +
+    Reduce("+", lapply(1:K, \(k) exp(trSigma2[k]) * BProp[[k]])) + 
+    exp(trTau2) * diag(n * S)
   
   logLik(SigmaProp, beta) - logLik(Sigma, beta) + # Log Likelihoods
     sum(logPriorTheta(propTheta)) - sum(logPriorTheta(prevTheta)) + # Log Priors

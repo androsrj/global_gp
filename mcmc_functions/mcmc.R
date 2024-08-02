@@ -3,8 +3,8 @@
 
 mcmc <- function(X, Z, Y, D, K,
                  starting,
+                 propSD,
                  model = c("full_gp", "mpp", "sparse_gpp")[1],
-                 propSD = list(sigma2 = 0.1, tau2 = 0.1, theta = 0.1), 
                  nIter = 1000, nBurn = 100, nThin = 2) {
   
   # Dimensions
@@ -12,19 +12,19 @@ mcmc <- function(X, Z, Y, D, K,
   n <<- length(Y) / S
   STest <<- nrow(ZTest)
   nTest <<- length(YTest) / STest
-  J <- matrix(1, nrow = S, ncol = 1)
-  JTest <- matrix(1, nrow = STest, ncol = 1)
-  A <<- J %x% X
-  ATest <<- JTest %x% XTest
-  K <<- K
+  #J <<- matrix(1, nrow = S, ncol = 1)
+  #JTest <<- matrix(1, nrow = STest, ncol = 1)
+  A <<- matrix(1, nrow = S*n, ncol = 1)
+  ATest <<- matrix(1, nrow = STest*nTest, ncol = 1)
   p <<- ncol(X)
-  DFull <<- matrix(1, S, S) %x% D
-  DTestFull <<- matrix(1, STest, STest) %x% DTest
+  DXFull <<- matrix(1, S, S) %x% rdist(X)
+  DXTestFull <<- matrix(1, STest, STest) %x% rdist(XTest)
+  
   
   # Save model type and theta globally
   model <<- model
   #theta <<- theta
-  BF <<- Bsplines_2D(Z, df = c(sqrt(K), sqrt(K)))
+  BF <- Bsplines_2D(Z, df = c(sqrt(K), sqrt(K)))
   basis <<- lapply(1:K, function(k) {
     Reduce("rbind", lapply(1:S, \(s) BF[s, k] * diag(n)))
   })
@@ -38,14 +38,16 @@ mcmc <- function(X, Z, Y, D, K,
   
   # Tuning parameters for variance of each proposal distribution
   # Can be user-supplied
+  sdSigf2 <- propSD$sigf2
+  sdThf <- propSD$thf
   sdSigma2 <- propSD$sigma2
   sdTheta <- propSD$theta
   sdTau2 <- propSD$tau2
   
   # Initialize vectors for MCMC
-  trSigma2 <- trTheta <- matrix(0, nrow = K, ncol = nIter)
+  trSigma2 <- trTheta <- beta <- matrix(0, nrow = K, ncol = nIter)
   trTau2 <- trThf <- trSigf2 <- numeric(nIter) # Transformed parameters
-  beta <- matrix(0, nrow = p, ncol = nIter)
+  #beta <- matrix(0, nrow = p, ncol = nIter)
   acceptTau2 <- 0 # Track acceptance rates
   acceptSigma2 <- 0
   acceptSigf2 <- 0
@@ -58,12 +60,12 @@ mcmc <- function(X, Z, Y, D, K,
   trSigf2[1] <- log(starting$sigf2)
   trThf[1] <- g(starting$thf)
   trTau2[1] <- log(starting$tau2)
-  beta[ , 1] <- starting$beta
+  beta[1] <- starting$beta
   
   # Base of covariance matrix for updating sigma2 and tau2
   B <<- baseVariance(theta = starting$theta, D = D)
   Sigma <<- Reduce("+", lapply(1:K, \(k) starting$sigma2[k] * B[[k]])) + 
-    exp(-starting$thf * DFull) + 
+    exp(-starting$thf * DXFull) + 
     starting$tau2 * diag(n * S)
     
   # Base of covariance matrix for predictions
@@ -71,28 +73,28 @@ mcmc <- function(X, Z, Y, D, K,
   SigmaTest <<- Reduce("+", lapply(1:K, function(k) {
     starting$sigma2[k] * BTest[[k]]
   })) + 
-    exp(-starting$thf * DTestFull) + 
+    exp(-starting$thf * DXTestFull) + 
     starting$tau2 * diag(STest * nTest)
   
   # Initial predictions for test subjects
   YPreds <- matrix(data = NA, nrow = nTest * STest, ncol = nIter)
-  YPreds[ , 1] <- t(rmvnorm(1, mean = ATest %*% beta[ , 1], sigma = SigmaTest))
+  YPreds[ , 1] <- t(rmvnorm(1, mean = ATest * beta[1], sigma = SigmaTest))
   
   # Run Gibbs/Metropolis for one chain
   for (i in 2:nIter) {
-
+    
     cat(paste0("Beginning iteration ", i, ".\n"))
     
     ### Metropolis update (sigma2_f) ###
-    propTrSigf2 <- rnorm(1, mean = trSigf2[i - 1], sd = sdSigma2)
-    MHratio <<- logRatioSigf2(propTrSigf2, 
+    propTrSigf2 <- rnorm(1, mean = trSigf2[i - 1], sd = sdSigf2)
+    MHratio <- logRatioSigf2(propTrSigf2, 
                               trSigf2[i - 1],
                               trThf[i - 1],
                               trSigma2[ , i - 1],
                               trTheta[ , i - 1],
                               trTau2[i - 1],
-                              beta[ , i - 1])
-    
+                              beta[i - 1])
+    cat(paste0("MH Ratio is ", round(exp(MHratio), 2), "\n"))
     if(runif(1) < exp(MHratio)) {
       trSigf2[i] <- propTrSigf2
       Sigma <<- SigmaProp
@@ -101,17 +103,19 @@ mcmc <- function(X, Z, Y, D, K,
       trSigf2[i] <- trSigf2[i - 1]
     }
     
-    cat("finished sigf2")
+    cat(paste0("finished sigf2: ", round(exp(trSigf2[i]), 2), "\n"))
+    
+    cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[i-1]), 3), "\n"))
     
     ### Metropolis update (theta_f) ###
-    propTrThf <- rnorm(1, mean = trThf[i - 1], sd = sdTheta)
-    MHratio <<- logRatioThf(propTrThf, 
+    propTrThf <- rnorm(1, mean = trThf[i - 1], sd = sdThf)
+    MHratio <- logRatioThf(propTrThf, 
                             trThf[i - 1],
                             trSigma2[ , i - 1],
                             trTheta[ , i - 1],
                             trSigf2[i],
                             trTau2[i - 1],
-                            beta[ , i - 1])
+                            beta[i - 1])
     
     if(runif(1) < exp(MHratio)) {
       trThf[i] <- propTrThf
@@ -121,17 +125,19 @@ mcmc <- function(X, Z, Y, D, K,
       trThf[i] <- trThf[i - 1]
     }
     
-    cat("finished thf")
+    cat(paste0("finished thf: ", round(gInv(trThf[i]), 2), "\n"))
+    
+    cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[i-1]), 3), "\n"))
     
     ### Metropolis update (sigma2) ###
     propTrSigma2 <- rnorm(K, mean = trSigma2[ , i - 1], sd = sdSigma2)
-    MHratio <<- logRatioSigma2(propTrSigma2, 
+    MHratio <- logRatioSigma2(propTrSigma2, 
                                trSigma2[ , i - 1], 
                                trSigf2[i],
                                trThf[i],
                                trTheta[ , i - 1],
                                trTau2[i - 1],
-                               beta[ , i - 1])
+                               beta[i - 1])
       
     if(runif(1) < exp(MHratio)) {
       trSigma2[, i] <- propTrSigma2
@@ -141,17 +147,21 @@ mcmc <- function(X, Z, Y, D, K,
       trSigma2[, i] <- trSigma2[, i - 1]
     }
     
-    cat("finished sigma2")
+    cat("finished sigma2: ")
+    cat(round(exp(trSigma2[,i]), 2))
+    cat("\n")
+    
+    cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[i-1]), 3), "\n"))
     
     ### Metropolis update (theta) ###
     propTrTheta <- rnorm(K, mean = trTheta[ , i - 1], sd = sdTheta)
-    MHratio <<- logRatioTheta(propTrTheta,
+    MHratio <- logRatioTheta(propTrTheta,
                               trTheta[ , i - 1],
                               trSigma2[ , i], 
                               trSigf2[i],
                               trThf[i],
                               trTau2[i - 1],
-                              beta[ , i - 1])
+                              beta[i - 1])
     
     if(runif(1) < exp(MHratio)) {
       trTheta[, i] <- propTrTheta
@@ -162,7 +172,11 @@ mcmc <- function(X, Z, Y, D, K,
       trTheta[, i] <- trTheta[, i - 1]
     }
     
-    cat(paste0("finished theta, which is ", round(gInv(trTheta[,i]), 3), ". "))
+    cat("finished theta: ")
+    cat(round(gInv(trTheta[,i]), 2))
+    cat("\n")
+
+    cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[i-1]), 3), "\n"))
     
     ### Metropolis update (tau2) ###
     
@@ -174,7 +188,7 @@ mcmc <- function(X, Z, Y, D, K,
                             trThf[i], 
                             trSigma2[ , i], 
                             trTheta[ , i], 
-                            beta[ , i - 1])
+                            beta[i - 1])
     #if (is.na(MHratio)) {
     #  break
     #}
@@ -186,26 +200,34 @@ mcmc <- function(X, Z, Y, D, K,
       trTau2[i] <- trTau2[i - 1]
     }
     #cat("Tau2 updated \n")
+    cat(paste0("finished tau: ", round(exp(trTau2[i]), 2), "\n"))
+    
+    cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[i-1]), 3), "\n"))
     
     ### Gibbs update (beta) ###
     
     SigmaInv <- solve(Sigma)
     SigmaBeta <- solve(crossprod(A, SigmaInv %*% A) + 1)
     meanBeta <- SigmaBeta %*% crossprod(A, SigmaInv %*% Y)
-    beta[ , i] <- t(rmvnorm(1, meanBeta, SigmaBeta))
+    beta[i] <- t(rmvnorm(1, meanBeta, SigmaBeta))
     
-    #cat("Beta updated \n")
+    cat(paste0("finished beta: ", round(beta[i], 2), "\n"))
+    
+    cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[i-1]), 3), "\n"))
+    
+    #cat("beta updated \n")
     
     ### Posterior predictive sampling for test subjects ###
     SigmaTest <<- Reduce("+", lapply(1:K, function(k) {
       exp(trSigma2[k, i]) * BTest[[k]]
-    })) + exp(trTau2[i]) * diag(STest * nTest)
-    YPreds[ , i] <- t(rmvnorm(1, mean = ATest %*% beta[ , i], sigma = SigmaTest))
+    })) + exp(trTau2[i]) * diag(STest * nTest) + 
+      exp(-gInv(trThf[i]) * DXTestFull) 
+    YPreds[ , i] <- t(rmvnorm(1, mean = ATest * beta[i], sigma = SigmaTest))
   }
   #cat(paste0("MH Ratio is ", exp(MHratio), "\n"))
   #cat(paste0("Last TrTau2 was ", trTau2[i-1]), "\n")
   #cat(paste0("Proposed TrTau2 is ", propTrTau2), "\n")
-  #cat(paste0("Beta is ", beta[ , i-1]), "\n")
+  #cat(paste0("beta is ", beta[ , i-1]), "\n")
   #return(list(prevTrSigma2 = trSigma2[,i-1], trSigma2 = trSigma2[,i]))
   
   # Acceptance rates (for Metropolis-sampled parameters)
@@ -222,7 +244,7 @@ mcmc <- function(X, Z, Y, D, K,
   trSigma2 <- trSigma2[ , index]
   trTheta <- trTheta[ , index]
   trTau2 <- trTau2[index]
-  beta <- beta[ , index]
+  beta <- beta[index]
   YPreds <- YPreds[ , index]
   nSamples <- length(index)
   

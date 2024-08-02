@@ -7,6 +7,7 @@ source("mcmc_functions/posterior.R")
 source("other_functions/helper_functions.R") # Other misc functions (not part of MCMC)
 source("other_functions/bsplines_2_3D.R")
 
+library(fields)
 load("data/train.RData")
 load("data/test.RData")
 load("data/theta.RData")
@@ -23,9 +24,11 @@ YTest <- test$Y
 UTest <- test$U
 DTest <- test$D
 K <- 9
-propSD <- list(sigma2 = seq(0.05, 0.15, length = K),
-               tau2 = 0.01,
-               theta = seq(0.1, 0.25, length = K))
+propSD <- list(sigf2 = 0.5,
+               thf = 1,
+               sigma2 = seq(0.4, 0.6, length = K),
+               tau2 = 1,
+               theta = seq(2, 3, length = K))
 starting <- list(sigma2 = seq(50, 100, length = K),
                  theta = rep(0.5, K),
                  sigf2 = 5,
@@ -36,7 +39,7 @@ starting <- list(sigma2 = seq(50, 100, length = K),
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 starting = starting,
                 propSD = propSD,
-                nIter = 500, nBurn = 100, nThin=2,
+                nIter = 50, nBurn = 10, nThin=2,
                 model = "full_gp")
 
 #theta

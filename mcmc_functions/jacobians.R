@@ -1,17 +1,17 @@
 ### JACOBIAN AND TRANSFORMATIONS (for theta) ###
 
 # Transformation for theta, where trTheta = log((theta - a) / (b - theta))
-g <- function(x, a = 0.5, b = 10) {
+g <- function(x, a = 0.1, b = 10) {
   log((a - x) / (x - b))
 }
 
 # Inverse transformation for theta
-gInv <- function(trTheta, a = 0.5, b = 10) {
+gInv <- function(trTheta, a = 0.1, b = 10) {
   (b * exp(trTheta) + a) / (1 + exp(trTheta))
 }
 
 # Log-Jacobian for theta, (log-derivative of gInv function above)
-logJac <- function(trTheta, a = 0.5, b = 10) {
+logJac <- function(trTheta, a = 0.1, b = 10) {
   # log( (b - a) * exp(trTheta) / (1 + exp(trTheta))^2 ) # or simplify, as below
   log(b - a) + trTheta - 2 * log(1 + exp(trTheta))
 }

@@ -4,7 +4,7 @@ library(splines2)
 # Function to simulate spatial data
 spatialData <- function(n, X, Z, K,
                         sigf2, thf, sigma2, theta, tau2, beta,
-                        U = NULL, range = c(0, 10), dims = 2, 
+                        U = NULL, range = c(0, 10), dims = 2, eps=1e-6,
                         covariance = "exponential") {
   
   # Sample the locations and put them into an n-by-dims matrix
@@ -20,16 +20,18 @@ spatialData <- function(n, X, Z, K,
   # Compute the covariance matrix (symmetric)
   if (covariance == "exponential") {
     D <- rdist(U)
+    DX <- rdist(X)
   } else if (covariance == "exp_squared") {
     D <- rdist(U)^2
+    DX <- rdist(X)^2
   } else {
     stop("Covariance function must be either exponential or exp_squared.")
   }
   #C <- sigma2 * exp(- theta * D)
   C <- lapply(1:K, function(k) {
-    sigma2[k] * exp(- theta[k] * D)
+    sigma2[k] * exp(-theta[k] * D)
   })
-  Cf <- sigf2 * exp(- thf * D)
+  CX <- sigf2 * exp(-thf * DX)
   
   # Sample h
   eta <- sapply(1:K, function(k) {
@@ -40,13 +42,13 @@ spatialData <- function(n, X, Z, K,
   h <- c(sapply(1:S, \(i) rowSums(sapply(1:K, \(k) basis[i, k] * eta[ , k]))))
   
   # Sample f
-  f <- t(rmvnorm(1, sigma = Cf))
+  f <- t(rmvnorm(1, sigma = matrix(1, S, S) %x% CX + diag(eps, S*n)))
   
-  # Compute A from X using Kronecker product
-  A <- matrix(1, nrow = S) %x% X
+  # Columns of ones
+  A <- matrix(1, nrow = S*n)
   
   # Generate Y
-  Y <- A %*% beta + rep(f, S) + h + rnorm(n * S, 0, sqrt(tau2))
+  Y <- A * beta + f + h + rnorm(n * S, 0, sqrt(tau2))
   
   # Return data
   return(list(X = X, Z = Z, Y = Y, h = as.vector(h), D = D, U = U))
