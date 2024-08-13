@@ -1,20 +1,20 @@
 source("other_functions/spatial_data.R")
 source("other_functions/bsplines_2_3D.R")
-mySeed <- 32158
+mySeed <- 2158979
 
 # Sample sizes
-n <- 50
-nTest <- 10
-S <- 5
+n <- 200
+nTest <- 25
+S <- 10
 STest <- 5
 K <- 9
 p <- 2
 
 # True parameter values
-trueSigf2 <- 10
+trueSigf2 <- 5
 trueThf <- 1
 trueSigma2 <- seq(50, 100, length = K)
-trueTheta <- runif(K, 0.01, 0.1)
+trueTheta <- runif(K, 0.1, 0.5)
 trueTau2 <- 0.2
 trueBeta <- 3
 
@@ -34,8 +34,12 @@ train <- spatialData(n = n,
                      tau2 = trueTau2, 
                      beta = trueBeta,
                      range = c(0, 100))
+mean(train$Y)
 save(train, file = "data/train.RData")
 
+#if(mean(train$Y) < 2.9 | mean(train$Y) > 3.1) { 
+#	stop("change seed")
+#}
 set.seed(mySeed)
 indexTest <- sample(n, nTest)
 U <- train$U[indexTest, ]

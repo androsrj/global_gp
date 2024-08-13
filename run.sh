@@ -1,13 +1,13 @@
 #!/bin/bash
-#SBATCH --time=0-02:00:00
-#SBATCH --partition=short
+#SBATCH --time=0-12:00:00
+#SBATCH --partition=medium
 #SBATCH --mem-per-cpu=64GB
 #SBATCH --output=outfile
 module purge
 module load R
 
 ### Generate data, if necessary
-Rscript generate_data.R
+###Rscript generate_data.R
 
 ### Run simulation code and benchmark the start/end times
 start_time=$(date +%s)

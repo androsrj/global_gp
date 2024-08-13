@@ -24,25 +24,27 @@ YTest <- test$Y
 UTest <- test$U
 DTest <- test$D
 K <- 9
-propSD <- list(sigf2 = 0.5,
-               thf = 1,
-               sigma2 = seq(0.4, 0.6, length = K),
-               tau2 = 1,
-               theta = seq(2, 3, length = K))
+propSD <- list(sigf2 = 0.3,
+               thf = 0.7,
+               sigma2 = seq(0.05, 0.15, length = K),
+               tau2 = 0.4,
+               theta = seq(0.2, 0.5, length = K))
 starting <- list(sigma2 = seq(50, 100, length = K),
                  theta = rep(0.5, K),
-                 sigf2 = 5,
-                 thf = 1, 
+                 sigf2 = 6,
+                 thf = 1.3, 
                  tau2 = 0.1,
-                 beta = 2)
+                 beta = 4)
 
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 starting = starting,
                 propSD = propSD,
-                nIter = 50, nBurn = 10, nThin=2,
+                nIter = 2000, nBurn = 2000, nThin=2,
                 model = "full_gp")
 
 #theta
+mean(train$Y)
+sd(train$Y)
 results$posteriorMeans
 results$acceptance
 nSamples <- length(results$paramSamples[[5]])

@@ -65,7 +65,7 @@ mcmc <- function(X, Z, Y, D, K,
   # Base of covariance matrix for updating sigma2 and tau2
   B <<- baseVariance(theta = starting$theta, D = D)
   Sigma <<- Reduce("+", lapply(1:K, \(k) starting$sigma2[k] * B[[k]])) + 
-    exp(-starting$thf * DXFull) + 
+    starting$sigf2 * exp(-starting$thf * DXFull) + 
     starting$tau2 * diag(n * S)
     
   # Base of covariance matrix for predictions
@@ -73,7 +73,7 @@ mcmc <- function(X, Z, Y, D, K,
   SigmaTest <<- Reduce("+", lapply(1:K, function(k) {
     starting$sigma2[k] * BTest[[k]]
   })) + 
-    exp(-starting$thf * DXTestFull) + 
+    starting$sigf2 * exp(-starting$thf * DXTestFull) + 
     starting$tau2 * diag(STest * nTest)
   
   # Initial predictions for test subjects
@@ -210,6 +210,7 @@ mcmc <- function(X, Z, Y, D, K,
     SigmaBeta <- solve(crossprod(A, SigmaInv %*% A) + 1)
     meanBeta <- SigmaBeta %*% crossprod(A, SigmaInv %*% Y)
     beta[i] <- t(rmvnorm(1, meanBeta, SigmaBeta))
+    #beta[i] <-  mean(Y)
     
     cat(paste0("finished beta: ", round(beta[i], 2), "\n"))
     
