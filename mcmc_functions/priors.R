@@ -18,6 +18,6 @@ logPriorTheta <- function(theta, a = 0.1, b = 10) {
 # Beta (standard MV normal)
 logPriorBeta <- function(beta) {
   p <- length(beta)
-  dmvnorm(beta, mean = rep(0, p), sigma = diag(p), log = TRUE)
+  dmvnorm(beta, mean = rep(0, p), sigma = 4*diag(p), log = TRUE)
   #dnorm(mu, 0, 1, log = TRUE)
 }

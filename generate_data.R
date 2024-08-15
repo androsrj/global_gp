@@ -16,7 +16,7 @@ trueThf <- 1
 trueSigma2 <- seq(50, 100, length = K)
 trueTheta <- runif(K, 0.1, 0.5)
 trueTau2 <- 0.2
-trueBeta <- 3
+trueBeta <- 2
 
 # Generate training data
 set.seed(mySeed)
@@ -37,9 +37,9 @@ train <- spatialData(n = n,
 mean(train$Y)
 save(train, file = "data/train.RData")
 
-#if(mean(train$Y) < 2.9 | mean(train$Y) > 3.1) { 
-#	stop("change seed")
-#}
+if(mean(train$Y) < 1.9 | mean(train$Y) > 2.1) { 
+	stop("change seed")
+}
 set.seed(mySeed)
 indexTest <- sample(n, nTest)
 U <- train$U[indexTest, ]
