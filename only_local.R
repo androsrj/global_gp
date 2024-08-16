@@ -6,6 +6,7 @@ source("mcmc_functions/likelihood.R")
 source("mcmc_functions/posterior.R")
 source("other_functions/helper_functions.R") # Other misc functions (not part of MCMC)
 source("other_functions/bsplines_2_3D.R")
+library(fields)
 
 load("data/train.RData")
 load("data/test.RData")
@@ -25,13 +26,15 @@ YTest <- test$Y
 UTest <- test$U
 DTest <- test$D
 K <- 9
-propSD <- list(sigma2 = seq(0.05, 0.15, length = K),
-               tau2 = 0.01,
-               theta = seq(0.1, 0.25, length = K))
+propSD <- list(sigf2 = 0.3,
+               thf = 0.7,
+               sigma2 = seq(0.05, 0.15, length = K),
+               tau2 = 0.4,
+               theta = seq(0.2, 0.5, length = K))
 starting <- list(sigma2 = seq(50, 100, length = K),
                  theta = rep(0.5, K),
-                 sigf2 = 10,
-                 thf = 1, 
+                 sigf2 = 6,
+                 thf = 1.3, 
                  tau2 = 0.1,
                  beta = 2)
 #theta <- runif(9, 0.5, 3)
@@ -39,10 +42,10 @@ starting <- list(sigma2 = seq(50, 100, length = K),
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 starting = starting,
                 propSD = propSD,
-                nIter = 400, nBurn = 100, nThin=2,
+                nIter = 2000, nBurn = 2000, nThin=2,
                 model = "full_gp")
 
-theta
+#theta
 results$posteriorMeans
 results$acceptance
 nSamples <- length(results$paramSamples[[3]])
@@ -81,12 +84,12 @@ contour(pred.surf, add=T)
 dev.off()
 
 nTestSubj <- nrow(test$Z)
-abs_error <- cvg <- width <- scores <- crps <- numeric(nTestSubj)
+rmse <- cvg <- width <- scores <- crps <- numeric(nTestSubj)
 a <- .05
 for (i in 1:nTestSubj) {
   truth <- YTest[(nTest*(i-1)+1):(i*nTest)]
   pred <- results$preds[2, (nTest*(i-1)+1):(i*nTest)]
-  abs_error[i] <- mean(abs(truth - pred))
+  rmse[i] <- sqrt(mean((truth - pred)^2))
   lower <- results$preds[1, (nTest*(i-1)+1):(i*nTest)]
   upper <- results$preds[3, (nTest*(i-1)+1):(i*nTest)]
   cvg[i] <- mean(lower < truth & upper > truth)
@@ -98,8 +101,8 @@ for (i in 1:nTestSubj) {
   crps[i] <- mean(energy_score(truth, predSamples))
 }
 
-abs_error
-cat(paste0("Mean absolute error: ", round(mean(abs_error), 3), "\n"))
+rmse
+cat(paste0("Root MS error: ", round(mean(rmse), 3), "\n"))
 
 cvg
 cat(paste0("Mean coverage: ", round(mean(cvg), 3), "\n"))

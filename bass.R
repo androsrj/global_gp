@@ -25,12 +25,12 @@ bassCRPS <- mean(sapply(1:STest, function(i) {
 #sqrt(mean((bassPreds - test$Y)^2))
 
 nTestSubj <- nrow(test$Z)
-abs_error <- cvg <- width <- scores <- numeric(nTestSubj)
+rmse <- cvg <- width <- scores <- numeric(nTestSubj)
 a <- .05
 for (i in 1:nTestSubj) {
   truth <- test$Y[(nTest*(i-1)+1):(i*nTest)]
   pred <- bassPreds[(nTest*(i-1)+1):(i*nTest)]
-  abs_error[i] <- mean(abs(truth - pred))
+  rmse[i] <- sqrt(mean((truth - pred)^2))
   lower <- bassLower[(nTest*(i-1)+1):(i*nTest)]
   upper <- bassUpper[(nTest*(i-1)+1):(i*nTest)]
   cvg[i] <- mean(lower < truth & upper > truth)
@@ -42,8 +42,8 @@ for (i in 1:nTestSubj) {
   #crps[i] <- mean(energy_score(truth, predSamples))
 }
 
-abs_error
-cat(paste0("Mean absolute error: ", round(mean(abs_error), 3), "\n"))
+rmse
+cat(paste0("Root MS error: ", round(mean(rmse), 3), "\n"))
 
 cvg
 cat(paste0("Mean coverage: ", round(mean(cvg), 3), "\n"))

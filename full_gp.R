@@ -39,7 +39,7 @@ starting <- list(sigma2 = seq(50, 100, length = K),
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 starting = starting,
                 propSD = propSD,
-                nIter = 1000, nBurn = 1000, nThin=2,
+                nIter = 3000, nBurn = 3000, nThin=2,
                 model = "full_gp")
 
 #theta
@@ -85,12 +85,12 @@ contour(pred.surf, add=T)
 dev.off()
 
 STest <- nrow(test$Z)
-abs_error <- cvg <- width <- scores <- crps <- numeric(STest)
+rmse <- cvg <- width <- scores <- crps <- numeric(STest)
 a <- .05
 for (i in 1:STest) {
   truth <- YTest[(nTest*(i-1)+1):(i*nTest)]
   pred <- results$preds[2, (nTest*(i-1)+1):(i*nTest)]
-  abs_error[i] <- mean(abs(truth - pred))
+  rmse[i] <- sqrt(mean((truth - pred)^2))
   lower <- results$preds[1, (nTest*(i-1)+1):(i*nTest)]
   upper <- results$preds[3, (nTest*(i-1)+1):(i*nTest)]
   cvg[i] <- mean(lower < truth & upper > truth)
@@ -102,8 +102,8 @@ for (i in 1:STest) {
   crps[i] <- mean(energy_score(truth, predSamples))
 }
 
-abs_error
-cat(paste0("Mean absolute error: ", round(mean(abs_error), 3), "\n"))
+rmse
+cat(paste0("Root MS error: ", round(mean(rmse), 3), "\n"))
 
 cvg
 cat(paste0("Mean coverage: ", round(mean(cvg), 3), "\n"))
