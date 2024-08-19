@@ -27,7 +27,7 @@ m.3 <- spRecover(m.3, start=floor(0.5*n.samples), thin=2,
                  n.omp.threads=4, verbose=FALSE)
 
 STest <- nrow(test$Z)
-abs_error <- cvg <- width <- scores <- crps <- numeric(STest)
+rmse <- cvg <- width <- scores <- crps <- numeric(STest)
 a <- .05
 for (i in 1:STest) {
   truth <- test$Y[(nTest*(i-1)+1):(nTest*i), ]
@@ -35,7 +35,7 @@ for (i in 1:STest) {
                         pred.coords=test$U + rnorm(50, 0, 0.0001), thin=10,
                         joint=TRUE, n.omp.threads=4, verbose=FALSE)
   pred <- apply(m.3.pred$p.y.predictive.samples, 1, mean)
-  abs_error[i] <- mean(abs(truth - pred))
+  rmse[i] <- sqrt(mean((truth - pred)^2))
   lower <- apply(m.3.pred$p.y.predictive.samples, 1, quantile, .025)
   upper <- apply(m.3.pred$p.y.predictive.samples, 1, quantile, .975)
   cvg[i] <- mean(lower < truth & upper > truth)
@@ -47,8 +47,8 @@ for (i in 1:STest) {
   crps[i] <- mean(energy_score(truth, predSamples))
 }
 
-abs_error
-cat(paste0("Mean absolute error: ", round(mean(abs_error), 3), "\n"))
+rmse
+cat(paste0("Root MS error: ", round(mean(rmse), 3), "\n"))
 
 cvg
 cat(paste0("Mean coverage: ", round(mean(cvg), 3), "\n"))
