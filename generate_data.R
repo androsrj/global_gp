@@ -1,6 +1,6 @@
 source("other_functions/spatial_data.R")
 source("other_functions/bsplines_2_3D.R")
-mySeed <- 9764
+mySeed <- 97642
 
 # Sample sizes
 n <- 200

@@ -207,7 +207,7 @@ mcmc <- function(X, Z, Y, D, K,
     ### Gibbs update (beta) ###
     
     SigmaInv <- solve(Sigma)
-    SigmaBeta <- solve(crossprod(A, SigmaInv %*% A) + 1/4)
+    SigmaBeta <- solve(crossprod(A, SigmaInv %*% A) + 1/4*diag(p+1))
     meanBeta <- SigmaBeta %*% crossprod(A, SigmaInv %*% Y)
     beta[ , i] <- t(rmvnorm(1, meanBeta, SigmaBeta))
     #beta[i] <-  mean(Y)
@@ -223,7 +223,7 @@ mcmc <- function(X, Z, Y, D, K,
       exp(trSigma2[k, i]) * BTest[[k]]
     })) + exp(trTau2[i]) * diag(STest * nTest) + 
       exp(-gInv(trThf[i]) * DXTestFull) 
-    YPreds[ , i] <- t(rmvnorm(1, mean = ATest * beta[i], sigma = SigmaTest))
+    YPreds[ , i] <- t(rmvnorm(1, mean = ATest %*% beta[ , i], sigma = SigmaTest))
   }
   #cat(paste0("MH Ratio is ", exp(MHratio), "\n"))
   #cat(paste0("Last TrTau2 was ", trTau2[i-1]), "\n")
