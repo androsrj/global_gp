@@ -34,12 +34,12 @@ starting <- list(sigma2 = seq(50, 100, length = K),
                  sigf2 = 6,
                  thf = 1.3, 
                  tau2 = 0.1,
-                 beta = 4)
+                 beta = c(3, 0, 0))
 
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 starting = starting,
                 propSD = propSD,
-                nIter = 3000, nBurn = 3000, nThin=2,
+                nIter = 1000, nBurn = 1000, nThin=2,
                 model = "full_gp")
 
 #theta

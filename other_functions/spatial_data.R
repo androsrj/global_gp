@@ -44,11 +44,11 @@ spatialData <- function(n, X, Z, K,
   # Sample f
   f <- t(rmvnorm(1, sigma = matrix(1, S, S) %x% CX + diag(eps, S*n)))
   
-  # Columns of ones
-  A <- matrix(1, nrow = S*n)
+  # Columns of ones combined with X matrix
+  A <- rep(1, S) %x% cbind(matrix(1, nrow = n), X)
   
   # Generate Y
-  Y <- A * beta + f + h + rnorm(n * S, 0, sqrt(tau2))
+  Y <- A %*% beta + f + h + rnorm(n * S, 0, sqrt(tau2))
   
   # Return data
   return(list(X = X, Z = Z, Y = Y, h = as.vector(h), D = D, U = U))

@@ -36,7 +36,7 @@ starting <- list(sigma2 = seq(50, 100, length = K),
                  sigf2 = 6,
                  thf = 1.3, 
                  tau2 = 0.1,
-                 beta = 2)
+                 beta = c(3, 0, 0))
 #theta <- runif(9, 0.5, 3)
 
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
