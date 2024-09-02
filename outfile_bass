@@ -1,44 +1,44 @@
-MCMC Start #-- Aug 19 04:34:38 PM --# nbasis: 0 
-MCMC iteration 1000 #-- Aug 19 04:34:38 PM --# nbasis: 1 
-MCMC iteration 2000 #-- Aug 19 04:34:38 PM --# nbasis: 2 
-MCMC iteration 3000 #-- Aug 19 04:34:39 PM --# nbasis: 0 
-MCMC iteration 4000 #-- Aug 19 04:34:39 PM --# nbasis: 1 
-MCMC iteration 5000 #-- Aug 19 04:34:39 PM --# nbasis: 2 
-MCMC iteration 6000 #-- Aug 19 04:34:40 PM --# nbasis: 1 
-MCMC iteration 7000 #-- Aug 19 04:34:40 PM --# nbasis: 0 
-MCMC iteration 8000 #-- Aug 19 04:34:40 PM --# nbasis: 1 
-MCMC iteration 9000 #-- Aug 19 04:34:41 PM --# nbasis: 1 
-MCMC iteration 10000 #-- Aug 19 04:34:41 PM --# nbasis: 1 
-MCMC Start #-- Aug 19 04:34:41 PM --# nbasis: 0 
-MCMC iteration 1000 #-- Aug 19 04:34:41 PM --# nbasis: 1 
-MCMC iteration 2000 #-- Aug 19 04:34:42 PM --# nbasis: 2 
-MCMC iteration 3000 #-- Aug 19 04:34:42 PM --# nbasis: 2 
-MCMC iteration 4000 #-- Aug 19 04:34:42 PM --# nbasis: 2 
-MCMC iteration 5000 #-- Aug 19 04:34:43 PM --# nbasis: 0 
-MCMC iteration 6000 #-- Aug 19 04:34:43 PM --# nbasis: 2 
-MCMC iteration 7000 #-- Aug 19 04:34:43 PM --# nbasis: 1 
-MCMC iteration 8000 #-- Aug 19 04:34:44 PM --# nbasis: 1 
-MCMC iteration 9000 #-- Aug 19 04:34:44 PM --# nbasis: 1 
-MCMC iteration 10000 #-- Aug 19 04:34:44 PM --# nbasis: 1 
-MCMC Start #-- Aug 19 04:34:44 PM --# nbasis: 0 
-MCMC iteration 1000 #-- Aug 19 04:34:45 PM --# nbasis: 0 
-MCMC iteration 2000 #-- Aug 19 04:34:45 PM --# nbasis: 0 
-MCMC iteration 3000 #-- Aug 19 04:34:45 PM --# nbasis: 1 
-MCMC iteration 4000 #-- Aug 19 04:34:45 PM --# nbasis: 0 
-MCMC iteration 5000 #-- Aug 19 04:34:46 PM --# nbasis: 0 
-MCMC iteration 6000 #-- Aug 19 04:34:46 PM --# nbasis: 1 
-MCMC iteration 7000 #-- Aug 19 04:34:46 PM --# nbasis: 1 
-MCMC iteration 8000 #-- Aug 19 04:34:47 PM --# nbasis: 1 
-MCMC iteration 9000 #-- Aug 19 04:34:47 PM --# nbasis: 0 
-MCMC iteration 10000 #-- Aug 19 04:34:47 PM --# nbasis: 2 
-[1]  7.915439  5.506684  6.338200 23.000760  9.042643
-Root MS error: 10.361
-[1] 0.84 0.88 0.60 0.72 0.88
-Mean coverage: 0.784
-[1] 22.96179 23.73390 12.70493 34.99914 23.06542
-Mean width: 23.493
-[1] 43.57814 31.53610 45.86781 77.40318 32.37952
-Mean interval score: 46.153
-[1] 3.407598
-Mean CRPS: 3.408
-Total time taken - 0 hours, 0 minutes, and 11 seconds.
+MCMC Start #-- Aug 22 01:11:42 PM --# nbasis: 0 
+MCMC iteration 1000 #-- Aug 22 01:11:42 PM --# nbasis: 2 
+MCMC iteration 2000 #-- Aug 22 01:11:43 PM --# nbasis: 2 
+MCMC iteration 3000 #-- Aug 22 01:11:43 PM --# nbasis: 1 
+MCMC iteration 4000 #-- Aug 22 01:11:44 PM --# nbasis: 1 
+MCMC iteration 5000 #-- Aug 22 01:11:44 PM --# nbasis: 1 
+MCMC iteration 6000 #-- Aug 22 01:11:44 PM --# nbasis: 0 
+MCMC iteration 7000 #-- Aug 22 01:11:45 PM --# nbasis: 2 
+MCMC iteration 8000 #-- Aug 22 01:11:45 PM --# nbasis: 1 
+MCMC iteration 9000 #-- Aug 22 01:11:46 PM --# nbasis: 1 
+MCMC iteration 10000 #-- Aug 22 01:11:46 PM --# nbasis: 0 
+MCMC Start #-- Aug 22 01:11:46 PM --# nbasis: 0 
+MCMC iteration 1000 #-- Aug 22 01:11:46 PM --# nbasis: 4 
+MCMC iteration 2000 #-- Aug 22 01:11:47 PM --# nbasis: 2 
+MCMC iteration 3000 #-- Aug 22 01:11:47 PM --# nbasis: 3 
+MCMC iteration 4000 #-- Aug 22 01:11:48 PM --# nbasis: 2 
+MCMC iteration 5000 #-- Aug 22 01:11:48 PM --# nbasis: 1 
+MCMC iteration 6000 #-- Aug 22 01:11:48 PM --# nbasis: 1 
+MCMC iteration 7000 #-- Aug 22 01:11:49 PM --# nbasis: 1 
+MCMC iteration 8000 #-- Aug 22 01:11:49 PM --# nbasis: 1 
+MCMC iteration 9000 #-- Aug 22 01:11:49 PM --# nbasis: 2 
+MCMC iteration 10000 #-- Aug 22 01:11:50 PM --# nbasis: 2 
+MCMC Start #-- Aug 22 01:11:50 PM --# nbasis: 0 
+MCMC iteration 1000 #-- Aug 22 01:11:50 PM --# nbasis: 2 
+MCMC iteration 2000 #-- Aug 22 01:11:50 PM --# nbasis: 3 
+MCMC iteration 3000 #-- Aug 22 01:11:51 PM --# nbasis: 1 
+MCMC iteration 4000 #-- Aug 22 01:11:51 PM --# nbasis: 1 
+MCMC iteration 5000 #-- Aug 22 01:11:51 PM --# nbasis: 2 
+MCMC iteration 6000 #-- Aug 22 01:11:52 PM --# nbasis: 2 
+MCMC iteration 7000 #-- Aug 22 01:11:52 PM --# nbasis: 2 
+MCMC iteration 8000 #-- Aug 22 01:11:52 PM --# nbasis: 1 
+MCMC iteration 9000 #-- Aug 22 01:11:53 PM --# nbasis: 0 
+MCMC iteration 10000 #-- Aug 22 01:11:53 PM --# nbasis: 0 
+[1] 4.992676 7.268650 4.330115 9.157794 5.627002
+Root MS error: 6.275
+[1] 0.68 0.48 0.84 0.52 0.72
+Mean coverage: 0.648
+[1] 12.90270 12.74585 18.08573 10.35041 13.90255
+Mean width: 13.597
+[1]  39.44641  83.71843  34.16535 144.32764  48.07725
+Mean interval score: 69.947
+[1] 5.446529
+Mean CRPS: 5.447
+Total time taken - 0 hours, 0 minutes, and 13 seconds.
