@@ -6,7 +6,7 @@ mySeed <- 97642
 n <- 200
 nTest <- 25
 S <- 10
-STest <- 5
+STest <- 10
 K <- 9
 p <- 2
 
