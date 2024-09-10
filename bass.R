@@ -24,12 +24,21 @@ bassCRPS <- mean(sapply(1:STest, function(i) {
 
 #sqrt(mean((bassPreds - test$Y)^2))
 
+lims <- c(-15, 15)
 nTestSubj <- nrow(test$Z)
 rmse <- cvg <- width <- scores <- numeric(nTestSubj)
 a <- .05
 for (i in 1:nTestSubj) {
   truth <- test$Y[(nTest*(i-1)+1):(i*nTest)]
   pred <- bassPreds[(nTest*(i-1)+1):(i*nTest)]
+  if (i == 1) {
+    pdf("figures/subj1_bass.pdf")
+    pred.surf <-  mba.surf(cbind(test$U, pred), no.X=100, no.Y=100, extend=T)$xyz.est
+    image.plot(pred.surf, xaxs ="r", yaxs = "r", zlim = lims, main="BASS, Subject 1", 
+               cex.main = 1.5, col = hcl.colors(12, "YlOrRd", rev=TRUE))
+    contour(pred.surf, add=T)
+    dev.off()
+  }
   rmse[i] <- sqrt(mean((truth - pred)^2))
   lower <- bassLower[(nTest*(i-1)+1):(i*nTest)]
   upper <- bassUpper[(nTest*(i-1)+1):(i*nTest)]

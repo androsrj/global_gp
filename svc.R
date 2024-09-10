@@ -26,6 +26,8 @@ m.3 <- spSVC(train$Y[1:n,] ~ train$X - 1, coords=train$U,
 m.3 <- spRecover(m.3, start=floor(0.5*n.samples), thin=2,
                  n.omp.threads=4, verbose=FALSE)
 
+
+lims <- c(-15, 15)
 STest <- nrow(test$Z)
 rmse <- cvg <- width <- scores <- crps <- numeric(STest)
 a <- .05
@@ -35,6 +37,14 @@ for (i in 1:STest) {
                         pred.coords=test$U + rnorm(50, 0, 0.0001), thin=10,
                         joint=TRUE, n.omp.threads=4, verbose=FALSE)
   pred <- apply(m.3.pred$p.y.predictive.samples, 1, mean)
+  if (i == 1) {
+    pdf("figures/subj1_svc.pdf")
+    pred.surf <-  mba.surf(cbind(test$U, pred), no.X=100, no.Y=100, extend=T)$xyz.est
+    image.plot(pred.surf, xaxs ="r", yaxs = "r", zlim = lims, main="SVC, Subject 1", 
+               cex.main = 1.5, col = hcl.colors(12, "YlOrRd", rev=TRUE))
+    contour(pred.surf, add=T)
+    dev.off()
+  }
   rmse[i] <- sqrt(mean((truth - pred)^2))
   lower <- apply(m.3.pred$p.y.predictive.samples, 1, quantile, .025)
   upper <- apply(m.3.pred$p.y.predictive.samples, 1, quantile, .975)
