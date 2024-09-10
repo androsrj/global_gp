@@ -11,7 +11,7 @@ nTest <- nrow(test$X)
 Ybass <- matrix(c(train$Y), nrow = nrow(train$Z)) 
 model <- bassPCA(train$Z, Ybass, n.pc = 3, n.cores = 1)
 #model <- bassPCA(inputs[-stormsTest, ], out[-stormsTest, ], n.pc = 3, n.cores = 1)
-predictions <- predict(model, test$Z)[ , , test$index]
+predictions <- predict(model, test$Z)[ , , sort(test$index)]
 
 bassPreds <- c(apply(predictions, 2:3, mean))
 bassLower <- apply(predictions, 2:3, quantile, .025)

@@ -1,6 +1,6 @@
 source("other_functions/spatial_data.R")
 source("other_functions/bsplines_2_3D.R")
-mySeed <- 97642
+mySeed <- 926851
 
 # Sample sizes
 n <- 200
@@ -37,9 +37,9 @@ train <- spatialData(n = n,
 mean(train$Y)
 save(train, file = "data/train.RData")
 
-#if(mean(train$Y) < 1.9 | mean(train$Y) > 2.1) { 
-#	stop("change seed")
-#}
+if(mean(train$Y) < 1.9 | mean(train$Y) > 2.1) { 
+	stop("change seed")
+}
 set.seed(mySeed)
 indexTest <- sample(n, nTest)
 U <- train$U[indexTest, ]
