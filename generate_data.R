@@ -1,6 +1,6 @@
 source("other_functions/spatial_data.R")
 source("other_functions/bsplines_2_3D.R")
-mySeed <- 926851
+mySeed <- 3324
 
 # Sample sizes
 n <- 200
@@ -11,7 +11,7 @@ K <- 9
 p <- 2
 
 # True parameter values
-trueSigf2 <- 5
+trueSigf2 <- 8
 trueThf <- 1
 trueSigma2 <- seq(50, 100, length = K)
 trueTheta <- runif(K, 0.1, 0.5)
