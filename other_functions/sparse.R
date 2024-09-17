@@ -34,10 +34,10 @@ sparse <- function(C, m) {
   #  Ctilde <- (Ctilde + t(Ctilde)) / 2
   #}
   
-  CtildeInv <- t(diag(n) - A) %*% solve(D) %*% (diag(n) - A)
+  #CtildeInv <- t(diag(n) - A) %*% solve(D) %*% (diag(n) - A)
   
-  return(list(Ctilde = Ctilde, CtildeInv = CtildeInv))
-  #return(Ctilde)
+  #return(list(Ctilde = Ctilde, CtildeInv = CtildeInv))
+  return(Ctilde)
 }
 
 
