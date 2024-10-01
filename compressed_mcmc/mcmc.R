@@ -13,19 +13,28 @@ mcmc <- function(X, Z, Y, D, K,
   n <<- length(Y) / S
   STest <<- nrow(ZTest)
   nTest <<- length(YTest) / STest
-  #J <<- matrix(1, nrow = S, ncol = 1)
-  #JTest <<- matrix(1, nrow = STest, ncol = 1)
-  A <<- rep(1, S) %x% cbind(matrix(1, nrow = n, ncol = 1), X)
-  ATest <<- rep(1, STest) %x% cbind(matrix(1, nrow = nTest, ncol = 1), XTest)
-  p <<- ncol(X)
+  
+  # Transformation matrix
+  m <<- m
+  phi <<- matrix(rnorm(m*n, 0, sqrt(1/n)), nrow = m, ncol = n)
+  phiFull <<- matrix(1, nrow = S, ncol = S) %x% phi
   DXFull <<- matrix(1, S, S) %x% rdist(X)
   DXTestFull <<- matrix(1, STest, STest) %x% rdist(XTest)
-  m <<- m
   
+  # Compress data
+  fullY <<- c(Y)
+  newY <<- c(phi %*% Y)
+  newX <- phi %*% X
   
-  # Save model type and theta globally
+  # Other
+  A <<- rep(1, S) %x% cbind(matrix(1, nrow = m, ncol = 1), newX)
+  ATest <<- rep(1, STest) %x% cbind(matrix(1, nrow = nTest, ncol = 1), XTest)
+  p <<- ncol(X)
+  
+  # Save model type globally
   model <<- model
-  #theta <<- theta
+  
+  # Basis function expansions
   BF <- Bsplines_2D(Z, df = c(sqrt(K), sqrt(K)))
   basis <<- lapply(1:K, function(k) {
     Reduce("rbind", lapply(1:S, \(s) BF[s, k] * diag(n)))
@@ -66,10 +75,12 @@ mcmc <- function(X, Z, Y, D, K,
   
   # Base of covariance matrix for updating sigma2 and tau2
   B <<- baseVariance(theta = starting$theta, D = D)
-  Sigma <<- Reduce("+", lapply(1:K, \(k) starting$sigma2[k] * B[[k]])) + 
-    starting$sigf2 * exp(-starting$thf * DXFull) + 
-    starting$tau2 * diag(n * S)
-  Sigma <<- sparse(Sigma, m = m)
+  Sigma <<- phiFull %*% 
+    (Reduce("+", lapply(1:K, \(k) starting$sigma2[k] * B[[k]])) + 
+       starting$sigf2 * exp(-starting$thf * DXFull)) %*% 
+    t(phiFull) + 
+    starting$tau2 * diag(m * S)
+  #Sigma <<- sparse(Sigma, m = m)
     
   # Base of covariance matrix for predictions
   BTest <- lapply(1:K, \(k) tcrossprod(basisTest[[k]] %*% exp(-starting$theta[k] * DTest), basisTest[[k]]))
@@ -211,7 +222,7 @@ mcmc <- function(X, Z, Y, D, K,
     
     SigmaInv <- solve(Sigma)
     SigmaBeta <- solve(crossprod(A, SigmaInv %*% A) + 1/4*diag(p+1))
-    meanBeta <- SigmaBeta %*% crossprod(A, SigmaInv %*% Y)
+    meanBeta <- SigmaBeta %*% crossprod(A, SigmaInv %*% newY)
     beta[ , i] <- t(rmvnorm(1, meanBeta, SigmaBeta))
     #beta[i] <-  mean(Y)
     

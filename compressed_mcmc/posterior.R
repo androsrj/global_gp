@@ -15,7 +15,12 @@ logPost <- function(trSigf2, trThf, trSigma2, trTheta, trTau2, beta) {
 logRatioSigma2 <- function(propTrSigma2, prevTrSigma2, trSigf2, trThf, trTheta, trTau2, beta) {
   propSigma2 <- exp(propTrSigma2)
   prevSigma2 <- exp(prevTrSigma2)
-  SigmaProp <<- sparse(Sigma + Reduce("+", lapply(1:K, \(k) (propSigma2[k] - prevSigma2[k]) * B[[k]])), m = m)
+  #SigmaProp <<- Sigma + Reduce("+", lapply(1:K, \(k) (propSigma2[k] - prevSigma2[k]) * B[[k]]))
+  SigmaProp <<- phiFull %*% 
+    (Reduce("+", lapply(1:K, \(k) propSigma2[k] * B[[k]])) + 
+       exp(trSigf2) * exp(-gInv(trThf) * DXFull)) %*% 
+    t(phiFull) + 
+    exp(trTau2) * diag(m * S)
   
   logLik(SigmaProp, beta) - logLik(Sigma, beta) + # Log Likelihoods
     sum(logPriorSigma2(propSigma2)) - sum(logPriorSigma2(prevSigma2)) + # Log Priors
@@ -26,7 +31,12 @@ logRatioSigma2 <- function(propTrSigma2, prevTrSigma2, trSigf2, trThf, trTheta, 
 logRatioSigf2 <- function(propTrSigf2, prevTrSigf2, trThf, trSigma2, trTheta, trTau2, beta) {
   propSigf2 <- exp(propTrSigf2)
   prevSigf2 <- exp(prevTrSigf2)
-  SigmaProp <<- sparse(Sigma + (propSigf2 - prevSigf2) * exp(-gInv(trThf) * DXFull), m = m)
+  #SigmaProp <<- Sigma + (propSigf2 - prevSigf2) * exp(-gInv(trThf) * DXFull)
+  SigmaProp <<- phiFull %*% 
+    (Reduce("+", lapply(1:K, \(k) exp(trSigma2[k]) * B[[k]])) + 
+       propSigf2 * exp(-gInv(trThf) * DXFull)) %*% 
+    t(phiFull) + 
+    exp(trTau2) * diag(m * S)
   
   logLik(SigmaProp, beta) - logLik(Sigma, beta) + # Log Likelihoods
     logPriorSigma2(propSigf2) - logPriorSigma2(prevSigf2) + # Log Priors
@@ -37,7 +47,7 @@ logRatioSigf2 <- function(propTrSigf2, prevTrSigf2, trThf, trSigma2, trTheta, tr
 logRatioTau2 <- function(propTrTau2, prevTrTau2, trSigf2, trThf, trSigma2, trTheta, beta) {
   propTau2 <- exp(propTrTau2)
   prevTau2 <- exp(prevTrTau2)
-  SigmaProp <<- sparse(Sigma + (propTau2 - prevTau2) * diag(n * S), m = m)
+  SigmaProp <<- Sigma + (propTau2 - prevTau2) * diag(m * S)
   
   logLik(SigmaProp, beta) - logLik(Sigma, beta) + # Log Likelihoods
     logPriorTau2(propTau2) - logPriorTau2(prevTau2) + # Log Priors
@@ -48,8 +58,12 @@ logRatioTau2 <- function(propTrTau2, prevTrTau2, trSigf2, trThf, trSigma2, trThe
 logRatioThf <- function(propTrThf, prevTrThf, trSigma2, trTheta, trSigf2, trTau2, beta) {
   propThf <- gInv(propTrThf)
   prevThf <- gInv(prevTrThf)
-  #SigmaProp <<- SigmaK + exp(trSigf2) * exp(-propThf * D)
-  SigmaProp <<- sparse(Sigma - exp(trSigf2) * exp(-prevThf * DXFull) + exp(trSigf2) * exp(-propThf * DXFull), m = m)
+  #SigmaProp <<- Sigma - exp(trSigf2) * exp(-prevThf * DXFull) + exp(trSigf2) * exp(-propThf * DXFull)
+  SigmaProp <<- phiFull %*% 
+    (Reduce("+", lapply(1:K, \(k) exp(trSigma2[k]) * B[[k]])) + 
+       exp(trSigf2) * exp(-propThf * DXFull)) %*% 
+    t(phiFull) + 
+    exp(trTau2) * diag(m * S)
   
   logLik(SigmaProp, beta) - logLik(Sigma, beta) + # Log Likelihoods
     logPriorTheta(propThf) - logPriorTheta(prevThf) + # Log Priors
@@ -60,9 +74,11 @@ logRatioTheta <- function(propTrTheta, prevTrTheta, trSigma2, trSigf2, trThf, tr
   propTheta <- gInv(propTrTheta)
   prevTheta <- gInv(prevTrTheta)
   BProp <<- baseVariance(propTheta, D)
-  SigmaProp <<- exp(trSigf2) * exp(-gInv(trThf) * DXFull) +
-    Reduce("+", lapply(1:K, \(k) exp(trSigma2[k]) * BProp[[k]])) + 
-    exp(trTau2) * diag(n * S)
+  SigmaProp <<- phiFull %*% 
+    (exp(trSigf2) * exp(-gInv(trThf) * DXFull) +
+       Reduce("+", lapply(1:K, \(k) exp(trSigma2[k]) * BProp[[k]]))) %*%
+    t(phiFull) + 
+    exp(trTau2) * diag(m * S)
   
   logLik(SigmaProp, beta) - logLik(Sigma, beta) + # Log Likelihoods
     sum(logPriorTheta(propTheta)) - sum(logPriorTheta(prevTheta)) + # Log Priors

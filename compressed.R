@@ -1,13 +1,11 @@
 # SOURCES
-source("nngp_functions/mcmc.R") # Metropolis-Gibbs Sampler
-source("nngp_functions/priors.R")
-source("nngp_functions/jacobians.R")
-source("nngp_functions/likelihood.R")
-source("nngp_functions/posterior.R")
+source("compressed_mcmc/mcmc.R") # Metropolis-Gibbs Sampler
+source("compressed_mcmc/priors.R")
+source("compressed_mcmc/jacobians.R")
+source("compressed_mcmc/likelihood.R")
+source("compressed_mcmc/posterior.R")
 source("other_functions/helper_functions.R") # Other misc functions (not part of MCMC)
 source("other_functions/bsplines_2_3D.R")
-source("other_functions/sparse.R")
-#source("mcmc_functions/nngp.R")
 
 library(fields)
 load("data/train.RData")
@@ -15,9 +13,11 @@ load("data/test.RData")
 load("data/theta.RData")
 n <- nrow(train$X)
 nTest <- nrow(test$X)
+S <- nrow(train$Z)
+STest <- nrow(test$Z)
 X <- train$X
 Z <- train$Z
-Y <- train$Y
+Y <- matrix(train$Y, nrow = n, ncol = S)
 U <- train$U
 D <- train$D
 XTest <- test$X
@@ -41,7 +41,7 @@ starting <- list(sigma2 = seq(50, 100, length = K),
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 starting = starting,
                 propSD = propSD,
-                nIter = 100, nBurn = 100, nThin=2,
+                nIter = 1000, nBurn = 1000, nThin=2,
                 model = "full_gp")
 
 #theta
@@ -86,7 +86,6 @@ lims <- c(-15, 15)
 # contour(pred.surf, add=T)
 # dev.off()
 
-STest <- nrow(test$Z)
 rmse <- cvg <- width <- scores <- crps <- numeric(STest)
 a <- .05
 for (i in 1:STest) {
