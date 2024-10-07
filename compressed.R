@@ -26,11 +26,11 @@ YTest <- test$Y
 UTest <- test$U
 DTest <- test$D
 K <- 9
-propSD <- list(sigf2 = 0.3,
-               thf = 0.7,
-               sigma2 = seq(0.05, 0.15, length = K),
+propSD <- list(sigf2 = 1.1,
+               thf = 20,
+               sigma2 = seq(0.7, 0.9, length = K),
                tau2 = 0.4,
-               theta = seq(0.2, 0.5, length = K))
+               theta = seq(30, 50, length = K))
 starting <- list(sigma2 = seq(50, 100, length = K),
                  theta = rep(0.5, K),
                  sigf2 = 6,
@@ -41,8 +41,8 @@ starting <- list(sigma2 = seq(50, 100, length = K),
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 starting = starting,
                 propSD = propSD,
-                nIter = 1000, nBurn = 1000, nThin=2,
-                model = "full_gp")
+                nIter = 2000, nBurn = 2000, nThin=2,
+                model = "full_gp", m = 50)
 
 #theta
 mean(train$Y)
