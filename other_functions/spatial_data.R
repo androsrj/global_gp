@@ -51,5 +51,5 @@ spatialData <- function(n, X, Z, K,
   Y <- A %*% beta + f + h + rnorm(n * S, 0, sqrt(tau2))
   
   # Return data
-  return(list(X = X, Z = Z, Y = Y, h = as.vector(h), D = D, U = U))
+  return(list(X = X, Z = Z, Y = Y, h = as.vector(h), D = D, U = U, basis = basis))
 }
