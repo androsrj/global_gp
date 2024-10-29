@@ -6,6 +6,7 @@ source("compressed_mcmc/likelihood.R")
 source("compressed_mcmc/posterior.R")
 source("other_functions/helper_functions.R") # Other misc functions (not part of MCMC)
 source("other_functions/bsplines_2_3D.R")
+mySeed <- 321
 
 library(fields)
 load("data/train.RData")
@@ -27,10 +28,10 @@ UTest <- test$U
 DTest <- test$D
 K <- 9
 propSD <- list(sigf2 = 1.1,
-               thf = 20,
+               thf = 2,
                sigma2 = seq(0.7, 0.9, length = K),
                tau2 = 0.4,
-               theta = seq(30, 50, length = K))
+               theta = seq(3, 5, length = K))
 starting <- list(sigma2 = seq(50, 100, length = K),
                  theta = rep(0.5, K),
                  sigf2 = 6,
@@ -38,11 +39,12 @@ starting <- list(sigma2 = seq(50, 100, length = K),
                  tau2 = 0.1,
                  beta = c(3, 0, 0))
 
+set.seed(mySeed)
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 starting = starting,
                 propSD = propSD,
                 nIter = 2000, nBurn = 2000, nThin=2,
-                model = "full_gp", m = 50)
+                model = "full_gp", m = 100)
 
 #theta
 mean(train$Y)

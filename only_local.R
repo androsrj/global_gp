@@ -20,6 +20,7 @@ Y <- train$Y
 U <- train$U
 D <- train$D
 XTest <- test$X
+cat('hello world 2')
 #ZTest <- test$Z
 ZTest <- matrix(1, ncol = 2, nrow = nrow(test$Z))
 YTest <- test$Y
@@ -38,11 +39,11 @@ starting <- list(sigma2 = seq(50, 100, length = K),
                  tau2 = 0.1,
                  beta = c(3, 0, 0))
 #theta <- runif(9, 0.5, 3)
-
+cat('hello world 3')
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 starting = starting,
                 propSD = propSD,
-                nIter = 2000, nBurn = 2000, nThin=2,
+                nIter = 500, nBurn = 500, nThin=2,
                 model = "full_gp")
 
 #theta

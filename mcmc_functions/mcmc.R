@@ -6,7 +6,7 @@ mcmc <- function(X, Z, Y, D, K,
                  propSD,
                  model = c("full_gp", "mpp", "sparse_gpp")[1],
                  nIter = 1000, nBurn = 100, nThin = 2) {
-  
+    
   # Dimensions
   S <<- nrow(Z)
   n <<- length(Y) / S
@@ -14,12 +14,14 @@ mcmc <- function(X, Z, Y, D, K,
   nTest <<- length(YTest) / STest
   #J <<- matrix(1, nrow = S, ncol = 1)
   #JTest <<- matrix(1, nrow = STest, ncol = 1)
+  cat('s6')
   A <<- rep(1, S) %x% cbind(matrix(1, nrow = n, ncol = 1), X)
+  cat('s7')
   ATest <<- rep(1, STest) %x% cbind(matrix(1, nrow = nTest, ncol = 1), XTest)
   p <<- ncol(X)
   DXFull <<- matrix(1, S, S) %x% rdist(X)
   DXTestFull <<- matrix(1, STest, STest) %x% rdist(XTest)
-  
+  cat("hello world 4")
   
   # Save model type and theta globally
   model <<- model
@@ -67,7 +69,7 @@ mcmc <- function(X, Z, Y, D, K,
   Sigma <<- Reduce("+", lapply(1:K, \(k) starting$sigma2[k] * B[[k]])) + 
     starting$sigf2 * exp(-starting$thf * DXFull) + 
     starting$tau2 * diag(n * S)
-    
+  
   # Base of covariance matrix for predictions
   BTest <- lapply(1:K, \(k) tcrossprod(basisTest[[k]] %*% exp(-starting$theta[k] * DTest), basisTest[[k]]))
   SigmaTest <<- Reduce("+", lapply(1:K, function(k) {
