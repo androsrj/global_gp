@@ -14,14 +14,11 @@ mcmc <- function(X, Z, Y, D, K,
   nTest <<- length(YTest) / STest
   #J <<- matrix(1, nrow = S, ncol = 1)
   #JTest <<- matrix(1, nrow = STest, ncol = 1)
-  cat('s6')
   A <<- rep(1, S) %x% cbind(matrix(1, nrow = n, ncol = 1), X)
-  cat('s7')
   ATest <<- rep(1, STest) %x% cbind(matrix(1, nrow = nTest, ncol = 1), XTest)
   p <<- ncol(X)
   DXFull <<- matrix(1, S, S) %x% rdist(X)
   DXTestFull <<- matrix(1, STest, STest) %x% rdist(XTest)
-  cat("hello world 4")
   
   # Save model type and theta globally
   model <<- model

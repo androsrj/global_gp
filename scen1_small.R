@@ -8,9 +8,11 @@ source("other_functions/helper_functions.R") # Other misc functions (not part of
 source("other_functions/bsplines_2_3D.R")
 
 library(fields)
-load("data/train.RData")
-load("data/test.RData")
-load("data/theta.RData")
+size <- "small"
+scen <- "scen1"
+dir <- paste0("data/", size, "/", scen, "/")
+load(paste0(dir, "train.RData"))
+load(paste0(dir, "test.RData"))
 n <- nrow(train$X)
 nTest <- nrow(test$X)
 X <- train$X
@@ -41,6 +43,9 @@ results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 propSD = propSD,
                 nIter = 2000, nBurn = 2000, nThin=2,
                 model = "full_gp")
+
+path <- paste0("objects/", size, "_", scen, ".RDS") 
+saveRDS(results, file = path)
 
 #theta
 mean(train$Y)
