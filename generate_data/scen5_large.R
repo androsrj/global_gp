@@ -5,8 +5,8 @@ mySeed <- 45213
 # Sample sizes
 # Can have a "small" dataset with n = 100 and nTest = 25
 # Then a "large" dataset with n = 500 and nTest = 100
-n <- 100
-nTest <- 25
+n <- 500
+nTest <- 100
 
 # Number of subjects - can probably leave these alone
 S <- 10
@@ -21,10 +21,10 @@ p <- 2
 
 # Covariance parameters for local covariates
 trueSigf2 <- 5
-trueThf <- 10
+trueThf <- 1
 
 # Covariance parameters for global covariates (each length K)
-trueSigma2 <- seq(50, 100, length = K)
+trueSigma2 <- seq(5, 10, length = K)
 trueTheta <- runif(K, 0.1, 0.5)
 
 # Error variance
@@ -51,7 +51,7 @@ train <- spatialData(n = n,
                      tau2 = trueTau2, 
                      beta = trueBeta,
                      range = c(0, 100))
-save(train, file = "../data/small/scen2/train.RData")
+save(train, file = "../data/large/scen5/train.RData")
 
 set.seed(mySeed)
 indexTest <- sample(n, nTest)
@@ -74,5 +74,5 @@ test <- spatialData(n = nTest,
                     beta = trueBeta,
                     range = c(0, 100))
 test$index <- indexTest
-save(test, file = "../data/small/scen2/test.RData")
+save(test, file = "../data/large/scen5/test.RData")
 

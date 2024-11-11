@@ -10,8 +10,9 @@ module load R
 start_time=$(date +%s)
 ##Rscript scen1_small.R
 ##Rscript scen2_small.R
-##Rscript scen3_small.R
-Rscript scen4_small.R
+Rscript scen3_small.R
+##Rscript scen4_small.R
+##Rscript scen5_small.R
 finish_time=$(date +%s)
 
 ### Calculate and output total runtime

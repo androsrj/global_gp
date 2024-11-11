@@ -9,7 +9,7 @@ source("other_functions/bsplines_2_3D.R")
 
 library(fields)
 size <- "small"
-scen <- "scen4"
+scen <- "scen6"
 dir <- paste0("data/", size, "/", scen, "/")
 load(paste0(dir, "train.RData"))
 load(paste0(dir, "test.RData"))
@@ -27,15 +27,15 @@ UTest <- test$U
 DTest <- test$D
 K <- 9
 propSD <- list(sigf2 = 0.6,
-               thf = 2,
-               sigma2 = seq(0.1, 0.25, length = K),
+               thf = 0.7,
+               sigma2 = seq(0.1, 0.2, length = K),
                tau2 = 0.35,
-               theta = seq(0.9, 1.5, length = K))
+               theta = seq(0.5, 0.9, length = K))
 starting <- list(sigma2 = seq(50, 100, length = K),
-                 theta = rep(0.5, K),
+                 theta = rep(5, K),
                  sigf2 = 4,
                  thf = 1.5, 
-                 tau2 = 1.5,
+                 tau2 = 0.1,
                  beta = c(0, 0, 0))
 
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
@@ -54,7 +54,7 @@ results$posteriorMeans
 results$acceptance
 nSamples <- length(results$paramSamples[[5]])
 plot(1:nSamples, results$paramSamples[[5]], type="l")
-saveRDS(results, file = "objects/global.RDS")
+#saveRDS(results, file = "objects/global.RDS")
 
 library(MBA)
 library(fields)

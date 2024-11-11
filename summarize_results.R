@@ -10,7 +10,7 @@ source("other_functions/bsplines_2_3D.R")
 
 library(fields)
 size <- "small"
-scen <- "scen4"
+scen <- "scen6"
 dir <- paste0("data/", size, "/", scen, "/")
 load(paste0(dir, "train.RData"))
 load(paste0(dir, "test.RData"))
@@ -50,13 +50,15 @@ path <- paste0("objects/", size, "_", scen, ".RDS")
 results <- readRDS(file=path)
 
 #theta
-mean(train$Y)
-sd(train$Y)
-results$posteriorMeans
-results$acceptance
+#mean(train$Y)
+#sd(train$Y)
+results$posteriorMeans$beta
+results$credLower$beta
+results$credUpper$beta
+#results$acceptance
 nSamples <- length(results$paramSamples[[5]])
-plot(1:nSamples, results$paramSamples[[5]], type="l")
-saveRDS(results, file = "objects/global.RDS")
+#plot(1:nSamples, results$paramSamples[[5]], type="l")
+#saveRDS(results, file = "objects/global.RDS")
 
 library(MBA)
 library(fields)
@@ -111,6 +113,7 @@ for (i in 1:STest) {
 
 rmse
 cat(paste0("Root MS error: ", round(mean(rmse), 3), "\n"))
+cat(paste0("Compared to SD of ", round(sd(test$Y), 3), "\n"))
 
 cvg
 cat(paste0("Mean coverage: ", round(mean(cvg), 3), "\n"))

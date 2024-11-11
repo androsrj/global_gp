@@ -206,7 +206,7 @@ mcmc <- function(X, Z, Y, D, K,
     ### Gibbs update (beta) ###
     
     SigmaInv <- solve(Sigma)
-    SigmaBeta <- solve(crossprod(A, SigmaInv %*% A) + 1/4*diag(p+1))
+    SigmaBeta <- solve(crossprod(A, SigmaInv %*% A) + diag(p+1))
     meanBeta <- SigmaBeta %*% crossprod(A, SigmaInv %*% Y)
     beta[ , i] <- t(rmvnorm(1, meanBeta, SigmaBeta))
     #beta[i] <-  mean(Y)

@@ -27,7 +27,7 @@ UTest <- test$U
 DTest <- test$D
 K <- 9
 propSD <- list(sigf2 = 0.6,
-               thf = 1,
+               thf = 2,
                sigma2 = seq(0.1, 0.25, length = K),
                tau2 = 0.3,
                theta = seq(0.5, 0.8, length = K))
@@ -36,7 +36,7 @@ starting <- list(sigma2 = seq(50, 100, length = K),
                  sigf2 = 15,
                  thf = 1.5, 
                  tau2 = 0.1,
-                 beta = c(3, 0, 0))
+                 beta = c(0, 0, 0))
 
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 starting = starting,

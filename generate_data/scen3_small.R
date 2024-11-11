@@ -31,7 +31,7 @@ trueTheta <- runif(K, 0.1, 0.5)
 trueTau2 <- 0.2
 
 # Regression coefficients
-trueBeta <- c(2, 0.5, -1)
+trueBeta <- c(1, 0.5, -1)
 
 
 

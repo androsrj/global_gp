@@ -8,8 +8,8 @@ source("other_functions/helper_functions.R") # Other misc functions (not part of
 source("other_functions/bsplines_2_3D.R")
 
 library(fields)
-size <- "large"
-scen <- "scen1"
+size <- "small"
+scen <- "scen5"
 dir <- paste0("data/", size, "/", scen, "/")
 load(paste0(dir, "train.RData"))
 load(paste0(dir, "test.RData"))
@@ -26,17 +26,17 @@ YTest <- test$Y
 UTest <- test$U
 DTest <- test$D
 K <- 9
-propSD <- list(sigf2 = 0.3,
-               thf = 0.7,
-               sigma2 = seq(0.05, 0.15, length = K),
-               tau2 = 0.4,
-               theta = seq(0.2, 0.5, length = K))
-starting <- list(sigma2 = seq(50, 100, length = K),
+propSD <- list(sigf2 = 0.6,
+               thf = 1.5,
+               sigma2 = seq(0.2, 0.4, length = K),
+               tau2 = 0.35,
+               theta = seq(0.9, 1.5, length = K))
+starting <- list(sigma2 = seq(5, 10, length = K),
                  theta = rep(0.5, K),
-                 sigf2 = 6,
-                 thf = 1.3, 
+                 sigf2 = 4,
+                 thf = 1.5, 
                  tau2 = 0.1,
-                 beta = c(3, 0, 0))
+                 beta = c(0, 0, 0))
 
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 starting = starting,

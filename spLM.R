@@ -2,7 +2,7 @@ library(spBayes)
 library(fields)
 
 size <- "large"
-scen <- "scen1"
+scen <- "scen5"
 dir <- paste0("data/", size, "/", scen, "/")
 load(paste0(dir, "train.RData"))
 load(paste0(dir, "test.RData"))
@@ -25,13 +25,13 @@ fullXTest <- matrix(1, ncol=1, nrow=10) %x% test$X
 
 p <- 3
 starting <- list("phi"=3/0.5, "sigma.sq"=10, "tau.sq"=1)
-tuning <- list("phi"=0.1, "sigma.sq"=0.1, "tau.sq"=0.1)
+tuning <- list("phi"=0.01, "sigma.sq"=0.01, "tau.sq"=0.01)
 priors.1 <- list("beta.Norm"=list(rep(0,p), diag(1000,p)),
                  "phi.Unif"=c(0.5, 30), "sigma.sq.IG"=c(2, 2),
                  "tau.sq.IG"=c(2, 0.1))
 cov.model <- "exponential"
-n.report <- 10
-n.samples <- 10
+n.report <- 100
+n.samples <- 1000
 verbose <- TRUE
 m.1 <- spLM(Y ~ fullX, coords=fullCoords, starting=starting,
             tuning=tuning, priors=priors.1, cov.model=cov.model,
@@ -45,5 +45,14 @@ m.1.pred <- spPredict(m.1, pred.covars=cbind(matrix(1, ncol=1, nrow=nTest*nrow(t
 y.hat <- apply(m.1.pred$p.y.predictive.samples, 1, mean)
 quant <- function(x){quantile(x, prob=c(0.025, 0.5, 0.975))}
 y.quant <- apply(m.1.pred$p.y.predictive.samples, 1, quant)
-save(m.1, m.1.pred, y.hat, y.quant, file = "objects/spLM.RData")
 
+# Std Dev
+sd(YTest)
+
+# RMSE
+sqrt(mean((YTest - y.hat)^2))
+
+# Coverage
+mean(y.quant[1,] < YTest & YTest < y.quant[3,])
+
+save(m.1, m.1.pred, y.hat, y.quant, file = paste0("objects/spLM_", scen, ".RData"))
