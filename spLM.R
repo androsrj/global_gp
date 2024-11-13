@@ -2,7 +2,7 @@ library(spBayes)
 library(fields)
 
 size <- "large"
-scen <- "scen5"
+scen <- "scen2"
 dir <- paste0("data/", size, "/", scen, "/")
 load(paste0(dir, "train.RData"))
 load(paste0(dir, "test.RData"))
@@ -24,11 +24,11 @@ fullCoords <- matrix(1, ncol=1, nrow=10) %x% train$U + rnorm(10000, 0, 1/10)
 fullXTest <- matrix(1, ncol=1, nrow=10) %x% test$X
 
 p <- 3
-starting <- list("phi"=3/0.5, "sigma.sq"=10, "tau.sq"=1)
+starting <- list("phi"=3/0.5, "sigma.sq"=2, "tau.sq"=0.1)
 tuning <- list("phi"=0.01, "sigma.sq"=0.01, "tau.sq"=0.01)
 priors.1 <- list("beta.Norm"=list(rep(0,p), diag(1000,p)),
                  "phi.Unif"=c(0.5, 30), "sigma.sq.IG"=c(2, 2),
-                 "tau.sq.IG"=c(2, 0.1))
+                 "tau.sq.IG"=c(2, 2))
 cov.model <- "exponential"
 n.report <- 100
 n.samples <- 1000
