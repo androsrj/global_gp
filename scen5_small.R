@@ -6,8 +6,9 @@ source("mcmc_functions/likelihood.R")
 source("mcmc_functions/posterior.R")
 source("other_functions/helper_functions.R") # Other misc functions (not part of MCMC)
 source("other_functions/bsplines_2_3D.R")
-
 library(fields)
+
+nReps <- 10
 size <- "small"
 scen <- "scen5"
 dir <- paste0("data/", size, "/", scen, "/")
@@ -38,11 +39,15 @@ starting <- list(sigma2 = seq(5, 10, length = K),
                  tau2 = 0.1,
                  beta = c(0, 0, 0))
 
-results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
-                starting = starting,
-                propSD = propSD,
-                nIter = 2000, nBurn = 2000, nThin=2,
-                model = "full_gp")
+cat("Setup complete \n")
+results <- vector("list", length = nReps)
+for (i in 1:nReps) {
+  results[[i]] <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
+                       starting = starting,
+                       propSD = propSD,
+                       nIter = 2000, nBurn = 1000, nThin=2,
+                       model = "full_gp")
+}
 
 path <- paste0("objects/", size, "_", scen, ".RDS") 
 saveRDS(results, file = path)
@@ -53,42 +58,13 @@ sd(train$Y)
 results$posteriorMeans
 results$acceptance
 nSamples <- length(results$paramSamples[[5]])
-plot(1:nSamples, results$paramSamples[[5]], type="l")
+#plot(1:nSamples, results$paramSamples[[5]], type="l")
 saveRDS(results, file = "objects/global.RDS")
 
 library(MBA)
 library(fields)
 
-lims <- c(-15, 15)
-
-pdf("figures/subj1_true.pdf")
-pred.surf <-  mba.surf(cbind(UTest, YTest[1:nTest]), no.X=100, no.Y=100, extend=T)$xyz.est
-image.plot(pred.surf, xaxs ="r", yaxs = "r", zlim = lims, main="True Surface, Subject 1", 
-           cex.main = 1.5, col = hcl.colors(12, "YlOrRd", rev=TRUE))
-contour(pred.surf, add=T)
-dev.off()
-
-pdf("figures/subj1_global.pdf")
-pred.surf <-  mba.surf(cbind(UTest, results$preds[2,1:nTest]), no.X=100, no.Y=100, extend=T)$xyz.est
-image.plot(pred.surf, xaxs ="r", yaxs = "r", zlim = lims, main="Global GP, Subject 1", 
-           cex.main = 1.5, col = hcl.colors(12, "YlOrRd", rev=TRUE))
-contour(pred.surf, add=T)
-dev.off()
-
-pdf("figures/subj2_true.pdf")
-pred.surf <-  mba.surf(cbind(UTest, YTest[(nTest+1):(2*nTest)]), no.X=100, no.Y=100, extend=T)$xyz.est
-image.plot(pred.surf, xaxs ="r", yaxs = "r", zlim = lims, main="True Surface, Subject 2", 
-           cex.main = 1.5, col = hcl.colors(12, "YlOrRd", rev=TRUE))
-contour(pred.surf, add=T)
-dev.off()
-
-pdf("figures/subj2_global.pdf")
-pred.surf <-  mba.surf(cbind(UTest, results$preds[2, (nTest+1):(2*nTest)]), no.X=100, no.Y=100, extend=T)$xyz.est
-image.plot(pred.surf, xaxs ="r", yaxs = "r", zlim = lims, main="Global GP, Subject 2", 
-           cex.main = 1.5, col = hcl.colors(12, "YlOrRd", rev=TRUE))
-contour(pred.surf, add=T)
-dev.off()
-
+results <- results[[1]]
 STest <- nrow(test$Z)
 rmse <- cvg <- width <- scores <- crps <- numeric(STest)
 a <- .05

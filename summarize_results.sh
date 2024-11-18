@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --time=0-02:00:00
 #SBATCH --partition=short
-#SBATCH --mem-per-cpu=64GB
+#SBATCH --mem-per-cpu=8GB
 #SBATCH --output=outfile_summary
 module purge
 module load R
