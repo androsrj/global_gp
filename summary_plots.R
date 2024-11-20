@@ -1,6 +1,8 @@
 library(ggplot2)
 nScen <- 5
 nReps <- 10
+line.type <- 2
+line.width <- 4
 
 # Density plots for beta0
 par(mfrow = c(2,3))
@@ -13,7 +15,7 @@ for (i in 1:nScen) {
        main = "",
        xlim = c(-2.5, 4),
        breaks = 10)
-  abline(v = 1, lty = 3, lwd = 3.5, col = "skyblue4")
+  abline(v = 1, lty = line.type, lwd = line.width, col = "skyblue4")
   mtext("Beta_0 Samples", side = 3, line = - 2, outer = TRUE)
 }
 
@@ -27,7 +29,7 @@ for (i in 1:nScen) {
        xlab = paste0("Scenario ", i),
        main = "",
        xlim = c(-1.5, 2))
-  abline(v = 0.5, lty = 3, lwd = 3.5, col = "skyblue4")
+  abline(v = 0.5, lty = line.type, lwd = line.width, col = "skyblue4")
   mtext("Beta_1 Samples", side = 3, line = - 2, outer = TRUE)
 }
 
@@ -42,7 +44,7 @@ for (i in 1:nScen) {
        main = "",
        xlim = c(-2, 1.5),
        breaks = 10)
-  abline(v = -1, lty = 3, lwd = 3.5, col = "skyblue4")
+  abline(v = -1, lty = line.type, lwd = line.width, col = "skyblue4")
   mtext("Beta_2 Samples", side = 3, line = - 2, outer = TRUE)
 }
 
@@ -60,7 +62,7 @@ for (i in 1:nScen) {
   hist(sigf2_samples, 
        xlab = paste0("Scenario ", i),
        main = "")
-  abline(v = true_sigf2, lty = 3, lwd = 3.5, col = "skyblue4")
+  abline(v = true_sigf2, lty = line.type, lwd = line.width, col = "skyblue4")
   mtext("Sigma2_f Samples", side = 3, line = - 2, outer = TRUE)
 }
 
@@ -78,7 +80,7 @@ for (i in 1:nScen) {
   hist(thf_samples, 
        xlab = paste0("Scenario ", i),
        main = "")
-  abline(v = true_thf, lty = 3, lwd = 3.5, col = "skyblue4")
+  abline(v = true_thf, lty = line.type, lwd = line.width, col = "skyblue4")
   mtext("Theta_f Samples", side = 3, line = - 2, outer = TRUE)
 }
 
@@ -96,7 +98,7 @@ for (i in 1:nScen) {
   hist(tau2_samples, 
        xlab = paste0("Scenario ", i),
        main = "")
-  abline(v = true_tau2, lty = 3, lwd = 3.5, col = "skyblue4")
+  abline(v = true_tau2, lty = line.type, lwd = line.width, col = "skyblue4")
   mtext("Tau2 Samples", side = 3, line = - 2, outer = TRUE)
 }
 
