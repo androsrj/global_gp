@@ -1,0 +1,48 @@
+----------------------------------------
+	General model description
+----------------------------------------
+Model fit with 100 observations.
+
+Number of covariates 2.
+
+Number of space varying covariates 2.
+
+Using the exponential spatial correlation model.
+
+Number of MCMC samples 5000.
+
+Priors and hyperpriors:
+	beta flat.
+	Diag(K) IG hyperpriors
+		parameter	shape		scale
+		K[1,1]		2.000000	1.000000
+		K[2,2]		2.000000	1.000000
+
+	phi Unif lower bound hyperpriors:	0.030	0.030	
+	phi Unif upper bound hyperpriors:	22.668	22.668	
+
+	tau.sq IG hyperpriors shape=2.00000 and scale=1.00000
+
+Source compiled with OpenMP, posterior sampling is using 4 thread(s).
+-------------------------------------------------
+		Sampling
+-------------------------------------------------
+Sampled: 5000 of 5000, 100.00%
+Report interval Metrop. Acceptance rate: 43.50%
+Overall Metrop. Acceptance rate: 43.50%
+-------------------------------------------------
+ [1] 3.213657 2.276657 3.210042 1.855019 2.423513 4.698777 2.353450 2.421583
+ [9] 2.511274 1.922652
+Root MS error: 2.689
+ [1] 0.88 0.92 0.88 1.00 0.92 0.72 0.92 0.92 0.88 1.00
+Mean coverage: 0.904
+ [1] 10.31788 10.20476 10.14084 10.29831 10.16865 10.40326 10.46711 10.13925
+ [9] 10.22614 10.33640
+Mean width: 10.27
+ [1] 17.16415 11.17412 16.21181 10.29831 12.31445 40.67132 12.95648 13.85243
+ [9] 13.25774 10.33640
+Mean interval score: 15.824
+ [1] 1.923292 1.341678 1.895119 1.093048 1.416194 2.924791 1.401505 1.455477
+ [9] 1.446116 1.169996
+Mean CRPS: 1.607
+Total time taken - 0 hours, 0 minutes, and 23 seconds.

@@ -48,24 +48,6 @@ for (i in 1:nScen) {
   mtext("Beta_2 Samples", side = 3, line = - 2, outer = TRUE)
 }
 
-# Density plots for sigf2
-par(mfrow = c(2,3))
-for (i in 1:nScen) {
-  path <- paste0("objects/small_scen", i, ".RDS") 
-  results <- readRDS(path)
-  sigf2_samples <- results[[2]]$paramSamples$sigf2
-  if (i == 3) {
-    true_sigf2 <- 20
-  } else {
-    true_sigf2 <- 5
-  }
-  hist(sigf2_samples, 
-       xlab = paste0("Scenario ", i),
-       main = "")
-  abline(v = true_sigf2, lty = line.type, lwd = line.width, col = "skyblue4")
-  mtext("Sigma2_f Samples", side = 3, line = - 2, outer = TRUE)
-}
-
 # Density plots for theta_f
 par(mfrow = c(2,3))
 for (i in 1:nScen) {
@@ -82,6 +64,25 @@ for (i in 1:nScen) {
        main = "")
   abline(v = true_thf, lty = line.type, lwd = line.width, col = "skyblue4")
   mtext("Theta_f Samples", side = 3, line = - 2, outer = TRUE)
+}
+
+
+# Density plots for sigf2
+par(mfrow = c(2,3))
+for (i in 1:nScen) {
+  path <- paste0("objects/small_scen", i, ".RDS") 
+  results <- readRDS(path)
+  sigf2_samples <- results[[2]]$paramSamples$sigf2
+  if (i == 3) {
+    true_sigf2 <- 20
+  } else {
+    true_sigf2 <- 5
+  }
+  hist(sigf2_samples, 
+       xlab = paste0("Scenario ", i),
+       main = "")
+  abline(v = true_sigf2, lty = line.type, lwd = line.width, col = "skyblue4")
+  mtext("Sigma2_f Samples", side = 3, line = - 2, outer = TRUE)
 }
 
 # Density plots for tau2
