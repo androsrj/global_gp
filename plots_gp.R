@@ -1,5 +1,5 @@
 library(ggplot2)
-nScen <- 5
+nScen <- 6
 nReps <- 10
 line.type <- 2
 line.width <- 4

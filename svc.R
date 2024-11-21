@@ -1,13 +1,14 @@
 library(spBayes)
 
-scen <- 1 
+scen <- 1
+nReps <- 10
+
 path <- paste0("data/small/scen", scen) 
 load(paste0(path, "/train.RData")) 
 load(paste0(path, "/test.RData"))
 source("other_functions/helper_functions.R")
 
 d.max <- max(iDist(train$U))
-
 r <- 2
 n <- nrow(train$X)
 nTest <- nrow(test$X)
@@ -19,59 +20,21 @@ starting <- list("phi"=rep(3/(0.1*d.max), r), "sigma.sq"=rep(1, r), "tau.sq"=1)
 tuning <- list("phi"=rep(0.1, r), "sigma.sq"=rep(0.05, r), "tau.sq"=0.1)
 n.samples <- 5000
 
-m.3 <- spSVC(train$Y[1:n,] ~ train$X - 1, coords=train$U,
-             starting=starting, svc.cols=c(1,2),
-             tuning=tuning, priors=priors, cov.model="exponential",
-             n.samples=n.samples, n.report=5000, n.omp.threads=4)
-
-m.3 <- spRecover(m.3, start=floor(0.5*n.samples), thin=2,
-                 n.omp.threads=4, verbose=FALSE)
-
-
-lims <- c(-15, 15)
-STest <- nrow(test$Z)
-rmse <- cvg <- width <- scores <- crps <- numeric(STest)
-a <- .05
-for (i in 1:STest) {
-  truth <- test$Y[(nTest*(i-1)+1):(nTest*i), ]
-  m.3.pred <- spPredict(m.3, pred.covars=test$X,
-                        pred.coords=test$U + rnorm(50, 0, 0.0001), thin=10,
-                        joint=TRUE, n.omp.threads=4, verbose=FALSE)
-  pred <- apply(m.3.pred$p.y.predictive.samples, 1, mean)
-  #if (i == 1) {
-  #  pdf("figures/subj1_svc.pdf")
-  #  pred.surf <-  mba.surf(cbind(test$U, pred), no.X=100, no.Y=100, extend=T)$xyz.est
-  #  image.plot(pred.surf, xaxs ="r", yaxs = "r", zlim = lims, main="SVC, Subject 1", 
-  #             cex.main = 1.5, col = hcl.colors(12, "YlOrRd", rev=TRUE))
-  #  contour(pred.surf, add=T)
-  #  dev.off()
-  #}
-  rmse[i] <- sqrt(mean((truth - pred)^2))
-  lower <- apply(m.3.pred$p.y.predictive.samples, 1, quantile, .025)
-  upper <- apply(m.3.pred$p.y.predictive.samples, 1, quantile, .975)
-  cvg[i] <- mean(lower < truth & upper > truth)
-  width[i] <- mean(upper - lower)
-  scores[i] <- mean((upper - lower) + 
-                      2/a * (lower - truth) * (truth < lower) + 
-                      2/a * (truth - upper) * (truth > upper))
-  predSamples <- t(m.3.pred$p.y.predictive.samples)
-  crps[i] <- mean(energy_score(truth, predSamples))
+results <- vector("list", nReps)
+for (i in 1:nReps) {
+  m.3 <- spSVC(train$Y[1:n,] ~ train$X, coords=train$U,
+               starting=starting, svc.cols=c(1,2),
+               tuning=tuning, priors=priors, cov.model="exponential",
+               n.samples=n.samples, n.report=5000, n.omp.threads=4)
+  
+  m.3 <- spRecover(m.3, start=floor(0.5*n.samples), thin=2,
+                   n.omp.threads=4, verbose=FALSE)
+  
+  results[[i]] <- m.3
+  
 }
 
-rmse
-cat(paste0("Root MS error: ", round(mean(rmse), 3), "\n"))
-
-cvg
-cat(paste0("Mean coverage: ", round(mean(cvg), 3), "\n"))
-
-width
-cat(paste0("Mean width: ", round(mean(width), 3), "\n"))
-
-scores
-cat(paste0("Mean interval score: ", round(mean(scores), 3), "\n"))
-
-crps
-cat(paste0("Mean CRPS: ", round(mean(crps), 3), "\n"))
+saveRDS(results, paste0("objects/svc_scen", scen, ".RDS"))
 
 
 
