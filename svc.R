@@ -1,6 +1,6 @@
 library(spBayes)
 
-scen <- 1
+scen <- 6
 nReps <- 10
 
 path <- paste0("data/small/scen", scen) 
