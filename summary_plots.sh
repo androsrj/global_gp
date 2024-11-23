@@ -8,7 +8,7 @@ module load R
 
 ### Run simulation code and benchmark the start/end times
 start_time=$(date +%s)
-Rscript summary_plots.R
+Rscript plots_svc.R
 finish_time=$(date +%s)
 
 ### Calculate and output total runtime
