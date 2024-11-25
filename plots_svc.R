@@ -6,6 +6,7 @@ line.type <- 2
 line.width <- 4
 
 # Density plots for beta0
+pdf("figures/svc/beta0_svc.pdf")
 par(mfrow = c(2,3))
 for (i in 1:nScen) {
   path <- paste0("objects/svc_scen", i, ".RDS") 
@@ -19,8 +20,10 @@ for (i in 1:nScen) {
   abline(v = 1, lty = line.type, lwd = line.width, col = "skyblue4")
   mtext("Beta_0 Samples", side = 3, line = - 2, outer = TRUE)
 }
+dev.off()
 
 # Density plots for beta1
+pdf("figures/svc/beta1_svc.pdf")
 par(mfrow = c(2,3))
 for (i in 1:nScen) {
   path <- paste0("objects/svc_scen", i, ".RDS") 
@@ -33,8 +36,10 @@ for (i in 1:nScen) {
   abline(v = 0.5, lty = line.type, lwd = line.width, col = "skyblue4")
   mtext("Beta_1 Samples", side = 3, line = - 2, outer = TRUE)
 }
+dev.off()
 
 # Density plots for beta2
+pdf("figures/svc/beta2_svc.pdf")
 par(mfrow = c(2,3))
 for (i in 1:nScen) {
   path <- paste0("objects/svc_scen", i, ".RDS") 
@@ -48,9 +53,10 @@ for (i in 1:nScen) {
   abline(v = -1, lty = line.type, lwd = line.width, col = "skyblue4")
   mtext("Beta_2 Samples", side = 3, line = - 2, outer = TRUE)
 }
-
+dev.off()
 
 # Density plots for tau2
+pdf("figures/svc/tau2_svc.pdf")
 par(mfrow = c(2,3))
 for (i in 1:nScen) {
   path <- paste0("objects/svc_scen", i, ".RDS") 
@@ -67,7 +73,7 @@ for (i in 1:nScen) {
   abline(v = true_tau2, lty = line.type, lwd = line.width, col = "skyblue4")
   mtext("Tau2 Samples", side = 3, line = - 2, outer = TRUE)
 }
-
+dev.off()
 
 ### BOXPLOTS FOR PREDICTIVE DIAGNOSTICS ###
 
@@ -117,6 +123,7 @@ ggplot(df, aes(x = Scenario, y = Coverage, group = Scenario, fill = Scenario)) +
   theme_bw() +
   labs(title = "Interval Coverage (95%)",
        x = "", y = "")
+ggsave("figures/svc/coverage_svc.pdf")
 
 # Interval Length
 ggplot(df, aes(x = Scenario, y = Length, group = Scenario, fill = Scenario)) + 
@@ -124,4 +131,4 @@ ggplot(df, aes(x = Scenario, y = Length, group = Scenario, fill = Scenario)) +
   theme_bw() + 
   labs(title = "Interval Length (95%)",
        x = "", y = "")
-
+ggsave("figures/svc/length_svc.pdf")

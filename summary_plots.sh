@@ -8,6 +8,7 @@ module load R
 
 ### Run simulation code and benchmark the start/end times
 start_time=$(date +%s)
+Rscript plots_gp.R
 Rscript plots_svc.R
 finish_time=$(date +%s)
 
