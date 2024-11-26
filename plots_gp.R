@@ -141,7 +141,7 @@ df <- data.frame(RMSE = rmse,
 ggplot(df, aes(x = Scenario, y = Coverage, group = Scenario, fill = Scenario)) + 
   geom_boxplot() +
   theme_bw() +
-  labs(title = "Interval Coverage (95%)",
+  labs(title = "Interval Coverage (95%) for Global GP",
        x = "", y = "")
 ggsave("figures/gp/coverage_gp.pdf")
 
@@ -149,6 +149,6 @@ ggsave("figures/gp/coverage_gp.pdf")
 ggplot(df, aes(x = Scenario, y = Length, group = Scenario, fill = Scenario)) + 
   geom_boxplot() +
   theme_bw() + 
-  labs(title = "Interval Length (95%)",
+  labs(title = "Interval Length (95%) for Global GP",
        x = "", y = "")
 ggsave("figures/gp/length_gp.pdf")
