@@ -14,11 +14,18 @@ mcmc <- function(X, Z, Y, D, K,
   nTest <<- length(YTest) / STest
   #J <<- matrix(1, nrow = S, ncol = 1)
   #JTest <<- matrix(1, nrow = STest, ncol = 1)
-  A <<- rep(1, S) %x% cbind(matrix(1, nrow = n, ncol = 1), X)
-  ATest <<- rep(1, STest) %x% cbind(matrix(1, nrow = nTest, ncol = 1), XTest)
-  p <<- ncol(X)
-  DXFull <<- matrix(1, S, S) %x% rdist(scale(X))
-  DXTestFull <<- matrix(1, STest, STest) %x% rdist(scale(XTest))
+  A <<- as.matrix(cbind(matrix(1, n, 1), Z[rep(1:S, each = n), ], X))
+  ATest <<- as.matrix(cbind(matrix(1, nTest, 1), ZTest[rep(1:STest, each = nTest), ], XTest))
+  p <<- ncol(X) + ncol(Z)
+  #DXFull <<- matrix(1, S, S) %x% rdist(X)
+  #DXTestFull <<- matrix(1, STest, STest) %x% rdist(XTest)
+  DXFull <<- rdist(A[,-1])
+  DXTestFull <<- rdist(ATest[,-1])
+
+  if (ncol(Z) > 2) {
+    Z <- Z[ , 1:2]
+    ZTest <- ZTest[ , 1:2]
+  }
   
   # Save model type and theta globally
   model <<- model
@@ -66,7 +73,7 @@ mcmc <- function(X, Z, Y, D, K,
   Sigma <<- Reduce("+", lapply(1:K, \(k) starting$sigma2[k] * B[[k]])) + 
     starting$sigf2 * exp(-starting$thf * DXFull) + 
     starting$tau2 * diag(n * S)
-  
+
   # Base of covariance matrix for predictions
   BTest <- lapply(1:K, \(k) tcrossprod(basisTest[[k]] %*% exp(-starting$theta[k] * DTest), basisTest[[k]]))
   SigmaTest <<- Reduce("+", lapply(1:K, function(k) {
@@ -74,11 +81,11 @@ mcmc <- function(X, Z, Y, D, K,
   })) + 
     starting$sigf2 * exp(-starting$thf * DXTestFull) + 
     starting$tau2 * diag(STest * nTest)
-  
+
   # Initial predictions for test subjects
   YPreds <- matrix(data = NA, nrow = nTest * STest, ncol = nIter)
-  YPreds[ , 1] <- t(rmvnorm(1, mean = ATest * beta[1], sigma = SigmaTest))
-  
+  YPreds[ , 1] <- t(rmvnorm(1, mean = ATest %*% beta[ , 1], sigma = SigmaTest))
+
   # Run Gibbs/Metropolis for one chain
   for (i in 2:nIter) {
     

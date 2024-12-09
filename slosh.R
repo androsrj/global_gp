@@ -1,5 +1,5 @@
 # SOURCES
-source("mcmc_functions/mcmc.R") # Metropolis-Gibbs Sampler
+source("mcmc_functions/slosh_mcmc.R") # Metropolis-Gibbs Sampler
 source("mcmc_functions/priors.R")
 source("mcmc_functions/jacobians.R")
 source("mcmc_functions/likelihood.R")
@@ -7,15 +7,18 @@ source("mcmc_functions/posterior.R")
 source("other_functions/helper_functions.R") # Other misc functions (not part of MCMC)
 source("other_functions/bsplines_2_3D.R")
 library(fields)
+library(ggplot2)
 
 load("data/flood_data.RData")
 
-which.Z <- c(1, 2)
+mySeed <- 1234
+which.Z <- c(1:5)
 n <- 100
 nTest <- 25
 S <- 10
 STest <- 10
 
+set.seed(mySeed)
 which.storms <- sample(4000, S + STest)
 train.storms <- which.storms[1:S]
 test.storms <- which.storms[(S+1):(S+STest)]
@@ -32,6 +35,7 @@ ggplot(data = coords.subset, aes(x=x, y=y, fill=elev_meters)) +
 
 source("coastlines.R")
 
+set.seed(mySeed)
 which.points <- sample(nrow(coords.subset), n + nTest)
 train.index <- which.points[1:n]
 test.index <- which.points[(n+1):(n+nTest)]
@@ -52,22 +56,22 @@ DTest <- fields::rdist(UTest)
 
 K <- 9
 propSD <- list(sigf2 = 0.6,
-               thf = 5,
+               thf = 20,
                sigma2 = seq(0.1, 0.25, length = K),
                tau2 = 0.4,
-               theta = seq(0.5, 0.8, length = K))
+               theta = seq(0.1, 0.3, length = K))
 starting <- list(sigma2 = seq(50, 100, length = K),
                  theta = rep(0.5, K),
                  sigf2 = 6,
-                 thf = 8, 
+                 thf = 5, 
                  tau2 = 0.1,
-                 beta = c(0, 0, 0))
+                 beta = rep(0,8))
 
 cat("Setup complete \n")
 results<- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                starting = starting,
                propSD = propSD,
-               nIter = 1000, nBurn = 500, nThin=2,
+               nIter = 3000, nBurn = 2000, nThin=2,
                model = "full_gp")
 saveRDS(results, file = "objects/slosh.RDS")
 
