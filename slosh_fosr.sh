@@ -1,14 +1,14 @@
 #!/bin/bash
-#SBATCH --time=0-04:00:00
+#SBATCH --time=0-08:00:00
 #SBATCH --partition=medium
-#SBATCH --mem-per-cpu=8GB
-#SBATCH --output=outfile_slosh
+#SBATCH --mem-per-cpu=16GB
+#SBATCH --output=outfile_slosh_fosr
 module purge
 module load R
 
 ### Run simulation code and benchmark the start/end times
 start_time=$(date +%s)
-Rscript slosh.R
+Rscript slosh_fosr.R
 finish_time=$(date +%s)
 
 ### Calculate and output total runtime

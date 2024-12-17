@@ -4,7 +4,7 @@ library(fields)
 library(ggplot2)
 library(spBayes)
 
-load("data/flood_data.RData")
+load("data//slosh/flood_subset.RData")
 
 mySeed <- 1234
 which.Z <- c(1:5)
@@ -13,31 +13,16 @@ nTest <- 25
 S <- 10
 STest <- 10
 
-set.seed(mySeed)
-which.storms <- sample(4000, S + STest)
-train.storms <- which.storms[1:S]
-test.storms <- which.storms[(S+1):(S+STest)]
-
-coords.subset <- coords[coords$x < -74.81 & coords$x > -74.83 & coords$y < 39.08 & coords$y > 39.06, ]
-source("coastlines.R")
-
-set.seed(mySeed)
-which.points <- sample(nrow(coords.subset), n + nTest)
-train.index <- which.points[1:n]
-test.index <- which.points[(n+1):(n+nTest)]
-
-X <- cbind(coords.subset$elev_meters[train.index], 
-           coords.subset$dist.east[train.index])
-Z <- inputs[train.storms, which.Z]
-Y <- matrix(c(t(as.matrix(out[train.storms, train.index]))), ncol = 1)
-U <- coords[train.index, 1:2]
-D <- fields::rdist(U)
-XTest <- cbind(coords.subset$elev_meters[test.index], 
-               coords.subset$dist.east[test.index])
-ZTest <- inputs[test.storms, which.Z]
-YTest <- matrix(c(t(as.matrix(out[test.storms, test.index]))), ncol = 1)
-UTest <- coords[test.index, 1:2]
-DTest <- fields::rdist(UTest)
+X <- flood.train$X
+Z <- flood.train$Z
+Y <- flood.train$Y
+U <- flood.train$U
+D <- flood.train$D
+XTest <- flood.test$X
+ZTest <- flood.test$Z
+YTest <- flood.test$Y
+UTest <- flood.test$U
+DTest <- flood.test$D
 
 d.max <- max(iDist(U))
 r <- 2
@@ -81,5 +66,5 @@ cat(paste0("Root MS error: ", round(mean(rmse), 3), "\n"))
 cvg
 cat(paste0("Mean coverage: ", round(mean(cvg), 3), "\n"))
 
-width
-cat(paste0("Mean width: ", round(mean(width), 3), "\n"))
+len
+cat(paste0("Mean width: ", round(mean(len), 3), "\n"))

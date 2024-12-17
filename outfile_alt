@@ -1,0 +1,95 @@
+Loading required package: spam
+Spam version 2.10-0 (2023-10-23) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: ‘spam’
+
+The following objects are masked from ‘package:base’:
+
+    backsolve, forwardsolve
+
+Loading required package: viridisLite
+
+Try help(fields) to get started.
+----------------------------------------
+	General model description
+----------------------------------------
+Model fit with 100 observations.
+
+Number of covariates 2.
+
+Number of space varying covariates 2.
+
+Using the exponential spatial correlation model.
+
+Number of MCMC samples 5000.
+
+Priors and hyperpriors:
+	beta flat.
+	Diag(K) IG hyperpriors
+		parameter	shape		scale
+		K[1,1]		2.000000	1.000000
+		K[2,2]		2.000000	1.000000
+
+	phi Unif lower bound hyperpriors:	156.893	156.893	
+	phi Unif upper bound hyperpriors:	117669.681	117669.681	
+
+	tau.sq IG hyperpriors shape=2.00000 and scale=1.00000
+
+Source compiled with OpenMP, posterior sampling is using 4 thread(s).
+-------------------------------------------------
+		Sampling
+-------------------------------------------------
+Sampled: 500 of 5000, 10.00%
+Report interval Metrop. Acceptance rate: 43.80%
+Overall Metrop. Acceptance rate: 43.80%
+-------------------------------------------------
+Sampled: 1000 of 5000, 20.00%
+Report interval Metrop. Acceptance rate: 43.80%
+Overall Metrop. Acceptance rate: 43.80%
+-------------------------------------------------
+Sampled: 1500 of 5000, 30.00%
+Report interval Metrop. Acceptance rate: 41.60%
+Overall Metrop. Acceptance rate: 43.07%
+-------------------------------------------------
+Sampled: 2000 of 5000, 40.00%
+Report interval Metrop. Acceptance rate: 40.00%
+Overall Metrop. Acceptance rate: 42.30%
+-------------------------------------------------
+Sampled: 2500 of 5000, 50.00%
+Report interval Metrop. Acceptance rate: 40.40%
+Overall Metrop. Acceptance rate: 41.92%
+-------------------------------------------------
+Sampled: 3000 of 5000, 60.00%
+Report interval Metrop. Acceptance rate: 45.80%
+Overall Metrop. Acceptance rate: 42.57%
+-------------------------------------------------
+Sampled: 3500 of 5000, 70.00%
+Report interval Metrop. Acceptance rate: 45.20%
+Overall Metrop. Acceptance rate: 42.94%
+-------------------------------------------------
+Sampled: 4000 of 5000, 80.00%
+Report interval Metrop. Acceptance rate: 47.00%
+Overall Metrop. Acceptance rate: 43.45%
+-------------------------------------------------
+Sampled: 4500 of 5000, 90.00%
+Report interval Metrop. Acceptance rate: 45.00%
+Overall Metrop. Acceptance rate: 43.62%
+-------------------------------------------------
+Sampled: 5000 of 5000, 100.00%
+Report interval Metrop. Acceptance rate: 46.00%
+Overall Metrop. Acceptance rate: 43.86%
+-------------------------------------------------
+YTest Standard Dev: 2.089
+ [1] 2.1309773 0.8132155 2.9564890 1.1372925 0.8997823 1.6309455 0.4955498
+ [8] 1.1592451 1.7325447 2.2487057
+Root MS error: 1.52
+ [1] 0.36 0.84 0.20 0.56 0.64 0.40 0.92 0.56 0.40 0.36
+Mean coverage: 0.524
+ [1] 2.450108 2.530137 2.485375 2.515968 2.521068 2.499073 2.552955 2.578829
+ [9] 2.519487 2.517650
+Mean width: 2.517
+Total time taken - 0 hours, 0 minutes, and 25 seconds.

@@ -9,7 +9,7 @@ source("other_functions/bsplines_2_3D.R")
 library(fields)
 library(ggplot2)
 
-load("data/flood_data.RData")
+load("data/slosh/flood_data.RData")
 
 mySeed <- 1234
 which.Z <- c(1:5)
@@ -23,17 +23,19 @@ which.storms <- sample(4000, S + STest)
 train.storms <- which.storms[1:S]
 test.storms <- which.storms[(S+1):(S+STest)]
 
-coords.subset <- coords[coords$x < -74.81 & coords$x > -74.83 & coords$y < 39.08 & coords$y > 39.06, ]
+subsample <- coords$x < -74.82 & coords$x > -74.84 & coords$y < 39.07 & coords$y > 39.05
+coords.subset <- coords[subsample, ]
+out.subset <- out[ , subsample]
 ggplot(data = coords, aes(x=x, y=y, col=elev_meters)) + 
   geom_point() + 
-  geom_vline(aes(xintercept = -74.81)) + 
-  geom_vline(aes(xintercept = -74.83)) + 
-  geom_hline(aes(yintercept = 39.06)) + 
-  geom_hline(aes(yintercept = 39.08)) 
+  geom_vline(aes(xintercept = -74.82)) + 
+  geom_vline(aes(xintercept = -74.84)) + 
+  geom_hline(aes(yintercept = 39.05)) + 
+  geom_hline(aes(yintercept = 39.07)) 
 ggplot(data = coords.subset, aes(x=x, y=y, fill=elev_meters)) + 
   geom_tile()
 
-source("coastlines.R")
+#source("coastlines.R")
 
 set.seed(mySeed)
 which.points <- sample(nrow(coords.subset), n + nTest)
@@ -43,35 +45,38 @@ test.index <- which.points[(n+1):(n+nTest)]
 X <- cbind(coords.subset$elev_meters[train.index], 
            coords.subset$dist.east[train.index])
 Z <- inputs[train.storms, which.Z]
-Y <- matrix(c(t(as.matrix(out[train.storms, train.index]))), ncol = 1)
-U <- coords[train.index, 1:2]
+Y <- matrix(c(t(as.matrix(out.subset[train.storms, train.index]))), ncol = 1)
+U <- coords.subset[train.index, 1:2]
 D <- fields::rdist(U)
 XTest <- cbind(coords.subset$elev_meters[test.index], 
                coords.subset$dist.east[test.index])
 ZTest <- inputs[test.storms, which.Z]
-YTest <- matrix(c(t(as.matrix(out[test.storms, test.index]))), ncol = 1)
-UTest <- coords[test.index, 1:2]
+YTest <- matrix(c(t(as.matrix(out.subset[test.storms, test.index]))), ncol = 1)
+UTest <- coords.subset[test.index, 1:2]
 DTest <- fields::rdist(UTest)
 
+flood.train <- list(X=X, Z=Z, Y=Y, U=U, D=D)
+flood.test <- list(X=XTest, Z=ZTest, Y=YTest, U=UTest, D=DTest)
+save(flood.train, flood.test, file = "data/slosh/flood_subset.RData")
 
 K <- 9
-propSD <- list(sigf2 = 0.6,
-               thf = 20,
-               sigma2 = seq(0.1, 0.25, length = K),
-               tau2 = 0.4,
-               theta = seq(0.1, 0.3, length = K))
+propSD <- list(sigf2 = 0.2,
+               thf = 0.3,
+               sigma2 = seq(0.2, 0.4, length = K),
+               tau2 = 0.2,
+               theta = seq(0.5, 0.8, length = K))
 starting <- list(sigma2 = seq(50, 100, length = K),
                  theta = rep(0.5, K),
                  sigf2 = 6,
-                 thf = 5, 
+                 thf = 0.2, 
                  tau2 = 0.1,
-                 beta = rep(0,8))
+                 beta = rep(0,7))
 
 cat("Setup complete \n")
 results<- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                starting = starting,
                propSD = propSD,
-               nIter = 3000, nBurn = 2000, nThin=2,
+               nIter = 50, nBurn = 50, nThin=2,
                model = "full_gp")
 saveRDS(results, file = "objects/slosh.RDS")
 
@@ -80,8 +85,6 @@ sd(YTest)
 results$posteriorMeans
 results$acceptance
 nSamples <- length(results$paramSamples[[5]])
-plot(1:nSamples, results$paramSamples[[5]], type="l")
-saveRDS(results, file = "objects/global.RDS")
 
 library(MBA)
 library(fields)
