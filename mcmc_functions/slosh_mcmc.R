@@ -228,8 +228,8 @@ mcmc <- function(X, Z, Y, D, K,
     #BTest <- lapply(1:K, \(k) tcrossprod(basisTest[[k]] %*% exp(-gInv(trTheta[k, i]) * DTest), basisTest[[k]]))
     SigmaTest <<- Reduce("+", lapply(1:K, function(k) {
       exp(trSigma2[k, i]) * BTest[[k]]
-    })) + exp(trTau2[i]) * diag(STest * nTest) + 
-      exp(gInv(trThf[i]) * DXTestFull) 
+    })) + exp(trTau2[i]) * diag(STest * nTest) #+ 
+      #exp(gInv(trThf[i]) * DXTestFull) 
     #temp <- matrix(1, nrow = nrow(SigmaTest), ncol = ncol(SigmaTest))
     #diag(temp) <- 0.02*diag(temp)
     YPreds[ , i] <- t(rmvnorm(1, mean = ATest %*% beta[ , i], sigma = SigmaTest))
