@@ -225,11 +225,13 @@ mcmc <- function(X, Z, Y, D, K,
     #cat("beta updated \n")
     
     ### Posterior predictive sampling for test subjects ###
-    #BTest <- lapply(1:K, \(k) tcrossprod(basisTest[[k]] %*% exp(-gInv(trTheta[k, i]) * DTest), basisTest[[k]]))
+    tempSigma2 <- pmin(1, exp(trSigma2[,i]))
+    #cat(paste0("Temp Sigma2 is ", tempSigma2, "/n"))
+    BTest <<- lapply(1:K, \(k) tcrossprod(basisTest[[k]] %*% exp(-gInv(trTheta[k, i]) * DTest), basisTest[[k]]))
     SigmaTest <<- Reduce("+", lapply(1:K, function(k) {
-      exp(trSigma2[k, i]) * BTest[[k]]
+      0.01 * exp(trSigma2[k,i]) * BTest[[k]]
     })) + exp(trTau2[i]) * diag(STest * nTest) + 
-      exp(gInv(trThf[i]) * DXTestFull) 
+      0.01 * exp(trSigf2[i]) * exp(-gInv(trThf[i]) * DXTestFull) 
     #temp <- matrix(1, nrow = nrow(SigmaTest), ncol = ncol(SigmaTest))
     #diag(temp) <- 0.02*diag(temp)
     YPreds[ , i] <- t(rmvnorm(1, mean = ATest %*% beta[ , i], sigma = SigmaTest))
@@ -311,8 +313,7 @@ mcmc <- function(X, Z, Y, D, K,
   #preds <- lapply(1:nTestSubj, function(j) {
   #  apply(YPreds[[j]], 1, quantile, c(0.025, 0.5, 0.975))
   #})
-  preds <- 5
-  #preds <- apply(YPreds, 1, quantile, c(0.025, 0.5, 0.975))
+  preds <- apply(YPreds, 1, quantile, c(0.025, 0.5, 0.975))
   
   # Return results
   return(list(acceptance = acceptance, 

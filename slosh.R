@@ -60,14 +60,14 @@ flood.test <- list(X=XTest, Z=ZTest, Y=YTest, U=UTest, D=DTest)
 save(flood.train, flood.test, file = "data/slosh/flood_subset.RData")
 
 K <- 9
-propSD <- list(sigf2 = 0.2,
+propSD <- list(sigf2 = 0.4,
                thf = 0.3,
-               sigma2 = seq(0.2, 0.4, length = K),
+               sigma2 = seq(0.4, 0.6, length = K),
                tau2 = 0.2,
                theta = seq(0.5, 0.8, length = K))
-starting <- list(sigma2 = seq(50, 100, length = K),
+starting <- list(sigma2 = seq(0.01, 0.1, length = K),
                  theta = rep(0.5, K),
-                 sigf2 = 6,
+                 sigf2 = 1,
                  thf = 0.2, 
                  tau2 = 0.1,
                  beta = rep(0,7))
@@ -76,7 +76,7 @@ cat("Setup complete \n")
 results<- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                starting = starting,
                propSD = propSD,
-               nIter = 50, nBurn = 50, nThin=2,
+               nIter = 5000, nBurn = 5000, nThin=2,
                model = "full_gp")
 saveRDS(results, file = "objects/slosh.RDS")
 
@@ -96,7 +96,7 @@ for (i in 1:STest) {
   truth <- YTest[(nTest*(i-1)+1):(i*nTest)]
   pred <- results$preds[2, (nTest*(i-1)+1):(i*nTest)]
   rmse[i] <- sqrt(mean((truth - pred)^2))
-  lower <- results$preds[1, (nTest*(i-1)+1):(i*nTest)]
+  lower <- pmax(0, results$preds[1, (nTest*(i-1)+1):(i*nTest)])
   upper <- results$preds[3, (nTest*(i-1)+1):(i*nTest)]
   cvg[i] <- mean(lower < truth & upper > truth)
   width[i] <- mean(upper - lower)
