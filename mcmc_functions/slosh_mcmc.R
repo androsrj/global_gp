@@ -232,6 +232,9 @@ mcmc <- function(X, Z, Y, D, K,
       0.01 * exp(trSigma2[k,i]) * BTest[[k]]
     })) + exp(trTau2[i]) * diag(STest * nTest) + 
       0.01 * exp(trSigf2[i]) * exp(-gInv(trThf[i]) * DXTestFull) 
+      exp(trSigma2[k, i]) * BTest[[k]]
+    })) + exp(trTau2[i]) * diag(STest * nTest) #+ 
+      #exp(gInv(trThf[i]) * DXTestFull) 
     #temp <- matrix(1, nrow = nrow(SigmaTest), ncol = ncol(SigmaTest))
     #diag(temp) <- 0.02*diag(temp)
     YPreds[ , i] <- t(rmvnorm(1, mean = ATest %*% beta[ , i], sigma = SigmaTest))
