@@ -8,18 +8,19 @@ module load R
 
 ### Run simulation code and benchmark the start/end times
 start_time=$(date +%s)
-Rscript scen1_small.R
-Rscript scen1_large.R
-Rscript scen2_small.R
-Rscript scen2_large.R
-Rscript scen3_small.R
-Rscript scen3_large.R
-Rscript scen4_small.R
-Rscript scen4_large.R
-Rscript scen5_small.R
-Rscript scen5_large.R
-Rscript scen6_small.R
-Rscript scen6_large.R
+##Rscript scen1_small.R
+##Rscript scen1_large.R
+##Rscript scen2_small.R
+##Rscript scen2_large.R
+##Rscript scen3_small.R
+##Rscript scen3_large.R
+##Rscript scen4_small.R
+##Rscript scen4_large.R
+##Rscript scen5_small.R
+##Rscript scen5_large.R
+##Rscript scen6_small.R
+##Rscript scen6_large.R
+Rscript scen7_small.R
 finish_time=$(date +%s)
 
 ### Calculate and output total runtime

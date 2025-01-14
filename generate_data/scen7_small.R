@@ -38,7 +38,7 @@ trueBeta <- c(1, 0.5, -1)
 # Generate training data #
 set.seed(mySeed)
 X <- matrix(runif(n*p, 0, 10), nrow = n, ncol = p)
-Z <- matrix(runif(1 * S, 0, 100), ncol = 1)
+Z <- matrix(runif(2 * S, 0, 100), ncol = 2)
 train <- spatialData(n = n, 
                      X = X,
                      Z = Z,
@@ -58,7 +58,7 @@ U <- train$U[indexTest, ]
 # Generate testing data
 set.seed(mySeed)
 XTest <- matrix(runif(nTest*p, 0, 10), nrow = nTest, ncol = p)
-ZTest <- matrix(runif(1 * STest, 0, 100), ncol = 1)
+ZTest <- matrix(runif(2 * STest, 0, 100), ncol = 2)
 test <- spatialData(n = nTest, 
                     X = XTest, 
                     Z = ZTest,

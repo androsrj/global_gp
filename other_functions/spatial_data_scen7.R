@@ -33,7 +33,7 @@ spatialData <- function(n, X, Z,
   
   # Sample gamma, from which we create h
   gamma <- t(rmvnorm(1, sigma = C))
-  h <- Z %x% gamma
+  h <- Z[ , 1] %x% gamma
   
   # Sample f
   f <- t(rmvnorm(1, sigma = matrix(1, S, S) %x% CX + diag(eps, S*n)))
