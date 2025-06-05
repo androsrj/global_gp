@@ -77,7 +77,7 @@ mcmc <- function(X, Z, Y, D, K,
   
   # Initial predictions for test subjects
   YPreds <- matrix(data = NA, nrow = nTest * STest, ncol = nIter)
-  YPreds[ , 1] <- t(rmvnorm(1, mean = ATest * beta[1], sigma = SigmaTest))
+  YPreds[ , 1] <- t(rmvnorm(1, mean = ATest %*% beta[ , 1], sigma = SigmaTest))
   
   # Run Gibbs/Metropolis for one chain
   for (i in 2:nIter) {
@@ -306,12 +306,12 @@ mcmc <- function(X, Z, Y, D, K,
               credUpper = credUpper,
               preds = preds,
               predSamples = YPreds,
-	      paramSamples = list(sigf2 = sigf2, 
-	                          thf = thf, 
-	                          sigma2 = sigma2, 
-	                          theta = theta, 
-	                          tau2 = tau2, 
-	                          beta = beta)))
+              paramSamples = list(sigf2 = sigf2, 
+                                  thf = thf, 
+                                  sigma2 = sigma2, 
+                                  theta = theta, 
+                                  tau2 = tau2, 
+                                  beta = beta)))
 }
 
 

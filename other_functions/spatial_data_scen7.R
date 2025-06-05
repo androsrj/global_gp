@@ -23,9 +23,11 @@ spatialData <- function(n, X, Z,
   
   # Compute the covariance matrix (symmetric)
   if (covariance == "exponential") {
+    D <- rdist(U)
     DZ <- rdist(UZ)
     DX <- rdist(X)
   } else if (covariance == "exp_squared") {
+    D <- rdist(U)^2
     DZ <- rdist(UZ)^2
     DX <- rdist(X)^2
   } else {
