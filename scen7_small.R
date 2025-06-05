@@ -8,7 +8,7 @@ source("other_functions/helper_functions.R") # Other misc functions (not part of
 source("other_functions/bsplines_2_3D.R")
 library(fields)
 
-nReps <- 10
+nReps <- 3
 size <- "small"
 scen <- "scen7"
 dir <- paste0("data/", size, "/", scen, "/")

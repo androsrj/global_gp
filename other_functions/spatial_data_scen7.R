@@ -1,8 +1,7 @@
 library(fields)
-library(splines2)
 
 # Function to simulate spatial data
-spatialData <- function(n, X, Z,
+spatialData <- function(n, X, Z, 
                         sigf2, thf, sigma2, theta, tau2, beta,
                         U = NULL, range = c(0, 10), dims = 2, eps=1e-6,
                         covariance = "exponential") {
@@ -17,23 +16,27 @@ spatialData <- function(n, X, Z,
   # Order U by sum of coordinates
   U <- U[order(rowSums(U)), ]
   
+  # Temporary matrix that combines U and Z (for sampling h later)
+  S <- nrow(Z)
+  UZ <- cbind(U[rep(1:n, times = S), ],
+              Z[rep(1:S, each = n), ])
+  
   # Compute the covariance matrix (symmetric)
   if (covariance == "exponential") {
-    D <- rdist(U)
+    DZ <- rdist(UZ)
     DX <- rdist(X)
   } else if (covariance == "exp_squared") {
-    D <- rdist(U)^2
+    DZ <- rdist(UZ)^2
     DX <- rdist(X)^2
   } else {
     stop("Covariance function must be either exponential or exp_squared.")
   }
   #C <- sigma2 * exp(- theta * D)
-  C <- sigma2 * exp(-theta * D)
+  CZ <- sigma2 * exp(-theta * DZ)
   CX <- sigf2 * exp(-thf * DX)
   
-  # Sample gamma, from which we create h
-  gamma <- t(rmvnorm(1, sigma = C))
-  h <- Z[ , 1] %x% gamma
+  # Sample h, which is a GP between both the locations U and global covariates Z
+  h <- t(rmvnorm(1, sigma = CZ))
   
   # Sample f
   f <- t(rmvnorm(1, sigma = matrix(1, S, S) %x% CX + diag(eps, S*n)))

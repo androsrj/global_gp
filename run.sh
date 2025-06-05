@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=0-05:00:00
+#SBATCH --time=0-12:00:00
 #SBATCH --partition=medium
 #SBATCH --mem-per-cpu=8GB
 #SBATCH --output=outfile

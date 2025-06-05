@@ -82,8 +82,10 @@ mcmc <- function(X, Z, Y, D, K,
   # Run Gibbs/Metropolis for one chain
   for (i in 2:nIter) {
     
-    cat(paste0("Beginning iteration ", i, ".\n"))
-    
+    if (i %% 10 == 0) {
+      cat(paste0("Beginning iteration ", i, ".\n"))
+    }
+
     ### Metropolis update (sigma2_f) ###
     propTrSigf2 <- rnorm(1, mean = trSigf2[i - 1], sd = sdSigf2)
     MHratio <- logRatioSigf2(propTrSigf2, 
@@ -93,7 +95,7 @@ mcmc <- function(X, Z, Y, D, K,
                               trTheta[ , i - 1],
                               trTau2[i - 1],
                               beta[ , i - 1])
-    cat(paste0("MH Ratio is ", round(exp(MHratio), 2), "\n"))
+    #cat(paste0("MH Ratio is ", round(exp(MHratio), 2), "\n"))
     if(runif(1) < exp(MHratio)) {
       trSigf2[i] <- propTrSigf2
       Sigma <<- SigmaProp
@@ -102,9 +104,8 @@ mcmc <- function(X, Z, Y, D, K,
       trSigf2[i] <- trSigf2[i - 1]
     }
     
-    cat(paste0("finished sigf2: ", round(exp(trSigf2[i]), 2), "\n"))
-    
-    cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[ , i-1]), 3), "\n"))
+    #cat(paste0("finished sigf2: ", round(exp(trSigf2[i]), 2), "\n"))
+    #cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[ , i-1]), 3), "\n"))
     
     ### Metropolis update (theta_f) ###
     propTrThf <- rnorm(1, mean = trThf[i - 1], sd = sdThf)
@@ -124,9 +125,8 @@ mcmc <- function(X, Z, Y, D, K,
       trThf[i] <- trThf[i - 1]
     }
     
-    cat(paste0("finished thf: ", round(gInv(trThf[i]), 2), "\n"))
-    
-    cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[ , i-1]), 3), "\n"))
+    #cat(paste0("finished thf: ", round(gInv(trThf[i]), 2), "\n"))
+    #cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[ , i-1]), 3), "\n"))
     
     ### Metropolis update (sigma2) ###
     propTrSigma2 <- rnorm(K, mean = trSigma2[ , i - 1], sd = sdSigma2)
@@ -146,11 +146,10 @@ mcmc <- function(X, Z, Y, D, K,
       trSigma2[, i] <- trSigma2[, i - 1]
     }
     
-    cat("finished sigma2: ")
-    cat(round(exp(trSigma2[,i]), 2))
-    cat("\n")
-    
-    cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[ , i - 1]), 3), "\n"))
+    #cat("finished sigma2: ")
+    #cat(round(exp(trSigma2[,i]), 2))
+    #cat("\n")
+    #cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[ , i - 1]), 3), "\n"))
     
     ### Metropolis update (theta) ###
     propTrTheta <- rnorm(K, mean = trTheta[ , i - 1], sd = sdTheta)
@@ -171,11 +170,10 @@ mcmc <- function(X, Z, Y, D, K,
       trTheta[, i] <- trTheta[, i - 1]
     }
     
-    cat("finished theta: ")
-    cat(round(gInv(trTheta[,i]), 2))
-    cat("\n")
-
-    cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[ , i - 1]), 3), "\n"))
+    #cat("finished theta: ")
+    #cat(round(gInv(trTheta[,i]), 2))
+    #cat("\n")
+    #cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[ , i - 1]), 3), "\n"))
     
     ### Metropolis update (tau2) ###
     
@@ -199,9 +197,8 @@ mcmc <- function(X, Z, Y, D, K,
       trTau2[i] <- trTau2[i - 1]
     }
     #cat("Tau2 updated \n")
-    cat(paste0("finished tau: ", round(exp(trTau2[i]), 2), "\n"))
-    
-    cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[ , i - 1]), 3), "\n"))
+    #cat(paste0("finished tau: ", round(exp(trTau2[i]), 2), "\n"))
+    #cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[ , i - 1]), 3), "\n"))
     
     ### Gibbs update (beta) ###
     
@@ -211,10 +208,8 @@ mcmc <- function(X, Z, Y, D, K,
     beta[ , i] <- t(rmvnorm(1, meanBeta, SigmaBeta))
     #beta[i] <-  mean(Y)
     
-    cat(paste0("finished beta: ", round(beta[ , i], 2), "\n"))
-    
-    cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[ , i - 1]), 3), "\n"))
-    
+    #cat(paste0("finished beta: ", round(beta[ , i], 2), "\n"))
+    #cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[ , i - 1]), 3), "\n"))
     #cat("beta updated \n")
     
     ### Posterior predictive sampling for test subjects ###
