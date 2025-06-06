@@ -22,7 +22,7 @@ trueSigf2 <- 5
 trueThf <- 1
 
 # Covariance parameters for global covariates (each length K)
-trueSigma2 <- 50
+trueSigma2 <- 5
 trueTheta <- 1
 
 # Error variance
@@ -48,7 +48,7 @@ train <- spatialData(n = n,
                      tau2 = trueTau2, 
                      beta = trueBeta,
                      range = c(0, 100))
-save(train, file = "../data/small/scen7/train.RData")
+save(train, file = "../data/small/scen10/train.RData")
 
 set.seed(mySeed)
 indexTest <- sample(n, nTest)
@@ -70,5 +70,5 @@ test <- spatialData(n = nTest,
                     beta = trueBeta,
                     range = c(0, 100))
 test$index <- indexTest
-save(test, file = "../data/small/scen7/test.RData")
+save(test, file = "../data/small/scen10/test.RData")
 

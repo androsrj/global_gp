@@ -21,6 +21,10 @@ start_time=$(date +%s)
 ##Rscript scen6_small.R
 ##Rscript scen6_large.R
 Rscript scen7_small.R
+Rscript scen8_small.R
+Rscript scen9_small.R
+Rscript scen10_small.R
+Rscript scen11_small.R
 finish_time=$(date +%s)
 
 ### Calculate and output total runtime

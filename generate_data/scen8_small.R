@@ -18,7 +18,7 @@ p <- 2
 # Need to play around with these
 
 # Covariance parameters for local covariates
-trueSigf2 <- 5
+trueSigf2 <- 10
 trueThf <- 1
 
 # Covariance parameters for global covariates (each length K)
@@ -48,7 +48,7 @@ train <- spatialData(n = n,
                      tau2 = trueTau2, 
                      beta = trueBeta,
                      range = c(0, 100))
-save(train, file = "../data/small/scen7/train.RData")
+save(train, file = "../data/small/scen8/train.RData")
 
 set.seed(mySeed)
 indexTest <- sample(n, nTest)
@@ -70,5 +70,5 @@ test <- spatialData(n = nTest,
                     beta = trueBeta,
                     range = c(0, 100))
 test$index <- indexTest
-save(test, file = "../data/small/scen7/test.RData")
+save(test, file = "../data/small/scen8/test.RData")
 

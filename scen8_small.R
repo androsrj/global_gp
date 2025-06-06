@@ -10,7 +10,7 @@ library(fields)
 
 nReps <- 10
 size <- "small"
-scen <- "scen4"
+scen <- "scen8"
 dir <- paste0("data/", size, "/", scen, "/")
 load(paste0(dir, "train.RData"))
 load(paste0(dir, "test.RData"))
@@ -28,15 +28,15 @@ UTest <- test$U
 DTest <- test$D
 K <- 9
 propSD <- list(sigf2 = 0.6,
-               thf = 2,
-               sigma2 = seq(0.1, 0.25, length = K),
+               thf = 1,
+               sigma2 = seq(0.1, 0.2, length = K),
                tau2 = 0.35,
-               theta = seq(0.9, 1.5, length = K))
+               theta = seq(0.5, 0.9, length = K))
 starting <- list(sigma2 = seq(50, 100, length = K),
-                 theta = rep(0.5, K),
+                 theta = rep(5, K),
                  sigf2 = 4,
-                 thf = 1.5, 
-                 tau2 = 1.5,
+                 thf = 3, 
+                 tau2 = 0.1,
                  beta = c(0, 0, 0))
 
 cat("Setup complete \n")
@@ -72,10 +72,11 @@ mean(sapply(1:nReps, \(i) results[[i]]$posteriorMeans$tau2))
 
 nSamples <- length(results$paramSamples[[5]])
 #plot(1:nSamples, results$paramSamples[[5]], type="l")
-saveRDS(results, file = "objects/global.RDS")
+#saveRDS(results, file = "objects/global.RDS")
 
 library(MBA)
 library(fields)
+
 
 results <- results[[1]]
 STest <- nrow(test$Z)
@@ -90,8 +91,8 @@ for (i in 1:STest) {
   cvg[i] <- mean(lower < truth & upper > truth)
   width[i] <- mean(upper - lower)
   scores[i] <- mean((upper - lower) + 
-		     2/a * (lower - truth) * (truth < lower) + 
-		     2/a * (truth - upper) * (truth > upper))
+                      2/a * (lower - truth) * (truth < lower) + 
+                      2/a * (truth - upper) * (truth > upper))
   predSamples <- t(results$predSamples[(nTest*(i-1)+1):(i*nTest), ])
   crps[i] <- mean(energy_score(truth, predSamples))
 }

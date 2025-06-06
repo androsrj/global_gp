@@ -52,11 +52,24 @@ for (i in 1:nReps) {
 path <- paste0("objects/", size, "_", scen, ".RDS") 
 saveRDS(results, file = path)
 
-#theta
+cat("Mean of Y: \n")
 mean(train$Y)
+cat("SD of Y: \n")
 sd(train$Y)
-results$posteriorMeans
-results$acceptance
+cat("Sigma2: \n")
+apply(sapply(1:nReps, \(i) results[[i]]$posteriorMeans$sigma2), 1, mean)
+cat("Theta: \n")
+apply(sapply(1:nReps, \(i) results[[i]]$posteriorMeans$theta), 1, mean)
+cat("Sigma2_f: \n")
+mean(sapply(1:nReps, \(i) results[[i]]$posteriorMeans$sigf2))
+cat("Theta_f: \n")
+mean(sapply(1:nReps, \(i) results[[i]]$posteriorMeans$thf))
+cat("Beta: \n")
+apply(sapply(1:nReps, \(i) results[[i]]$posteriorMeans$beta), 1, mean)
+cat("Tau2: \n")
+mean(sapply(1:nReps, \(i) results[[i]]$posteriorMeans$tau2))
+
+
 nSamples <- length(results$paramSamples[[5]])
 plot(1:nSamples, results$paramSamples[[5]], type="l")
 saveRDS(results, file = "objects/global.RDS")
