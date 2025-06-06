@@ -1,4 +1,4 @@
-source("../other_functions/spatial_data_scen7.R")
+source("../other_functions/spatial_data_misspec.R")
 mySeed <- 45213
 
 # Sample sizes
