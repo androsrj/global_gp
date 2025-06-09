@@ -122,6 +122,7 @@ if (SVC == TRUE) {
 ########################
 if (FOSR == TRUE) {
   for (s in scenarios) {
+    cat(paste0("FOSR, Scenario ", s, ": \n"))
     
     # Read in original data
     load(paste0("data/small/scen", s, "/train.RData"))

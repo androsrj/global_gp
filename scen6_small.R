@@ -45,7 +45,7 @@ for (i in 1:nReps) {
   results[[i]] <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                        starting = starting,
                        propSD = propSD,
-                       nIter = 200, nBurn = 100, nThin=2,
+                       nIter = 2000, nBurn = 1000, nThin=2,
                        model = "full_gp")
 }
 

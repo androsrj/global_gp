@@ -10,7 +10,7 @@ library(fields)
 
 nReps <- 10
 size <- "small"
-scen <- "scen8"
+scen <- "scen11"
 dir <- paste0("data/", size, "/", scen, "/")
 load(paste0(dir, "train.RData"))
 load(paste0(dir, "test.RData"))
@@ -28,14 +28,14 @@ UTest <- test$U
 DTest <- test$D
 K <- 9
 propSD <- list(sigf2 = 0.6,
-               thf = 1,
+               thf = 0.7,
                sigma2 = seq(0.1, 0.2, length = K),
                tau2 = 0.35,
                theta = seq(0.5, 0.9, length = K))
 starting <- list(sigma2 = seq(50, 100, length = K),
                  theta = rep(5, K),
                  sigf2 = 4,
-                 thf = 5, 
+                 thf = 1.5, 
                  tau2 = 0.1,
                  beta = c(0, 0, 0))
 
