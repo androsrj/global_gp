@@ -1,13 +1,13 @@
 library(ggplot2)
 library(spBayes)
-nScen <- 6
-nReps <- 10
+nScen <- 11
+nReps <- 2
 line.type <- 2
 line.width <- 4
 
 # Density plots for beta0
 pdf("figures/svc/beta0_svc.pdf")
-par(mfrow = c(2,3))
+par(mfrow = c(3,4))
 for (i in 1:nScen) {
   path <- paste0("objects/svc_scen", i, ".RDS") 
   results <- readRDS(path)
@@ -24,7 +24,7 @@ dev.off()
 
 # Density plots for beta1
 pdf("figures/svc/beta1_svc.pdf")
-par(mfrow = c(2,3))
+par(mfrow = c(3,4))
 for (i in 1:nScen) {
   path <- paste0("objects/svc_scen", i, ".RDS") 
   results <- readRDS(path)
@@ -40,7 +40,7 @@ dev.off()
 
 # Density plots for beta2
 pdf("figures/svc/beta2_svc.pdf")
-par(mfrow = c(2,3))
+par(mfrow = c(3,4))
 for (i in 1:nScen) {
   path <- paste0("objects/svc_scen", i, ".RDS") 
   results <- readRDS(path)
@@ -57,7 +57,7 @@ dev.off()
 
 # Density plots for tau2
 pdf("figures/svc/tau2_svc.pdf")
-par(mfrow = c(2,3))
+par(mfrow = c(3,4))
 for (i in 1:nScen) {
   path <- paste0("objects/svc_scen", i, ".RDS") 
   results <- readRDS(path)

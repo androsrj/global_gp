@@ -1,12 +1,12 @@
 library(ggplot2)
-nScen <- 6
-nReps <- 10
+nScen <- 11
+nReps <- 2
 line.type <- 2
 line.width <- 4
 
 # Density plots for beta0
 pdf("figures/gp/beta0_gp.pdf")
-par(mfrow = c(2,3))
+par(mfrow = c(3,4))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)
@@ -23,7 +23,7 @@ dev.off()
 
 # Density plots for beta1
 pdf("figures/gp/beta1_gp.pdf")
-par(mfrow = c(2,3))
+par(mfrow = c(3,4))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)
@@ -39,7 +39,7 @@ dev.off()
 
 # Density plots for beta2
 pdf("figures/gp/beta2_gp.pdf")
-par(mfrow = c(2,3))
+par(mfrow = c(3,4))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)
@@ -56,11 +56,11 @@ dev.off()
 
 # Density plots for theta_f
 pdf("figures/gp/thf_gp.pdf")
-par(mfrow = c(2,3))
+par(mfrow = c(3,4))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)
-  thf_samples <- results[[3]]$paramSamples$thf
+  thf_samples <- results[[1]]$paramSamples$thf
   if (i == 2) {
     true_thf <- 10
   } else {
@@ -76,7 +76,7 @@ dev.off()
 
 # Density plots for sigf2
 pdf("figures/gp/sigf2_gp.pdf")
-par(mfrow = c(2,3))
+par(mfrow = c(3,4))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)
@@ -96,7 +96,7 @@ dev.off()
 
 # Density plots for tau2
 pdf("figures/gp/tau2_gp.pdf")
-par(mfrow = c(2,3))
+par(mfrow = c(3,4))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)
