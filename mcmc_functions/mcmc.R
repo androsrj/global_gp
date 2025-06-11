@@ -1,8 +1,7 @@
 ### FINAL MCMC SKETCHING FUNCTION ###
 # Priors, Jacobians, likelihood, and posterior must already be sourced
 
-mcmc <- function(X, Z, Y, D, 
-		 XTest, ZTest, YTest, DTest, K,
+mcmc <- function(X, Z, Y, D, K,
                  starting,
                  propSD,
                  model = c("full_gp", "mpp", "sparse_gpp")[1],
