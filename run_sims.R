@@ -7,15 +7,16 @@ source("mcmc_functions/posterior.R")
 source("other_functions/helper_functions.R") # Other misc functions (not part of MCMC)
 source("other_functions/bsplines_2_3D.R")
 library(MBA)
+library(splines)
 library(fields)
 library(parallel) 
 library(doParallel)
 library(foreach) 
 
 run.sims <- function(scen) {
-  dir <- paste0("data/", size, "/scen", scen, "/")
-  load(paste0(dir, "train.RData"))
-  load(paste0(dir, "test.RData"))
+  dir <- paste0("data/small/scen", scen, "/")
+  train <- readRDS(paste0(dir, "train.RDS"))
+  test <- readRDS(paste0(dir, "test.RDS"))
   n <- nrow(train$X)
   nTest <- nrow(test$X)
   X <- train$X
@@ -55,14 +56,16 @@ run.sims <- function(scen) {
   
   results <- vector("list", length = nReps)
   for (i in 1:nReps) {
-    results[[i]] <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
+    results[[i]] <- mcmc(X = X, Z = Z, Y = Y, D = D, 
+			 XTest = XTest, ZTest = ZTest, 
+			 YTest = YTest, DTest = DTest, K = K,
                          starting = starting,
                          propSD = propSD,
-                         nIter = 2000, nBurn = 1000, nThin=2,
+                         nIter = 200, nBurn = 100, nThin=2,
                          model = "full_gp")
   }
   
-  path <- paste0("objects/", size, "_scen", scen, ".RDS") 
+  path <- paste0("objects/small_scen", scen, ".RDS") 
   saveRDS(results, file = path)
   
   acc <- apply(sapply(1:nReps, \(i) unlist(results[[i]]$acceptance)), 1, mean)
@@ -94,5 +97,5 @@ nReps <- 10
 nCores <- 11
 cl <- makeCluster(nCores)
 registerDoParallel(cl)
-obj <- foreach(i = 1:nCores, .packages = "mvtnorm") %dopar% run.sims(i)
+obj <- foreach(i = 1:nCores, .packages = c("mvtnorm", "splines", "fields")) %dopar% run.sims(i)
 stopCluster(cl)
