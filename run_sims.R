@@ -19,7 +19,7 @@ run.mcmc <- function(rep) {
   results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                   starting = starting,
                   propSD = propSD,
-                  nIter = 200, nBurn = 100, nThin=2,
+                  nIter = 4000, nBurn = 1000, nThin=2,
                   model = "full_gp")
   return(results)
 }
@@ -38,9 +38,9 @@ U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
 propSD <- list(sigma2 = seq(0.1, 0.2, length = K),
-               theta = seq(0.4, 0.7, length = K),
+               theta = seq(0.2, 0.4, length = K),
                sigf2 = 0.4,
-               thf = 2,
+               thf = 1,
                tau2 = 0.4)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
@@ -55,6 +55,7 @@ stopCluster(cl)
 saveRDS(obj, file = paste0("objects/small_scen", scen, ".RDS"))
 acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
 cat(paste0("Finished Scenario ", scen, " with average acceptance of: "))
+acc
 
 ##### SCENARIO 2 #####
 scen <- 2
@@ -70,9 +71,9 @@ U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
 propSD <- list(sigma2 = seq(0.1, 0.25, length = K),
-               theta = seq(0.5, 0.8, length = K),
+               theta = seq(0.2, 0.4, length = K),
                sigf2 = 0.4,
-               thf = 2,
+               thf = 1,
                tau2 = 0.4)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
@@ -87,6 +88,7 @@ stopCluster(cl)
 saveRDS(obj, file = paste0("objects/small_scen", scen, ".RDS"))
 acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
 cat(paste0("Finished Scenario ", scen, " with average acceptance of: "))
+acc
 
 ##### SCENARIO 3 #####
 scen <- 3
@@ -102,9 +104,9 @@ U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
 propSD <- list(sigma2 = seq(0.1, 0.2, length = K),
-               theta = seq(0.5, 0.8, length = K),
+               theta = seq(0.2, 0.4, length = K),
                sigf2 = 0.6,
-               thf = 2,
+               thf = 1,
                tau2 = 0.3)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
@@ -119,6 +121,7 @@ stopCluster(cl)
 saveRDS(obj, file = paste0("objects/small_scen", scen, ".RDS"))
 acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
 cat(paste0("Finished Scenario ", scen, " with average acceptance of: "))
+acc
 
 ##### SCENARIO 4 #####
 scen <- 4
@@ -134,9 +137,9 @@ U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
 propSD <- list(sigma2 = seq(0.1, 0.25, length = K),
-               theta = seq(0.9, 1.5, length = K),
+               theta = seq(0.3, 0.6, length = K),
                sigf2 = 0.6,
-               thf = 2,
+               thf = 1,
                tau2 = 0.35)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
@@ -151,6 +154,7 @@ stopCluster(cl)
 saveRDS(obj, file = paste0("objects/small_scen", scen, ".RDS"))
 acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
 cat(paste0("Finished Scenario ", scen, " with average acceptance of: "))
+acc
 
 ##### SCENARIO 5 #####
 scen <- 5
@@ -168,7 +172,7 @@ K <- 9
 propSD <- list(sigma2 = seq(0.2, 0.4, length = K),
                theta = seq(0.4, 0.7, length = K),
                sigf2 = 0.6,
-               thf = 1.5,
+               thf = 1,
                tau2 = 0.35)
 starting <- list(sigma2 = runif(K, 5, 10),
                  theta = rep(.25, K),
@@ -183,6 +187,7 @@ stopCluster(cl)
 saveRDS(obj, file = paste0("objects/small_scen", scen, ".RDS"))
 acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
 cat(paste0("Finished Scenario ", scen, " with average acceptance of: "))
+acc
 
 ##### SCENARIO 6 #####
 scen <- 6
@@ -198,7 +203,7 @@ U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
 propSD <- list(sigma2 = seq(0.1, 0.2, length = K),
-               theta = seq(0.5, 0.9, length = K),
+               theta = seq(0.3, 0.6, length = K),
                sigf2 = 0.6,
                thf = 0.7,
                tau2 = 0.4)
@@ -215,6 +220,7 @@ stopCluster(cl)
 saveRDS(obj, file = paste0("objects/small_scen", scen, ".RDS"))
 acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
 cat(paste0("Finished Scenario ", scen, " with average acceptance of: "))
+acc
 
 ##### SCENARIO 7 #####
 scen <- 7
@@ -229,11 +235,11 @@ Y <- train$Y; YTest <- test$Y
 U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
-propSD <- list(sigma2 = seq(0.1, 0.2, length = K),
-               theta = seq(0.4, 0.7, length = K),
-               sigf2 = 0.4,
-               thf = 2,
-               tau2 = 0.4)
+propSD <- list(sigma2 = seq(0.4, 0.6, length = K),
+               theta = seq(3, 4, length = K),
+               sigf2 = 1.5,
+               thf = 20,
+               tau2 = 0.25)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
                  sigf2 = 7,
@@ -247,6 +253,7 @@ stopCluster(cl)
 saveRDS(obj, file = paste0("objects/small_scen", scen, ".RDS"))
 acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
 cat(paste0("Finished Scenario ", scen, " with average acceptance of: "))
+acc
 
 ##### SCENARIO 8 #####
 scen <- 8
@@ -261,11 +268,11 @@ Y <- train$Y; YTest <- test$Y
 U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
-propSD <- list(sigma2 = seq(0.1, 0.2, length = K),
-               theta = seq(0.5, 0.9, length = K),
+propSD <- list(sigma2 = seq(0.3, 0.5, length = K),
+               theta = seq(4, 5, length = K),
                sigf2 = 0.6,
-               thf = 1,
-               tau2 = 0.35)
+               thf = 1.2,
+               tau2 = 0.25)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
                  sigf2 = 7,
@@ -279,6 +286,7 @@ stopCluster(cl)
 saveRDS(obj, file = paste0("objects/small_scen", scen, ".RDS"))
 acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
 cat(paste0("Finished Scenario ", scen, " with average acceptance of: "))
+acc
 
 ##### SCENARIO 9 #####
 scen <- 9
@@ -293,11 +301,11 @@ Y <- train$Y; YTest <- test$Y
 U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
-propSD <- list(sigma2 = seq(0.1, 0.2, length = K),
-               theta = seq(0.5, 0.8, length = K),
-               sigf2 = 0.6,
-               thf = 2,
-               tau2 = 0.3)
+propSD <- list(sigma2 = seq(0.4, 0.6, length = K),
+               theta = seq(1.6, 2, length = K),
+               sigf2 = 1.4,
+               thf = 20,
+               tau2 = 0.2)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
                  sigf2 = 17,
@@ -311,6 +319,7 @@ stopCluster(cl)
 saveRDS(obj, file = paste0("objects/small_scen", scen, ".RDS"))
 acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
 cat(paste0("Finished Scenario ", scen, " with average acceptance of: "))
+acc
 
 ##### SCENARIO 10 #####
 scen <- 10
@@ -325,11 +334,11 @@ Y <- train$Y; YTest <- test$Y
 U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
-propSD <- list(sigma2 = seq(0.2, 0.4, length = K),
-               theta = seq(0.4, 0.7, length = K),
+propSD <- list(sigma2 = seq(0.4, 0.7, length = K),
+               theta = seq(2.5, 3, length = K),
                sigf2 = 0.6,
-               thf = 1.5,
-               tau2 = 0.35)
+               thf = 1,
+               tau2 = 0.25)
 starting <- list(sigma2 = runif(K, 5, 10),
                  theta = rep(.25, K),
                  sigf2 = 7,
@@ -343,6 +352,7 @@ stopCluster(cl)
 saveRDS(obj, file = paste0("objects/small_scen", scen, ".RDS"))
 acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
 cat(paste0("Finished Scenario ", scen, " with average acceptance of: "))
+acc
 
 ##### SCENARIO 11 #####
 scen <- 11
@@ -357,11 +367,11 @@ Y <- train$Y; YTest <- test$Y
 U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
-propSD <- list(sigma2 = seq(0.1, 0.2, length = K),
-               theta = seq(0.5, 0.9, length = K),
-               sigf2 = 0.6,
-               thf = 0.7,
-               tau2 = 0.4)
+propSD <- list(sigma2 = seq(0.4, 0.6, length = K),
+               theta = seq(3, 4, length = K),
+               sigf2 = 2,
+               thf = 6,
+               tau2 = 0.3)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(2, K),
                  sigf2 = 7,
@@ -375,7 +385,7 @@ stopCluster(cl)
 saveRDS(obj, file = paste0("objects/small_scen", scen, ".RDS"))
 acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
 cat(paste0("Finished Scenario ", scen, " with average acceptance of: "))
-
+acc
 #acc <- apply(sapply(1:nReps, \(i) unlist(results[[i]]$acceptance)), 1, mean)
 #sigma2 <- apply(sapply(1:nReps, \(i) results[[i]]$posteriorMeans$sigma2), 1, mean)
 #theta <- apply(sapply(1:nReps, \(i) results[[i]]$posteriorMeans$theta), 1, mean)

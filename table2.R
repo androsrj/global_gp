@@ -20,8 +20,8 @@ if (GGP == TRUE) {
     # Read in model results and original data
     results <- readRDS(paste0("objects/small_scen", s, ".RDS"))
     nReps <- length(results)
-    load(paste0("data/small/scen", s, "/train.RData"))
-    load(paste0("data/small/scen", s, "/test.RData"))
+    train <- readRDS(paste0("data/small/scen", s, "/train.RDS"))
+    test <- readRDS(paste0("data/small/scen", s, "/test.RDS"))
     
     # Std deviation of original data
     cat("SD of Y: \n")
@@ -74,8 +74,8 @@ if (SVC == TRUE) {
     # Read in model results and original data
     results <- readRDS(paste0("objects/svc_scen", s, ".RDS"))
     nReps <- length(results)
-    load(paste0("data/small/scen", s, "/train.RData"))
-    load(paste0("data/small/scen", s, "/test.RData"))
+    train <- readRDS(paste0("data/small/scen", s, "/train.RDS"))
+    test <- readRDS(paste0("data/small/scen", s, "/test.RDS"))
     
     # Std deviation of original data
     cat("SD of Y: \n")
@@ -125,8 +125,8 @@ if (FOSR == TRUE) {
     cat(paste0("FOSR, Scenario ", s, ": \n"))
     
     # Read in original data
-    load(paste0("data/small/scen", s, "/train.RData"))
-    load(paste0("data/small/scen", s, "/test.RData"))
+    train <- readRDS(paste0("data/small/scen", s, "/train.RDS"))
+    test <- readRDS(paste0("data/small/scen", s, "/test.RDS"))
     
     # Fit FOSR model
     n <- nrow(train$X)
