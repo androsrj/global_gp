@@ -1,10 +1,10 @@
 library(spBayes)
 source("other_functions/helper_functions.R")
 
-run_svc <- function(scen, nReps) {
+run.svc <- function(scen, nReps) {
   d.max <- max(iDist(train$U))
   r <- 2
-  n <<- nrow(train$X)
+  n <- nrow(train$X)
   nTest <- nrow(test$X)
   priors <- list("phi.Unif"=list(rep(3/(0.75*d.max), r), rep(3/(0.001*d.max), r)),
                  "sigma.sq.IG"=list(rep(2, r), rep(1, r)),
@@ -33,67 +33,67 @@ run_svc <- function(scen, nReps) {
 nReps <- 10
 
 # Scenario 1
-load("data/small/scen1/train.RData")
-load("data/small/scen1/test.RData")
-run_svc(1, nReps)
+train <- readRDS("data/small/scen1/train.RDS")
+test <- readRDS("data/small/scen1/test.RDS")
+run.svc(1, nReps)
 
 
 # Scenario 2
-load("data/small/scen2/train.RData")
-load("data/small/scen2/test.RData")
-run_svc(2, nReps)
+train <- readRDS("data/small/scen2/train.RDS")
+test <- readRDS("data/small/scen2/test.RDS")
+run.svc(2, nReps)
 
 
 # Scenario 3
-load("data/small/scen3/train.RData")
-load("data/small/scen3/test.RData")
-run_svc(3, nReps)
+train <- readRDS("data/small/scen3/train.RDS")
+test <- readRDS("data/small/scen3/test.RDS")
+run.svc(3, nReps)
 
 
 # Scenario 4
-load("data/small/scen4/train.RData")
-load("data/small/scen4/test.RData")
-run_svc(4, nReps)
+train <- readRDS("data/small/scen4/train.RDS")
+test <- readRDS("data/small/scen4/test.RDS")
+run.svc(4, nReps)
 
 
 # Scenario 5
-load("data/small/scen5/train.RData")
-load("data/small/scen5/test.RData")
-run_svc(5, nReps)
+train <- readRDS("data/small/scen5/train.RDS")
+test <- readRDS("data/small/scen5/test.RDS")
+run.svc(5, nReps)
 
 
 # Scenario 6
-load("data/small/scen6/train.RData")
-load("data/small/scen6/test.RData")
-run_svc(6, nReps)
+train <- readRDS("data/small/scen6/train.RDS")
+test <- readRDS("data/small/scen6/test.RDS")
+run.svc(6, nReps)
 
 
 # Scenario 7
-load("data/small/scen7/train.RData")
-load("data/small/scen7/test.RData")
-run_svc(7, nReps)
+train <- readRDS("data/small/scen7/train.RDS")
+test <- readRDS("data/small/scen7/test.RDS")
+run.svc(7, nReps)
 
 
 # Scenario 8
-load("data/small/scen8/train.RData")
-load("data/small/scen8/test.RData")
-run_svc(8, nReps)
+train <- readRDS("data/small/scen8/train.RDS")
+test <- readRDS("data/small/scen8/test.RDS")
+run.svc(8, nReps)
 
 
 # Scenario 9
-load("data/small/scen9/train.RData")
-load("data/small/scen9/test.RData")
-run_svc(9, nReps)
+train <- readRDS("data/small/scen9/train.RDS")
+test <- readRDS("data/small/scen9/test.RDS")
+run.svc(9, nReps)
 
 
 # Scenario 10
-load("data/small/scen10/train.RData")
-load("data/small/scen10/test.RData")
-run_svc(10, nReps)
+train <- readRDS("data/small/scen10/train.RDS")
+test <- readRDS("data/small/scen10/test.RDS")
+run.svc(10, nReps)
 
 
 # Scenario 11
-load("data/small/scen11/train.RData")
-load("data/small/scen11/test.RData")
-run_svc(11, nReps)
+train <- readRDS("data/small/scen11/train.RDS")
+test <- readRDS("data/small/scen11/test.RDS")
+run.svc(11, nReps)
 
