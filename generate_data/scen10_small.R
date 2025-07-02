@@ -18,12 +18,12 @@ p <- 2
 # Need to play around with these
 
 # Covariance parameters for local covariates
-trueSigf2 <- 5
-trueThf <- 1
+trueSigb2 <- 5
+trueThb <- 1
 
-# Covariance parameters for global covariates (each length K)
-trueSigma2 <- 5
-trueTheta <- 1
+# Covariance parameters for beta
+trueSigb2 <- seq(3, 5, length = p + 1)
+trueThb <- seq(0.5, 1.5, length = p + 1)
 
 # Error variance
 trueTau2 <- 0.2
@@ -41,8 +41,8 @@ Z <- matrix(runif(2 * S, 0, 100), ncol = 2)
 train <- spatialData(n = n, 
                      X = X,
                      Z = Z,
-                     sigf2 = trueSigf2,
-                     thf = trueThf,
+                     sigb2 = trueSigb2,
+                     thb = trueThb,
                      sigma2 = trueSigma2, 
                      theta = trueTheta, 
                      tau2 = trueTau2, 
@@ -62,8 +62,8 @@ test <- spatialData(n = nTest,
                     X = XTest, 
                     Z = ZTest,
                     U = U,
-                    sigf2 = trueSigf2,
-                    thf = trueThf,
+                    sigb2 = trueSigb2,
+                    thb = trueThb,
                     sigma2 = trueSigma2, 
                     theta = trueTheta, 
                     tau2 = trueTau2, 

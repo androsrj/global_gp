@@ -12,7 +12,7 @@ library(fields)
 library(parallel) 
 library(doParallel)
 library(foreach)
-nReps <- nCores <- 3
+nReps <- nCores <- 10
 set.seed(999)
 
 run.mcmc <- function(rep) {
@@ -37,15 +37,16 @@ Y <- train$Y; YTest <- test$Y
 U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
+q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.1, 0.2, length = K),
                theta = seq(0.2, 0.4, length = K),
-               sigf2 = 0.4,
-               thf = 1,
+               sigb2 = seq(0.3, 0.5, length = q),
+               thb = seq(0.8, 1.2, length = q),
                tau2 = 0.4)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
-                 sigf2 = 7,
-                 thf = 2, 
+                 sigb2 = rep(7, q),
+                 thb = rep(2, q), 
                  tau2 = 0.3,
                  beta = c(0, 0, 0))
 cl <- makeCluster(nCores)
@@ -70,15 +71,16 @@ Y <- train$Y; YTest <- test$Y
 U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
+q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.1, 0.25, length = K),
                theta = seq(0.2, 0.4, length = K),
-               sigf2 = 0.4,
-               thf = 1,
+               sigb2 = seq(0.3, 0.5, length = q),
+               thb = seq(0.8, 1.2, length = q),
                tau2 = 0.4)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
-                 sigf2 = 7,
-                 thf = 8, 
+                 sigb2 = rep(7, q),
+                 thb = rep(8, q), 
                  tau2 = 0.3,
                  beta = c(0, 0, 0))
 cl <- makeCluster(nCores)
@@ -103,15 +105,16 @@ Y <- train$Y; YTest <- test$Y
 U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
+q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.1, 0.2, length = K),
                theta = seq(0.2, 0.4, length = K),
-               sigf2 = 0.6,
-               thf = 1,
+               sigb2 = seq(0.5, 0.7, length = q),
+               thb = seq(0.8, 1.2, length = q),
                tau2 = 0.3)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
-                 sigf2 = 17,
-                 thf = 2, 
+                 sigb2 = rep(17, q),
+                 thb = rep(2, q), 
                  tau2 = 0.3,
                  beta = c(0, 0, 0))
 cl <- makeCluster(nCores)
@@ -136,15 +139,16 @@ Y <- train$Y; YTest <- test$Y
 U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
+q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.1, 0.25, length = K),
                theta = seq(0.3, 0.6, length = K),
-               sigf2 = 0.6,
-               thf = 1,
+               sigb2 = seq(0.5, 0.7, length = q),
+               thb = seq(0.8, 1.2, length = q),
                tau2 = 0.35)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
-                 sigf2 = 7,
-                 thf = 2, 
+                 sigb2 = rep(7, q),
+                 thb = rep(2, q),  
                  tau2 = 1.5,
                  beta = c(0, 0, 0))
 cl <- makeCluster(nCores)
@@ -169,15 +173,16 @@ Y <- train$Y; YTest <- test$Y
 U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
+q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.2, 0.4, length = K),
                theta = seq(0.4, 0.7, length = K),
-               sigf2 = 0.6,
-               thf = 1,
+               sigb2 = seq(0.5, 0.7, length = q),
+               thb = seq(0.8, 1.2, length = q),
                tau2 = 0.35)
 starting <- list(sigma2 = runif(K, 5, 10),
                  theta = rep(.25, K),
-                 sigf2 = 7,
-                 thf = 2, 
+                 sigb2 = rep(7, q),
+                 thb = rep(2, q), 
                  tau2 = 0.3,
                  beta = c(0, 0, 0))
 cl <- makeCluster(nCores)
@@ -202,15 +207,16 @@ Y <- train$Y; YTest <- test$Y
 U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
+q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.1, 0.2, length = K),
                theta = seq(0.3, 0.6, length = K),
-               sigf2 = 0.6,
-               thf = 0.7,
+               sigb2 = seq(0.5, 0.7, length = q),
+               thb = seq(0.5, 0.9, length = q),
                tau2 = 0.4)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(2, K),
-                 sigf2 = 7,
-                 thf = 2, 
+                 sigb2 = rep(7, q),
+                 thb = rep(2, q), 
                  tau2 = 0.3,
                  beta = c(0, 0, 0))
 cl <- makeCluster(nCores)
@@ -235,15 +241,16 @@ Y <- train$Y; YTest <- test$Y
 U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
+q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.4, 0.6, length = K),
                theta = seq(3, 4, length = K),
-               sigf2 = 1.5,
-               thf = 20,
+               sigb2 = seq(1.3, 1.7, length = q),
+               thb = seq(5, 10, length = q),
                tau2 = 0.25)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
-                 sigf2 = 7,
-                 thf = 2, 
+                 sigb2 = rep(7, q),
+                 thb = rep(2, q), 
                  tau2 = 0.3,
                  beta = c(0, 0, 0))
 cl <- makeCluster(nCores)
@@ -268,15 +275,16 @@ Y <- train$Y; YTest <- test$Y
 U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
+q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.3, 0.5, length = K),
                theta = seq(4, 5, length = K),
-               sigf2 = 0.6,
-               thf = 1.2,
+               sigb2 = seq(0.5, 0.7, length = q),
+               thb = seq(1.0, 1.4, length = q),
                tau2 = 0.25)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
-                 sigf2 = 7,
-                 thf = 2, 
+                 sigb2 = rep(7, q),
+                 thb = rep(2, q), 
                  tau2 = 0.3,
                  beta = c(0, 0, 0))
 cl <- makeCluster(nCores)
@@ -301,15 +309,16 @@ Y <- train$Y; YTest <- test$Y
 U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
+q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.4, 0.6, length = K),
                theta = seq(1.6, 2, length = K),
-               sigf2 = 1.4,
-               thf = 20,
+               sigb2 = seq(1.2, 1.6, length = q),
+               thb = seq(5, 10, length = q),
                tau2 = 0.2)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
-                 sigf2 = 17,
-                 thf = 2, 
+                 sigb2 = rep(17, q),
+                 thb = rep(2, q), 
                  tau2 = 0.3,
                  beta = c(0, 0, 0))
 cl <- makeCluster(nCores)
@@ -334,15 +343,16 @@ Y <- train$Y; YTest <- test$Y
 U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
+q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.4, 0.7, length = K),
                theta = seq(2.5, 3, length = K),
-               sigf2 = 0.6,
-               thf = 1,
+               sigb2 = seq(0.5, 0.7, length = q),
+               thb = seq(0.8, 1.2, length = q),
                tau2 = 0.25)
 starting <- list(sigma2 = runif(K, 5, 10),
                  theta = rep(.25, K),
-                 sigf2 = 7,
-                 thf = 2, 
+                 sigb2 = rep(7, q),
+                 thb = rep(2, q), 
                  tau2 = 0.3,
                  beta = c(0, 0, 0))
 cl <- makeCluster(nCores)
@@ -367,15 +377,16 @@ Y <- train$Y; YTest <- test$Y
 U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
+q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.4, 0.6, length = K),
                theta = seq(3, 4, length = K),
-               sigf2 = 2,
-               thf = 6,
+               sigb2 = seq(1.5, 2.5, length = q),
+               thb = seq(4, 8, length = q),
                tau2 = 0.3)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(2, K),
-                 sigf2 = 7,
-                 thf = 2, 
+                 sigb2 = rep(7, q),
+                 thb = rep(2, q),  
                  tau2 = 0.3,
                  beta = c(0, 0, 0))
 cl <- makeCluster(nCores)
@@ -386,6 +397,7 @@ saveRDS(obj, file = paste0("objects/small_scen", scen, ".RDS"))
 acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
 cat(paste0("Finished Scenario ", scen, " with average acceptance of: "))
 acc
+
 #acc <- apply(sapply(1:nReps, \(i) unlist(results[[i]]$acceptance)), 1, mean)
 #sigma2 <- apply(sapply(1:nReps, \(i) results[[i]]$posteriorMeans$sigma2), 1, mean)
 #theta <- apply(sapply(1:nReps, \(i) results[[i]]$posteriorMeans$theta), 1, mean)

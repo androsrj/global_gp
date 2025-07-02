@@ -15,7 +15,11 @@ logRatioSigma2 <- function(propTrSigma2, prevTrSigma2, trSigb2, trThb, trTheta, 
 logRatioSigb2 <- function(propTrSigb2, prevTrSigb2, trThb, trSigma2, trTheta, trTau2, beta) {
   propSigb2 <- exp(propTrSigb2)
   prevSigb2 <- exp(prevTrSigb2)
-  SigmaProp <<- Sigma + (propSigb2 - prevSigb2) * exp(-gInv(trThb) * DXFull)
+  DBNew <<- lapply(1:(p+1), \(j) matrix(X0[ , j], nrow = n, ncol = n) * 
+                 (propSigb2[j] * exp(-gInv(trThb[j]) * D)) *
+                 matrix(X0[ , j], nrow = n, ncol = n, byrow = T))
+  CBNew <<- matrix(1, S, S) %x% Reduce("+", DBNew)
+  SigmaProp <<- Sigma - CBFull + CBNew
   
   logLik(SigmaProp, beta) - logLik(Sigma, beta) + # Log Likelihoods
     sum(logPriorSigma2(propSigb2)) - sum(logPriorSigma2(prevSigb2)) + # Log Priors
@@ -37,8 +41,12 @@ logRatioTau2 <- function(propTrTau2, prevTrTau2, trSigb2, trThb, trSigma2, trThe
 logRatioThb <- function(propTrThb, prevTrThb, trSigma2, trTheta, trSigb2, trTau2, beta) {
   propThb <- gInv(propTrThb)
   prevThb <- gInv(prevTrThb)
-  #SigmaProp <<- SigmaK + exp(trSigb2) * exp(-propThb * D)
-  SigmaProp <<- Sigma - exp(trSigb2) * exp(-prevThb * DXFull) + exp(trSigb2) * exp(-propThb * DXFull)
+  #SigmaProp <<- Sigma - exp(trSigb2) * exp(-prevThb * DXFull) + exp(trSigb2) * exp(-propThb * DXFull)
+  DBNew <<- lapply(1:(p+1), \(j) matrix(X0[ , j], nrow = n, ncol = n) * 
+                 (exp(trSigb2)[j] * exp(-propThb[j] * D)) *
+                 matrix(X0[ , j], nrow = n, ncol = n, byrow = T))
+  CBNew <<- matrix(1, S, S) %x% Reduce("+", DBNew)
+  SigmaProp <<- Sigma - CBFull + CBNew
   
   logLik(SigmaProp, beta) - logLik(Sigma, beta) + # Log Likelihoods
     sum(logPriorTheta(propThb)) - sum(logPriorTheta(prevThb)) + # Log Priors
@@ -49,7 +57,7 @@ logRatioTheta <- function(propTrTheta, prevTrTheta, trSigma2, trSigb2, trThb, tr
   propTheta <- gInv(propTrTheta)
   prevTheta <- gInv(prevTrTheta)
   BProp <<- baseVariance(propTheta, D)
-  SigmaProp <<- exp(trSigb2) * exp(-gInv(trThb) * DXFull) +
+  SigmaProp <<- CBFull+
     Reduce("+", lapply(1:K, \(k) exp(trSigma2[k]) * BProp[[k]])) + 
     exp(trTau2) * diag(n * S)
   

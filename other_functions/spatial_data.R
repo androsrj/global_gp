@@ -3,9 +3,9 @@ library(splines2)
 
 # Function to simulate spatial data
 spatialData <- function(n, X, Z, K,
-                        sigf2, thf, sigma2, theta, tau2, beta,
+                        sigb2, thb, sigma2, theta, tau2, beta,
                         U = NULL, range = c(0, 10), dims = 2, eps=1e-6,
-                        covariance = "exponential") {
+                        covariance = "exponential", intercept = TRUE) {
   
   # Sample the locations and put them into an n-by-dims matrix
   # Unless the coordinates are pre-supplied
@@ -20,18 +20,15 @@ spatialData <- function(n, X, Z, K,
   # Compute the covariance matrix (symmetric)
   if (covariance == "exponential") {
     D <- rdist(U)
-    DX <- rdist(X)
   } else if (covariance == "exp_squared") {
     D <- rdist(U)^2
-    DX <- rdist(X)^2
   } else {
     stop("Covariance function must be either exponential or exp_squared.")
   }
-  #C <- sigma2 * exp(- theta * D)
+  
   C <- lapply(1:K, function(k) {
     sigma2[k] * exp(-theta[k] * D)
   })
-  CX <- sigf2 * exp(-thf * DX)
   
   # Sample h
   eta <- sapply(1:K, function(k) {
@@ -41,15 +38,24 @@ spatialData <- function(n, X, Z, K,
   S <- nrow(Z)
   h <- c(sapply(1:S, \(i) rowSums(sapply(1:K, \(k) basis[i, k] * eta[ , k]))))
   
-  # Sample f
-  f <- t(rmvnorm(1, sigma = matrix(1, S, S) %x% CX + diag(eps, S*n)))
-  
-  # Columns of ones combined with X matrix
-  A <- rep(1, S) %x% cbind(matrix(1, nrow = n), X)
+  # Sample beta
+  n <- nrow(X)
+  if (intercept == TRUE) {
+    X0 <- cbind(rep(1, n), X)
+  } else {
+    X0 <-  X
+  }
+  q <- ncol(X0)
+  DB <- lapply(1:q, \(j) matrix(X0[ , j], nrow = n, ncol = n) * 
+                 (sigb2[j] * exp(-thb[j] * D)) *
+                 matrix(X0[ , j], nrow = n, ncol = n, byrow = T))
+  CB <- Reduce("+", DB)
+  B <- t(rmvnorm(q, sigma = CB)) + matrix(beta, nrow = n, ncol = q, byrow = TRUE)
+  XB <- rep(1, S) %x% (X0 %*% beta)
   
   # Generate Y
-  Y <- A %*% beta + f + h + rnorm(n * S, 0, sqrt(tau2))
+  Y <- XB + h + rnorm(n * S, 0, sqrt(tau2))
   
   # Return data
-  return(list(X = X, Z = Z, Y = Y, h = as.vector(h), D = D, U = U, basis = basis))
+  return(list(X = X, Z = Z, Y = Y, B = B, h = as.vector(h), D = D, U = U, basis = basis))
 }

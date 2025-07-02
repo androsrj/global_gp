@@ -19,9 +19,9 @@ p <- 2
 ### True parameter values ###
 # Need to play around with these
 
-# Covariance parameters for local covariates
-trueSigf2 <- 5
-trueThf <- 10
+# Covariance parameters for beta
+trueSigb2 <- seq(3, 5, length = p + 1)
+trueThb <- seq(5, 10, length = p + 1)
 
 # Covariance parameters for global covariates (each length K)
 trueSigma2 <- seq(50, 100, length = K)
@@ -44,8 +44,8 @@ train <- spatialData(n = n,
                      X = X,
                      Z = Z,
                      K = K,
-                     sigf2 = trueSigf2,
-                     thf = trueThf,
+                     sigb2 = trueSigb2,
+                     thb = trueThb,
                      sigma2 = trueSigma2, 
                      theta = trueTheta, 
                      tau2 = trueTau2, 
@@ -66,8 +66,8 @@ test <- spatialData(n = nTest,
                     Z = ZTest,
                     K = K,
                     U = U,
-                    sigf2 = trueSigf2,
-                    thf = trueThf,
+                    sigb2 = trueSigb2,
+                    thb = trueThb,
                     sigma2 = trueSigma2, 
                     theta = trueTheta, 
                     tau2 = trueTau2, 

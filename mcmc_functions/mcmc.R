@@ -18,8 +18,8 @@ mcmc <- function(X, Z, Y, D, K,
   A <<- rep(1, S) %x% cbind(matrix(1, nrow = n, ncol = 1), X)
   ATest <<- rep(1, STest) %x% cbind(matrix(1, nrow = nTest, ncol = 1), XTest)
   p <<- ncol(X)
-  X0 <- cbind(rep(1, n), X)
-  X0Test <- cbind(rep(1, nTest), XTest)
+  X0 <<- cbind(rep(1, n), X)
+  X0Test <<- cbind(rep(1, nTest), XTest)
   #DXFull <<- matrix(1, S, S) %x% rdist(scale(X))
   #DXTestFull <<- matrix(1, STest, STest) %x% rdist(scale(XTest))
   DB <- lapply(1:(p+1), \(j) matrix(X0[ , j], nrow = n, ncol = n) * 
@@ -113,6 +113,8 @@ mcmc <- function(X, Z, Y, D, K,
     if(runif(1) < exp(MHratio)) {
       trSigb2[ , i] <- propTrSigb2
       Sigma <<- SigmaProp
+      DB <<- DBNew
+      CBFull <<- CBNew
       acceptSigb2 <- acceptSigb2 + 1
     } else {
       trSigb2[ , i] <- trSigb2[ , i - 1]
@@ -134,6 +136,8 @@ mcmc <- function(X, Z, Y, D, K,
     if(runif(1) < exp(MHratio)) {
       trThb[ , i] <- propTrThb
       Sigma <<- SigmaProp
+      DB <<- DBNew
+      CBFull <<- CBNew
       acceptThb <- acceptThb + 1
     } else {
       trThb[ , i] <- trThb[ , i - 1]
@@ -227,10 +231,18 @@ mcmc <- function(X, Z, Y, D, K,
     #cat("beta updated \n")
     
     ### Posterior predictive sampling for test subjects ###
+    #SigmaTest <<- Reduce("+", lapply(1:K, function(k) {
+    #  exp(trSigma2[k, i]) * BTest[[k]]
+    #})) + exp(trTau2[i]) * diag(STest * nTest) + 
+    #  exp(-gInv(trThb[i]) * DXTestFull)
+    
+    DBTest <- lapply(1:(p+1), \(j) matrix(X0Test[ , j], nrow = nTest, ncol = nTest) * 
+                       (exp(trSigb2[j]) * exp(-gInv(trThb[j]) * DTest)) *
+                       matrix(X0Test[ , j], nrow = nTest, ncol = nTest, byrow = T))
+    CBTestFull <<- matrix(1, STest, STest) %x% Reduce("+", DBTest)
     SigmaTest <<- Reduce("+", lapply(1:K, function(k) {
       exp(trSigma2[k, i]) * BTest[[k]]
-    })) + exp(trTau2[i]) * diag(STest * nTest) + 
-      exp(-gInv(trThb[i]) * DXTestFull) 
+    })) + CBTestFull + exp(trTau2[i]) * diag(STest * nTest)
     YPreds[ , i] <- t(rmvnorm(1, mean = ATest %*% beta[ , i], sigma = SigmaTest))
   }
   #cat(paste0("MH Ratio is ", exp(MHratio), "\n"))
@@ -277,30 +289,30 @@ mcmc <- function(X, Z, Y, D, K,
   #}
   
   # Posterior mean estimates (can be somewhat skewed because of back-transformations)
-  posteriorMeans <- list(sigb2 = mean(sigb2),
-                         thb = mean(thb),
+  posteriorMeans <- list(sigb2 = apply(sigb2, 1, mean),
+                         thb = apply(thb, 1, mean),
                          sigma2 = apply(sigma2, 1, mean),
                          theta = apply(theta, 1, mean),
                          tau2 = mean(tau2),
                          beta = apply(beta, 1, mean))
   
   # Posterior median estimates (more accurate)
-  posteriorMedians <- list(sigb2 = median(sigb2),
-                           thb = median(thb),
+  posteriorMedians <- list(sigb2 = apply(sigb2, 1, median),
+                           thb = apply(thb, 1, median),
                            sigma2 = apply(sigma2, 1, median),
                            theta = apply(theta, 1, median),
                            tau2 = median(tau2),
                            beta = apply(beta, 1, median))
   
   # 95% credible interval bounds
-  credLower <- list(sigb2 = quantile(sigb2, 0.025),
-                    thb = quantile(thb, 0.025),
+  credLower <- list(sigb2 = apply(sigb2, 1, quantile, 0.025),
+                    thb = apply(thb, 1, quantile, 0.025),
                     sigma2 = apply(sigma2, 1, quantile, 0.025),
                     theta = apply(theta, 1, quantile, 0.025),
                     tau2 = quantile(tau2, 0.025),
                     beta = apply(beta, 1, quantile, .025))
-  credUpper <- list(sigb2 = quantile(sigb2, 0.975),
-                    thb = quantile(thb, 0.975),
+  credUpper <- list(sigb2 = apply(sigb2, 1, quantile, 0.975),
+                    thb = apply(thb, 1, quantile, 0.975),
                     sigma2 = apply(sigma2, 1, quantile, 0.975),
                     theta = apply(theta, 1, quantile, 0.975),
                     tau2 = quantile(tau2, 0.975),
