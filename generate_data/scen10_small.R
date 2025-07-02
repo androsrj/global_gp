@@ -17,13 +17,13 @@ p <- 2
 ### True parameter values ###
 # Need to play around with these
 
-# Covariance parameters for local covariates
-trueSigb2 <- 5
-trueThb <- 1
-
 # Covariance parameters for beta
 trueSigb2 <- seq(3, 5, length = p + 1)
 trueThb <- seq(0.5, 1.5, length = p + 1)
+
+# Covariance parameters for local covariates
+trueSigma2 <- 5
+trueTheta <- 1
 
 # Error variance
 trueTau2 <- 0.2
