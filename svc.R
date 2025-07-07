@@ -16,7 +16,7 @@ run.svc <- function(scen, nReps) {
   
   results <- vector("list", nReps)
   for (i in 1:nReps) {
-    m.3 <- spSVC(train$Y[1:n,] ~ train$X, coords=train$U,
+    m.3 <- spSVC(train$Y[1:nrow(train$X),] ~ train$X, coords=train$U,
                  starting=starting, svc.cols=c(1,2),
                  tuning=tuning, priors=priors, cov.model="exponential",
                  n.samples=n.samples, n.report=5000, n.omp.threads=4)

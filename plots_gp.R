@@ -55,44 +55,44 @@ for (i in 1:nScen) {
 dev.off()
 
 # Density plots for theta_f
-pdf("figures/gp/thf_gp.pdf")
-par(mfrow = c(3,4))
-for (i in 1:nScen) {
-  path <- paste0("objects/small_scen", i, ".RDS") 
-  results <- readRDS(path)
-  thf_samples <- results[[1]]$paramSamples$thf
-  if (i == 2) {
-    true_thf <- 10
-  } else {
-    true_thf = 1
-  }
-  hist(thf_samples, 
-       xlab = paste0("Scenario ", i),
-       main = "")
-  abline(v = true_thf, lty = line.type, lwd = line.width, col = "skyblue4")
-  mtext("Theta_f Samples", side = 3, line = - 2, outer = TRUE)
-}
-dev.off()
+#pdf("figures/gp/thf_gp.pdf")
+#par(mfrow = c(3,4))
+#for (i in 1:nScen) {
+#  path <- paste0("objects/small_scen", i, ".RDS") 
+#  results <- readRDS(path)
+#  thf_samples <- results[[1]]$paramSamples$thf
+#  if (i == 2) {
+#    true_thf <- 10
+#  } else {
+#    true_thf = 1
+#  }
+#  hist(thf_samples, 
+#       xlab = paste0("Scenario ", i),
+#       main = "")
+#  abline(v = true_thf, lty = line.type, lwd = line.width, col = "skyblue4")
+#  mtext("Theta_f Samples", side = 3, line = - 2, outer = TRUE)
+#}
+#dev.off()
 
 # Density plots for sigf2
-pdf("figures/gp/sigf2_gp.pdf")
-par(mfrow = c(3,4))
-for (i in 1:nScen) {
-  path <- paste0("objects/small_scen", i, ".RDS") 
-  results <- readRDS(path)
-  sigf2_samples <- results[[2]]$paramSamples$sigf2
-  if (i == 3) {
-    true_sigf2 <- 20
-  } else {
-    true_sigf2 <- 5
-  }
-  hist(sigf2_samples, 
-       xlab = paste0("Scenario ", i),
-       main = "")
-  abline(v = true_sigf2, lty = line.type, lwd = line.width, col = "skyblue4")
-  mtext("Sigma2_f Samples", side = 3, line = - 2, outer = TRUE)
-}
-dev.off()
+#pdf("figures/gp/sigf2_gp.pdf")
+#par(mfrow = c(3,4))
+#for (i in 1:nScen) {
+#  path <- paste0("objects/small_scen", i, ".RDS") 
+#  results <- readRDS(path)
+#  sigf2_samples <- results[[2]]$paramSamples$sigf2
+#  if (i == 3) {
+#    true_sigf2 <- 20
+#  } else {
+#    true_sigf2 <- 5
+#  }
+#  hist(sigf2_samples, 
+#       xlab = paste0("Scenario ", i),
+#       main = "")
+#  abline(v = true_sigf2, lty = line.type, lwd = line.width, col = "skyblue4")
+#  mtext("Sigma2_f Samples", side = 3, line = - 2, outer = TRUE)
+#}
+#dev.off()
 
 # Density plots for tau2
 pdf("figures/gp/tau2_gp.pdf")
@@ -121,7 +121,7 @@ rmse <- cvg <- len <- c()
 for (i in 1:nScen) { 
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)
-  load(paste0("data/small/scen", i, "/test.RData"))
+  test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
   preds <- lapply(1:nReps, \(j) results[[j]]$preds[2,])
   lower <- lapply(1:nReps, \(j) results[[j]]$preds[1,])
   upper <- lapply(1:nReps, \(j) results[[j]]$preds[3,])

@@ -82,7 +82,7 @@ rmse <- cvg <- len <- c()
 for (i in 1:nScen) { 
   path <- paste0("objects/svc_scen", i, ".RDS") 
   results <- readRDS(path)
-  load(paste0("data/small/scen", i, "/test.RData"))
+  test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
   STest <- nrow(test$Z)
   nTest <- nrow(test$X)
   a <- .05
