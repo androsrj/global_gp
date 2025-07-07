@@ -260,8 +260,8 @@ mcmc <- function(X, Z, Y, D, K,
   
   # Remove burn-in and perform thinning
   index <- seq(nBurn + 1, nIter, by = nThin)
-  trSigb2 <- trSigb2[index]
-  trThb <- trThb[index]
+  trSigb2 <- trSigb2[ , index]
+  trThb <- trThb[ , index]
   trSigma2 <- trSigma2[ , index]
   trTheta <- trTheta[ , index]
   trTau2 <- trTau2[index]
