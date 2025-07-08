@@ -41,7 +41,7 @@ q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.1, 0.2, length = K),
                theta = seq(0.2, 0.4, length = K),
                sigb2 = seq(0.7, 0.9, length = q),
-               thb = seq(3, 5, length = q),
+               thb = seq(0.3, 0.5, length = q),
                tau2 = 0.4)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
@@ -75,7 +75,7 @@ q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.1, 0.25, length = K),
                theta = seq(0.2, 0.4, length = K),
                sigb2 = seq(0.7, 0.9, length = q),
-               thb = seq(3, 5, length = q),
+               thb = seq(0.3, 0.5, length = q),
                tau2 = 0.4)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
@@ -109,7 +109,7 @@ q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.1, 0.2, length = K),
                theta = seq(0.2, 0.4, length = K),
                sigb2 = seq(0.7, 0.9, length = q),
-               thb = seq(3, 5, length = q),
+               thb = seq(0.3, 0.5, length = q),
                tau2 = 0.3)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
@@ -143,7 +143,7 @@ q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.1, 0.25, length = K),
                theta = seq(0.3, 0.6, length = K),
                sigb2 = seq(0.7, 0.9, length = q),
-               thb = seq(3, 5, length = q),
+               thb = seq(0.3, 0.5, length = q),
                tau2 = 0.35)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
@@ -177,7 +177,7 @@ q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.2, 0.4, length = K),
                theta = seq(0.4, 0.7, length = K),
                sigb2 = seq(0.7, 0.9, length = q),
-               thb = seq(3, 5, length = q),
+               thb = seq(0.3, 0.5, length = q),
                tau2 = 0.35)
 starting <- list(sigma2 = runif(K, 5, 10),
                  theta = rep(.25, K),
@@ -211,7 +211,7 @@ q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.1, 0.2, length = K),
                theta = seq(0.3, 0.6, length = K),
                sigb2 = seq(0.7, 0.9, length = q),
-               thb = seq(3, 5, length = q),
+               thb = seq(0.3, 0.5, length = q),
                tau2 = 0.4)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(2, K),
@@ -245,7 +245,7 @@ q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.4, 0.6, length = K),
                theta = seq(3, 4, length = K),
                sigb2 = seq(1.3, 1.7, length = q),
-               thb = seq(3, 5, length = q),
+               thb = seq(0.3, 0.5, length = q),
                tau2 = 0.25)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
@@ -279,7 +279,7 @@ q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.3, 0.5, length = K),
                theta = seq(4, 5, length = K),
                sigb2 = seq(0.5, 0.7, length = q),
-               thb = seq(3, 5, length = q),
+               thb = seq(0.3, 0.5, length = q),
                tau2 = 0.25)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
@@ -313,7 +313,7 @@ q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.4, 0.6, length = K),
                theta = seq(1.6, 2, length = K),
                sigb2 = seq(1.2, 1.6, length = q),
-               thb = seq(3, 5, length = q),
+               thb = seq(0.3, 0.5, length = q),
                tau2 = 0.2)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.25, K),
@@ -347,7 +347,7 @@ q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.4, 0.7, length = K),
                theta = seq(2.5, 3, length = K),
                sigb2 = seq(0.5, 0.7, length = q),
-               thb = seq(3, 5, length = q),
+               thb = seq(0.3, 0.5, length = q),
                tau2 = 0.25)
 starting <- list(sigma2 = runif(K, 5, 10),
                  theta = rep(.25, K),
@@ -381,7 +381,7 @@ q <- ncol(X) + 1
 propSD <- list(sigma2 = seq(0.4, 0.6, length = K),
                theta = seq(3, 4, length = K),
                sigb2 = seq(1.5, 2.5, length = q),
-               thb = seq(3, 5, length = q),
+               thb = seq(0.3, 0.5, length = q),
                tau2 = 0.3)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(2, K),
