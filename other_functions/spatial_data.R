@@ -1,5 +1,6 @@
 library(fields)
 library(splines2)
+library(Matrix)
 
 # Function to simulate spatial data
 spatialData <- function(n, X, Z, K,
@@ -30,15 +31,21 @@ spatialData <- function(n, X, Z, K,
     sigma2[k] * exp(-theta[k] * D)
   })
   
-  # Sample h
+  # Covariance - h
   eta <- sapply(1:K, function(k) {
     t(rmvnorm(1, sigma = C[[k]]))
   })
-  basis <- Bsplines_2D(Z, df = c(sqrt(K), sqrt(K)))
+  BF <- Bsplines_2D(Z, df = c(sqrt(K), sqrt(K)))
   S <- nrow(Z)
-  h <- c(sapply(1:S, \(i) rowSums(sapply(1:K, \(k) basis[i, k] * eta[ , k]))))
+  h <- c(sapply(1:S, \(i) rowSums(sapply(1:K, \(k) BF[i, k] * eta[ , k]))))
+  #basis <- lapply(1:K, function(k) {
+  #  Reduce("rbind", lapply(1:S, \(s) BF[s, k] * diag(n)))
+  #})
+  #B <- lapply(1:K, \(k) tcrossprod(basis[[k]] %*% C[[k]], basis[[k]]))
+  B.eta <- lapply(1:S, \(s) Reduce("+", lapply(1:K, \(k) BF[s, k]^2 * C[[k]])))
+  C.eta <- bdiag(B.eta)
   
-  # Sample beta
+  # Covariance - beta
   n <- nrow(X)
   if (intercept == TRUE) {
     X0 <- cbind(rep(1, n), X)
@@ -46,16 +53,18 @@ spatialData <- function(n, X, Z, K,
     X0 <-  X
   }
   q <- ncol(X0)
-  DB <- lapply(1:q, \(j) matrix(X0[ , j], nrow = n, ncol = n) * 
-                 (sigb2[j] * exp(-thb[j] * D)) *
-                 matrix(X0[ , j], nrow = n, ncol = n, byrow = T))
-  CB <- Reduce("+", DB)
-  B <- t(rmvnorm(q, sigma = CB)) + matrix(beta, nrow = n, ncol = q, byrow = TRUE)
-  XB <- rep(1, S) %x% (X0 %*% beta)
+  CB <- lapply(1:q, \(j) sigb2[j] * exp(-thb[j] * D))
+  CXB <- Reduce("+", lapply(1:q, \(j) matrix(X0[ , j], nrow = n, ncol = n) * CB[[j]] *
+                              matrix(X0[ , j], nrow = n, ncol = n, byrow = T)))
+  B <- Reduce("cbind", lapply(1:q, \(j) t(rmvnorm(1, sigma = CB[[j]])))) + matrix(beta, nrow = n, ncol = q, byrow = TRUE)
+  XB <- rep(1, S) %x% rowSums(X0 * B)
+  
+  # Final covariance matrix for Y
+  Sigma <- diag(S) %x% CXB + C.eta + diag(rnorm(n * S, 0, sqrt(tau2)))
   
   # Generate Y
-  Y <- XB + h + rnorm(n * S, 0, sqrt(tau2))
+  Y <- t(rmvnorm(1, sigma = Sigma))
   
   # Return data
-  return(list(X = X, Z = Z, Y = Y, B = B, h = as.vector(h), D = D, U = U, basis = basis))
+  return(list(X = X, Z = Z, Y = Y, B = B, h = as.vector(h), D = D, U = U, BF = BF))
 }

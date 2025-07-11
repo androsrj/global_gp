@@ -44,7 +44,7 @@ mcmc <- function(X, Z, Y, D, K,
   })
   
   # MCMC chain properties
-  nIter <- nBurn + nIter # 15 to 20 thousand ideally
+  nIter <- nBurn + nIter
   
   # Tuning parameters for variance of each proposal distribution
   # Can be user-supplied

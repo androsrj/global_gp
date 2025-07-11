@@ -31,14 +31,14 @@ trueTheta <- runif(K, 0.1, 0.5)
 trueTau2 <- 0.2
 
 # Regression coefficients
-trueBeta <- c(1, 0.5, -1)
-
+#trueBeta <- c(1, 0.5, -1)
+trueBeta <- rep(0, 3)
 
 
 ##########################
 # Generate training data #
 set.seed(mySeed)
-X <- matrix(runif(n*p, 0, 10), nrow = n, ncol = p)
+X <- matrix(runif(n*p, 0, 1), nrow = n, ncol = p)
 Z <- matrix(runif(2 * S, 0, 100), ncol = 2)
 train <- spatialData(n = n, 
                      X = X,
@@ -51,8 +51,8 @@ train <- spatialData(n = n,
                      tau2 = trueTau2, 
                      beta = trueBeta,
                      range = c(0, 100))
-saveRDS(train, file = "../data/small/scen1/train.RDS")
-
+#saveRDS(train, file = "../data/small/scen1/train.RDS")
+sd(train$Y)
 set.seed(mySeed)
 indexTest <- sample(n, nTest)
 U <- train$U[indexTest, ]
