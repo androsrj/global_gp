@@ -51,7 +51,7 @@ train <- spatialData(n = n,
                      tau2 = trueTau2, 
                      beta = trueBeta,
                      range = c(0, 100))
-#saveRDS(train, file = "../data/small/scen1/train.RDS")
+saveRDS(train, file = "../data/small/scen1/train.RDS")
 sd(train$Y)
 set.seed(mySeed)
 indexTest <- sample(n, nTest)
@@ -59,7 +59,7 @@ U <- train$U[indexTest, ]
 
 # Generate testing data
 set.seed(mySeed)
-XTest <- matrix(runif(nTest*p, 0, 10), nrow = nTest, ncol = p)
+XTest <- matrix(runif(nTest*p, 0, 1), nrow = nTest, ncol = p)
 ZTest <- matrix(runif(2 * STest, 0, 100), ncol = 2)
 test <- spatialData(n = nTest, 
                     X = XTest, 
@@ -73,6 +73,7 @@ test <- spatialData(n = nTest,
                     tau2 = trueTau2, 
                     beta = trueBeta,
                     range = c(0, 100))
+sd(test$Y)
 test$index <- indexTest
 saveRDS(test, file = "../data/small/scen1/test.RDS")
 

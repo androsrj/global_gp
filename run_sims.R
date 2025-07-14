@@ -20,7 +20,7 @@ run.mcmc <- function(rep) {
   results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                   starting = starting,
                   propSD = propSD,
-                  nIter = 800, nBurn = 500, nThin=2,
+                  nIter = 500, nBurn = 250, nThin=2,
                   model = "full_gp")
   return(results)
 }
@@ -39,16 +39,16 @@ U <- train$U; UTest <- test$U
 D <- train$D; DTest <- test$D
 K <- 9
 q <- ncol(X) + 1
-propSD <- list(sigma2 = seq(0.1, 0.25, length = K),
-               theta = seq(1.2, 1.4, length = K),
-               sigb2 = seq(0.2, 0.4, length = q),
-               thb = seq(0.3, 0.5, length = q),
-               tau2 = 0.4)
+propSD <- list(sigma2 = seq(0.3, 0.5, length = K),
+               theta = seq(0.7, 0.9, length = K),
+               sigb2 = seq(0.6, 0.8, length = q),
+               thb = seq(13, 18, length = q),
+               tau2 = 0.2)
 starting <- list(sigma2 = runif(K, 50, 100),
                  theta = rep(.7, K),
                  sigb2 = rep(0.2, q),
                  thb = rep(0.8, q), 
-                 tau2 = 0.3,
+                 tau2 = 0.1,
                  beta = c(0, 0, 0))
 #cl <- makeCluster(nCores)
 #registerDoParallel(cl)
@@ -57,7 +57,7 @@ starting <- list(sigma2 = runif(K, 50, 100),
 obj <- run.mcmc(1)
 saveRDS(obj, file = paste0("objects/small_scen", scen, ".RDS"))
 #acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
-acc <- apply(unlist(obj$acceptance), 1, mean)
+acc <- obj$acceptance
 cat(paste0("Finished Scenario ", scen, " with average acceptance of: "))
 acc
 
