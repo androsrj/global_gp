@@ -25,11 +25,11 @@ mcmc <- function(X, Z, Y, D, K,
   DB <- lapply(1:(p+1), \(j) matrix(X0[ , j], nrow = n, ncol = n) * 
                  (starting$sigb2[j] * exp(-starting$thb[j] * D)) *
                  matrix(X0[ , j], nrow = n, ncol = n, byrow = T))
-  CBFull <<- matrix(1, S, S) %x% Reduce("+", DB)
+  CBFull <<- diag(S) %x% Reduce("+", DB)
   DBTest <- lapply(1:(p+1), \(j) matrix(X0Test[ , j], nrow = nTest, ncol = nTest) * 
                      (starting$sigb2[j] * exp(-starting$thb[j] * DTest)) *
                      matrix(X0Test[ , j], nrow = nTest, ncol = nTest, byrow = T))
-  CBTestFull <<- matrix(1, STest, STest) %x% Reduce("+", DBTest)
+  CBTestFull <<- diag(STest) %x% Reduce("+", DBTest)
   
   # Save model type and theta globally
   model <<- model
@@ -142,7 +142,7 @@ mcmc <- function(X, Z, Y, D, K,
     } else {
       trThb[ , i] <- trThb[ , i - 1]
     }
-    
+    #trThb[ , i] <- g(c(0.07, 1, 1.5))
     #cat(paste0("finished thb: ", round(gInv(trThb[i]), 2), "\n"))
     #cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[ , i-1]), 3), "\n"))
     
@@ -214,6 +214,7 @@ mcmc <- function(X, Z, Y, D, K,
     } else {
       trTau2[i] <- trTau2[i - 1]
     }
+    #trTau2[i] <- log(0.2)
     #cat("Tau2 updated \n")
     #cat(paste0("finished tau: ", round(exp(trTau2[i]), 2), "\n"))
     #cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[ , i - 1]), 3), "\n"))
@@ -239,7 +240,7 @@ mcmc <- function(X, Z, Y, D, K,
     DBTest <- lapply(1:(p+1), \(j) matrix(X0Test[ , j], nrow = nTest, ncol = nTest) * 
                        (exp(trSigb2[j]) * exp(-gInv(trThb[j]) * DTest)) *
                        matrix(X0Test[ , j], nrow = nTest, ncol = nTest, byrow = T))
-    CBTestFull <<- matrix(1, STest, STest) %x% Reduce("+", DBTest)
+    CBTestFull <<- diag(STest) %x% Reduce("+", DBTest)
     SigmaTest <<- Reduce("+", lapply(1:K, function(k) {
       exp(trSigma2[k, i]) * BTest[[k]]
     })) + CBTestFull + exp(trTau2[i]) * diag(STest * nTest)

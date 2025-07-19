@@ -61,6 +61,7 @@ spatialData <- function(n, X, Z, K,
   
   # Final covariance matrix for Y
   Sigma <- diag(S) %x% CXB + C.eta + diag(rnorm(n * S, 0, sqrt(tau2)))
+  #cat(min(eigen(Sigma)$values))
   
   # Generate Y
   Y <- t(rmvnorm(1, sigma = Sigma))
