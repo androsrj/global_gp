@@ -6,7 +6,7 @@ logPriorSigma2 <- function(sigma2, a = 1, b = 1) {
 }
 
 # Tau2 (inverse gamma)
-logPriorTau2 <- function(tau2, a = 1, b = 1) {
+logPriorTau2 <- function(tau2, a = 3, b = 1) {
   a * log(b) - lgamma(a) - (a + 1) * log(tau2) - b / tau2
 }
 

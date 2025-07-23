@@ -43,7 +43,7 @@ spatialData <- function(n, X, Z, K,
   #})
   #B <- lapply(1:K, \(k) tcrossprod(basis[[k]] %*% C[[k]], basis[[k]]))
   B.eta <- lapply(1:S, \(s) Reduce("+", lapply(1:K, \(k) BF[s, k]^2 * C[[k]])))
-  C.eta <- bdiag(B.eta)
+  C.eta <- as.matrix(bdiag(B.eta))
   
   # Covariance - beta
   n <- nrow(X)
@@ -60,11 +60,11 @@ spatialData <- function(n, X, Z, K,
   XB <- rep(1, S) %x% rowSums(X0 * B)
   
   # Final covariance matrix for Y
-  Sigma <- diag(S) %x% CXB + C.eta + diag(rnorm(n * S, 0, sqrt(tau2)))
+  Sigma <- diag(S) %x% CXB + C.eta + tau2 * diag(n * S)
   #cat(min(eigen(Sigma)$values))
   
   # Generate Y
-  Y <- t(rmvnorm(1, sigma = Sigma))
+  Y <- t(rmvnorm(1, mean = XB, sigma = Sigma))
   
   # Return data
   return(list(X = X, Z = Z, Y = Y, B = B, h = as.vector(h), D = D, U = U, BF = BF))

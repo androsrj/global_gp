@@ -49,7 +49,7 @@ if (scen %in% which.scens) {
                    theta = rep(.25, K),
                    sigb2 = rep(2, q),
                    thb = rep(0.5, q), 
-                   tau2 = 0.1,
+                   tau2 = 2,
                    beta = c(0, 0, 0))
   cl <- makeCluster(nCores)
   registerDoParallel(cl)
@@ -86,8 +86,8 @@ if (scen %in% which.scens) {
                  tau2 = 0.9)
   starting <- list(sigma2 = runif(K, 50, 100),
                    theta = rep(.25, K),
-                   sigb2 = rep(2, q),
-                   thb = rep(2, q), 
+                   sigb2 = rep(0.2, q),
+                   thb = rep(0.2, q), 
                    tau2 = 0.1,
                    beta = c(0, 0, 0))
   #cl <- makeCluster(nCores)

@@ -101,68 +101,69 @@ mcmc <- function(X, Z, Y, D, K,
     }
 
     ### Metropolis update (sigma2_b) ###
-    propTrSigb2 <- rnorm(p + 1, mean = trSigb2[ , i - 1], sd = sdSigb2)
-    MHratio <- logRatioSigb2(propTrSigb2, 
-                             trSigb2[ , i - 1],
-                             trThb[ , i - 1],
-                             trSigma2[ , i - 1],
-                             trTheta[ , i - 1],
-                             trTau2[i - 1],
-                             beta[ , i - 1])
+    #propTrSigb2 <- rnorm(p + 1, mean = trSigb2[ , i - 1], sd = sdSigb2)
+    #MHratio <- logRatioSigb2(propTrSigb2, 
+    #                         trSigb2[ , i - 1],
+    #                         trThb[ , i - 1],
+    #                         trSigma2[ , i - 1],
+    #                         trTheta[ , i - 1],
+    #                         trTau2[i - 1],
+    #                         beta[ , i - 1])
     #cat(paste0("MH Ratio is ", round(exp(MHratio), 2), "\n"))
-    if(runif(1) < exp(MHratio)) {
-      trSigb2[ , i] <- propTrSigb2
-      Sigma <<- SigmaProp
-      DB <<- DBNew
-      CBFull <<- CBNew
-      acceptSigb2 <- acceptSigb2 + 1
-    } else {
-      trSigb2[ , i] <- trSigb2[ , i - 1]
-    }
-    
+    #if(runif(1) < exp(MHratio)) {
+    #  trSigb2[ , i] <- propTrSigb2
+    #  Sigma <<- SigmaProp
+    #  DB <<- DBNew
+    #  CBFull <<- CBNew
+    #  acceptSigb2 <- acceptSigb2 + 1
+    #} else {
+    #  trSigb2[ , i] <- trSigb2[ , i - 1]
+    #}
+    trSigb2[ , i] <- log(c(0.1, 0.2, 0.3))
     #cat(paste0("finished sigb2: ", round(exp(trSigb2[i]), 2), "\n"))
     #cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[ , i-1]), 3), "\n"))
     
     ### Metropolis update (theta_b) ###
-    propTrThb <- rnorm(p + 1, mean = trThb[ , i - 1], sd = sdThb)
-    MHratio <- logRatioThb(propTrThb, 
-                           trThb[ , i - 1],
-                           trSigma2[ , i - 1],
-                           trTheta[ , i - 1],
-                           trSigb2[ , i],
-                           trTau2[i - 1],
-                           beta[ , i - 1])
+    #propTrThb <- rnorm(p + 1, mean = trThb[ , i - 1], sd = sdThb)
+    #MHratio <- logRatioThb(propTrThb, 
+    #                       trThb[ , i - 1],
+    #                       trSigma2[ , i - 1],
+    #                       trTheta[ , i - 1],
+    #                       trSigb2[ , i],
+    #                       trTau2[i - 1],
+    #                       beta[ , i - 1])
     
-    if(runif(1) < exp(MHratio)) {
-      trThb[ , i] <- propTrThb
-      Sigma <<- SigmaProp
-      DB <<- DBNew
-      CBFull <<- CBNew
-      acceptThb <- acceptThb + 1
-    } else {
-      trThb[ , i] <- trThb[ , i - 1]
-    }
-    #trThb[ , i] <- g(c(0.07, 1, 1.5))
+    #if(runif(1) < exp(MHratio)) {
+    #  trThb[ , i] <- propTrThb
+    #  Sigma <<- SigmaProp
+    #  DB <<- DBNew
+    #  CBFull <<- CBNew
+    #  acceptThb <- acceptThb + 1
+    #} else {
+    #  trThb[ , i] <- trThb[ , i - 1]
+    #}
+    trThb[ , i] <- g(c(0.2, 0.25, 0.3))
     #cat(paste0("finished thb: ", round(gInv(trThb[i]), 2), "\n"))
     #cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[ , i-1]), 3), "\n"))
     
     ### Metropolis update (sigma2) ###
-    propTrSigma2 <- rnorm(K, mean = trSigma2[ , i - 1], sd = sdSigma2)
-    MHratio <- logRatioSigma2(propTrSigma2, 
-                               trSigma2[ , i - 1], 
-                               trSigb2[i],
-                               trThb[i],
-                               trTheta[ , i - 1],
-                               trTau2[i - 1],
-                               beta[ , i - 1])
+    #propTrSigma2 <- rnorm(K, mean = trSigma2[ , i - 1], sd = sdSigma2)
+    #MHratio <- logRatioSigma2(propTrSigma2, 
+    #                           trSigma2[ , i - 1], 
+    #                           trSigb2[i],
+    #                           trThb[i],
+    #                           trTheta[ , i - 1],
+    #                           trTau2[i - 1],
+    #                           beta[ , i - 1])
       
-    if(runif(1) < exp(MHratio)) {
-      trSigma2[, i] <- propTrSigma2
-      Sigma <<- SigmaProp
-      acceptSigma2 <- acceptSigma2 + 1
-    } else {
-      trSigma2[, i] <- trSigma2[, i - 1]
-    }
+    #if(runif(1) < exp(MHratio)) {
+    #  trSigma2[, i] <- propTrSigma2
+    #  Sigma <<- SigmaProp
+    #  acceptSigma2 <- acceptSigma2 + 1
+    #} else {
+    #  trSigma2[, i] <- trSigma2[, i - 1]
+    #}
+    trSigma2[ , i] <- log(seq(5, 10, length = K))
     
     #cat("finished sigma2: ")
     #cat(round(exp(trSigma2[,i]), 2))
@@ -170,24 +171,24 @@ mcmc <- function(X, Z, Y, D, K,
     #cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[ , i - 1]), 3), "\n"))
     
     ### Metropolis update (theta) ###
-    propTrTheta <- rnorm(K, mean = trTheta[ , i - 1], sd = sdTheta)
-    MHratio <- logRatioTheta(propTrTheta,
-                              trTheta[ , i - 1],
-                              trSigma2[ , i], 
-                              trSigb2[i],
-                              trThb[i],
-                              trTau2[i - 1],
-                              beta[ , i - 1])
-    
-    if(runif(1) < exp(MHratio)) {
-      trTheta[, i] <- propTrTheta
-      Sigma <<- SigmaProp
-      B <<- BProp
-      acceptTheta <- acceptTheta + 1
-    } else {
-      trTheta[, i] <- trTheta[, i - 1]
-    }
-    
+    #propTrTheta <- rnorm(K, mean = trTheta[ , i - 1], sd = sdTheta)
+    #MHratio <- logRatioTheta(propTrTheta,
+    #                          trTheta[ , i - 1],
+    #                          trSigma2[ , i], 
+    #                          trSigb2[i],
+    #                          trThb[i],
+    #                          trTau2[i - 1],
+    #                          beta[ , i - 1])
+    #
+    #if(runif(1) < exp(MHratio)) {
+    #  trTheta[, i] <- propTrTheta
+    #  Sigma <<- SigmaProp
+    #  B <<- BProp
+    #  acceptTheta <- acceptTheta + 1
+    #} else {
+    #  trTheta[, i] <- trTheta[, i - 1]
+    #}
+    trTheta[ , i] <- g(seq(0.1, 0.5, length = K))
     #cat("finished theta: ")
     #cat(round(gInv(trTheta[,i]), 2))
     #cat("\n")
@@ -221,11 +222,11 @@ mcmc <- function(X, Z, Y, D, K,
     
     ### Gibbs update (beta) ###
     
-    SigmaInv <- solve(Sigma)
-    SigmaBeta <- solve(crossprod(A, SigmaInv %*% A) + diag(p+1))
-    meanBeta <- SigmaBeta %*% crossprod(A, SigmaInv %*% Y)
-    beta[ , i] <- t(rmvnorm(1, meanBeta, SigmaBeta))
-    #beta[i] <-  mean(Y)
+    #SigmaInv <- solve(Sigma)
+    #SigmaBeta <- solve(crossprod(A, SigmaInv %*% A) + diag(p+1))
+    #meanBeta <- SigmaBeta %*% crossprod(A, SigmaInv %*% Y)
+    #beta[ , i] <- t(rmvnorm(1, meanBeta, SigmaBeta))
+    beta[ , i] <- c(5, 2, -4)
     
     #cat(paste0("finished beta: ", round(beta[ , i], 2), "\n"))
     #cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[ , i - 1]), 3), "\n"))

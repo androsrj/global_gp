@@ -8,8 +8,8 @@ Bsplines_2D = function(X, df = NULL, knots = NULL, degree = 3)
   # eg df = c(5,5)
   # atleast one of df or knots is needed.
   
-  basis_x = bs(X[,1], df[1], knots[[1]], degree)
-  basis_y = bs(X[,2], df[2], knots[[2]], degree)
+  basis_x = bs(X[,1], df[1], knots[[1]], degree, Boundary.knots = c(min(X) - 1, max(X) + 1))
+  basis_y = bs(X[,2], df[2], knots[[2]], degree, Boundary.knots = c(min(X) - 1, max(X) + 1))
   
   prodbasis = function(bx,by) as.numeric(outer(bx,by))
   basis_xy = matrix(0, nrow(basis_x), ncol(basis_x) * ncol(basis_y))
