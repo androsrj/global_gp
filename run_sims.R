@@ -89,7 +89,7 @@ if (scen %in% which.scens) {
                    sigb2 = rep(0.2, q),
                    thb = rep(0.2, q), 
                    tau2 = 0.1,
-                   beta = c(0, 0, 0))
+                   beta = c(5, 2, -4))
   #cl <- makeCluster(nCores)
   #registerDoParallel(cl)
   #obj <- foreach(i = 1:nCores, .packages = c("mvtnorm", "splines", "fields")) %dopar% run.mcmc(i)

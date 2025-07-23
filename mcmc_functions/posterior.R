@@ -18,7 +18,7 @@ logRatioSigb2 <- function(propTrSigb2, prevTrSigb2, trThb, trSigma2, trTheta, tr
   DBNew <<- lapply(1:(p+1), \(j) matrix(X0[ , j], nrow = n, ncol = n) * 
                  (propSigb2[j] * exp(-gInv(trThb[j]) * D)) *
                  matrix(X0[ , j], nrow = n, ncol = n, byrow = T))
-  CBNew <<- diag(S) %x% Reduce("+", DBNew)
+  CBNew <<- matrix(1, S, S) %x% Reduce("+", DBNew)
   SigmaProp <<- Sigma - CBFull + CBNew
   
   logLik(SigmaProp, beta) - logLik(Sigma, beta) + # Log Likelihoods
@@ -45,7 +45,7 @@ logRatioThb <- function(propTrThb, prevTrThb, trSigma2, trTheta, trSigb2, trTau2
   DBNew <<- lapply(1:(p+1), \(j) matrix(X0[ , j], nrow = n, ncol = n) * 
                  (exp(trSigb2)[j] * exp(-propThb[j] * D)) *
                  matrix(X0[ , j], nrow = n, ncol = n, byrow = T))
-  CBNew <<- diag(S) %x% Reduce("+", DBNew)
+  CBNew <<- matrix(1, S, S) %x% Reduce("+", DBNew)
   SigmaProp <<- Sigma - CBFull + CBNew
   
   logLik(SigmaProp, beta) - logLik(Sigma, beta) + # Log Likelihoods
