@@ -14,13 +14,13 @@ library(doParallel)
 library(foreach)
 nReps <- nCores <- 10
 set.seed(999)
-which.scens <- 2
+which.scens <- 1
 
 run.mcmc <- function(rep) {
   results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                   starting = starting,
                   propSD = propSD,
-                  nIter = 2000, nBurn = 2000, nThin=2,
+                  nIter = 1000, nBurn = 1000, nThin=2,
                   model = "full_gp")
   return(results)
 }
@@ -40,28 +40,29 @@ if (scen %in% which.scens) {
   D <- train$D; DTest <- test$D
   K <- 9
   q <- ncol(X) + 1
-  propSD <- list(sigma2 = seq(0.3, 0.5, length = K),
+  propSD <- list(sigma2 = seq(0.2, 0.4, length = K),
                  theta = seq(0.7, 0.9, length = K),
-                 sigb2 = seq(0.2, 0.3, length = q),
-                 thb = seq(0.3, 0.4, length = q),
-                 tau2 = 1.0)
-  starting <- list(sigma2 = runif(K, 50, 100),
+                 sigb2 = seq(0.4, 0.6, length = q),
+                 thb = seq(1.5, 2, length = q),
+                 tau2 = 0.25)
+  starting <- list(sigma2 = rep(5, K),
                    theta = rep(.25, K),
-                   sigb2 = rep(2, q),
-                   thb = rep(0.5, q), 
-                   tau2 = 2,
-                   beta = c(0, 0, 0))
-  cl <- makeCluster(nCores)
-  registerDoParallel(cl)
-  obj <- foreach(i = 1:nCores, .packages = c("mvtnorm", "splines", "fields")) %dopar% run.mcmc(i)
-  stopCluster(cl)
-  #obj <- run.mcmc(1)
+                   sigb2 = rep(0.5, q),
+                   thb = rep(0.2, q),
+                   tau2 = 0.1,
+                   beta = rep(0, 3))
+  #cl <- makeCluster(nCores)
+  #registerDoParallel(cl)
+  #obj <- foreach(i = 1:nCores, .packages = c("mvtnorm", "splines", "fields")) %dopar% run.mcmc(i)
+  #stopCluster(cl)
+  obj <- run.mcmc(1)
   saveRDS(obj, file = paste0("objects/small_scen", scen, ".RDS"))
-  acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
+  #acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
   cat(paste0("Finished Scenario ", scen, " with average acceptance of: "))
-  print(acc)
+  #print(acc)
+  print(obj$acceptance)
   cat(paste0("And posterior means of: "))
-  print(obj[[1]]$posteriorMeans)
+  print(obj$posteriorMeans)
 }
 
 ##### SCENARIO 2 #####
@@ -79,17 +80,17 @@ if (scen %in% which.scens) {
   D <- train$D; DTest <- test$D
   K <- 9
   q <- ncol(X) + 1
-  propSD <- list(sigma2 = seq(0.3, 0.5, length = K),
+  propSD <- list(sigma2 = seq(0.2, 0.4, length = K),
                  theta = seq(0.7, 0.9, length = K),
-                 sigb2 = seq(0.2, 0.4, length = q),
-                 thb = seq(0.5, 0.7, length = q),
-                 tau2 = 0.9)
-  starting <- list(sigma2 = runif(K, 50, 100),
+                 sigb2 = seq(0.4, 0.6, length = q),
+                 thb = seq(1.2, 1.4, length = q),
+                 tau2 = 0.25)
+  starting <- list(sigma2 = runif(K, 1, 10),
                    theta = rep(.25, K),
-                   sigb2 = rep(0.2, q),
+                   sigb2 = rep(5, q),
                    thb = rep(0.2, q), 
                    tau2 = 0.1,
-                   beta = c(5, 2, -4))
+                   beta = rep(0, 3))
   #cl <- makeCluster(nCores)
   #registerDoParallel(cl)
   #obj <- foreach(i = 1:nCores, .packages = c("mvtnorm", "splines", "fields")) %dopar% run.mcmc(i)

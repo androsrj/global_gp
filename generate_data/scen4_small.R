@@ -20,20 +20,19 @@ p <- 2
 # Need to play around with these
 
 # Covariance parameters for beta
-trueSigb2 <- seq(3, 5, length = p + 1)
-#trueThb <- seq(0.5, 1.5, length = p + 1)
-trueThb <- rep(0.1, p + 1)
+trueSigb2 <- seq(0.5, 1, length = p + 1)
+trueThb <- seq(0.2, 0.3, length = p + 1)
 
 # Covariance parameters for global covariates (each length K)
-trueSigma2 <- seq(50, 100, length = K)
-trueTheta <- runif(K, 0.1, 0.5)
+trueSigma2 <- seq(5, 10, length = K)
+trueTheta <- seq(0.1, 0.5, length = K)
 
 # Error variance
-trueTau2 <- 0.5
+trueTau2 <- 2
 
 # Regression coefficients
 #trueBeta <- c(1, 0.5, -1)
-trueBeta <- rep(0, 3)
+trueBeta <- c(5, 2, -4)
 
 
 ##########################

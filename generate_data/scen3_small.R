@@ -20,26 +20,25 @@ p <- 2
 # Need to play around with these
 
 # Covariance parameters for beta
-trueSigb2 <- seq(20, 25, length = p + 1)
-#trueThb <- seq(0,07, 0.11, length = p + 1)
-trueThb <- rep(0.1, p + 1)
+trueSigb2 <- seq(0.5, 1, length = p + 1)
+trueThb <- seq(0.5, 1, length = p + 1)
 
 # Covariance parameters for global covariates (each length K)
-trueSigma2 <- seq(50, 100, length = K)
-trueTheta <- runif(K, 0.1, 0.5)
+trueSigma2 <- seq(5, 10, length = K)
+trueTheta <- seq(0.1, 0.5, length = K)
 
 # Error variance
-trueTau2 <- 0.2
+trueTau2 <- 0.5
 
 # Regression coefficients
 #trueBeta <- c(1, 0.5, -1)
-trueBeta <- rep(0, 3)
+trueBeta <- c(5, 2, -4)
 
 
 ##########################
 # Generate training data #
 set.seed(mySeed)
-X <- matrix(runif(n*p, 0, 1), nrow = n, ncol = p)
+X <- matrix(runif(n*p, 0, 10), nrow = n, ncol = p)
 Z <- matrix(runif(2 * S, 0, 100), ncol = 2)
 train <- spatialData(n = n, 
                      X = X,
@@ -60,7 +59,7 @@ U <- train$U[indexTest, ]
 
 # Generate testing data
 set.seed(mySeed)
-XTest <- matrix(runif(nTest*p, 0, 11), nrow = nTest, ncol = p)
+XTest <- matrix(runif(nTest*p, 0, 10), nrow = nTest, ncol = p)
 ZTest <- matrix(runif(2 * STest, 0, 100), ncol = 2)
 test <- spatialData(n = nTest, 
                     X = XTest, 

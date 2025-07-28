@@ -29,7 +29,7 @@ mcmc <- function(X, Z, Y, D, K,
   DBTest <- lapply(1:(p+1), \(j) matrix(X0Test[ , j], nrow = nTest, ncol = nTest) *
                      (starting$sigb2[j] * exp(-starting$thb[j] * DTest)) *
                      matrix(X0Test[ , j], nrow = nTest, ncol = nTest, byrow = T))
-  CBTestFull <<- diag(STest) %x% Reduce("+", DBTest)
+  CBTestFull <<- matrix(1, S, S) %x% Reduce("+", DBTest)
   
   # Save model type and theta globally
   model <<- model
