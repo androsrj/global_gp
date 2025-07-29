@@ -4,7 +4,8 @@
 logRatioSigma2 <- function(propTrSigma2, prevTrSigma2, trSigb2, trThb, trTheta, trTau2, beta) {
   propSigma2 <- exp(propTrSigma2)
   prevSigma2 <- exp(prevTrSigma2)
-  SigmaProp <<- Sigma + Reduce("+", lapply(1:K, \(k) (propSigma2[k] - prevSigma2[k]) * B[[k]]))
+  C.eta.prop <<- var.eta(sigma2 = propSigma2, theta = gInv(trTheta), D = D, BF = BF)
+  SigmaProp <<- Sigma + C.eta.prop - C.eta
   
   logLik(SigmaProp, beta) - logLik(Sigma, beta) + # Log Likelihoods
     sum(logPriorSigma2(propSigma2)) - sum(logPriorSigma2(prevSigma2)) + # Log Priors
@@ -56,10 +57,8 @@ logRatioThb <- function(propTrThb, prevTrThb, trSigma2, trTheta, trSigb2, trTau2
 logRatioTheta <- function(propTrTheta, prevTrTheta, trSigma2, trSigb2, trThb, trTau2, beta) {
   propTheta <- gInv(propTrTheta)
   prevTheta <- gInv(prevTrTheta)
-  BProp <<- baseVariance(propTheta, D)
-  SigmaProp <<- CBFull+
-    Reduce("+", lapply(1:K, \(k) exp(trSigma2[k]) * BProp[[k]])) + 
-    exp(trTau2) * diag(n * S)
+  C.eta.prop <<- var.eta(sigma2 = exp(trSigma2), theta = propTheta, D = D, BF = BF)
+  SigmaProp <<- Sigma + C.eta.prop - C.eta
   
   logLik(SigmaProp, beta) - logLik(Sigma, beta) + # Log Likelihoods
     sum(logPriorTheta(propTheta)) - sum(logPriorTheta(prevTheta)) + # Log Priors

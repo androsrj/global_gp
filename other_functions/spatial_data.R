@@ -31,19 +31,14 @@ spatialData <- function(n, X, Z, K,
     sigma2[k] * exp(-theta[k] * D)
   })
   
-  # Covariance - h
-  eta <- sapply(1:K, function(k) {
-    t(rmvnorm(1, sigma = C[[k]]))
-  })
+  # Covariance - eta
   BF <- Bsplines_2D(Z, df = c(sqrt(K), sqrt(K)))
   S <- nrow(Z)
-  h <- c(sapply(1:S, \(i) rowSums(sapply(1:K, \(k) BF[i, k] * eta[ , k]))))
-  #basis <- lapply(1:K, function(k) {
-  #  Reduce("rbind", lapply(1:S, \(s) BF[s, k] * diag(n)))
-  #})
-  #B <- lapply(1:K, \(k) tcrossprod(basis[[k]] %*% C[[k]], basis[[k]]))
-  B.eta <- lapply(1:S, \(s) Reduce("+", lapply(1:K, \(k) BF[s, k]^2 * C[[k]])))
-  C.eta <- as.matrix(bdiag(B.eta))
+  C.array <- simplify2array(C)  # array of dim n x n x K
+  C.array <- aperm(C.array, c(3, 1, 2))  # now K x n x n
+  W.list <- lapply(1:K, function(k) tcrossprod(BF[, k]))  # each S x S
+  W.array <- simplify2array(W.list)  # S x S x K
+  C.eta <- Reduce('+', lapply(1:K, function(k) kronecker(W.array[, , k], C.array[k, , ])))
   
   # Covariance - beta
   n <- nrow(X)
@@ -67,5 +62,5 @@ spatialData <- function(n, X, Z, K,
   Y <- t(rmvnorm(1, mean = XB, sigma = Sigma))
   
   # Return data
-  return(list(X = X, Z = Z, Y = Y, B = B, h = as.vector(h), D = D, U = U, BF = BF))
+  return(list(X = X, Z = Z, Y = Y, B = B, D = D, U = U, BF = BF))
 }

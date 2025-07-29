@@ -32,10 +32,16 @@ energy_score = function(y, z){
 
 
 # Calculates the base of the covariance matrix for likelihood function
-baseVariance <- function(theta, D) {
-  B <- lapply(1:K, \(k) tcrossprod(basis[[k]] %*% exp(-theta[k] * D), basis[[k]]))
-  return(B)
-  
+var.eta <- function(sigma2, theta, D, BF) {
+  C.list <- lapply(1:K, function(k) {
+    sigma2[k] * exp(-theta[k] * D)
+  })
+  C.array <- simplify2array(C.list)  # array of dim n x n x K
+  C.array <- aperm(C.array, c(3, 1, 2))  # now K x n x n
+  W.list <- lapply(1:K, function(k) tcrossprod(BF[, k]))  # each S x S
+  W.array <- simplify2array(W.list)  # S x S x K
+  C.eta <- Reduce('+', lapply(1:K, function(k) kronecker(W.array[, , k], C.array[k, , ])))
+  return(C.eta)
 }
 
 

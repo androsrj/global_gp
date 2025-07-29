@@ -34,14 +34,14 @@ mcmc <- function(X, Z, Y, D, K,
   # Save model type and theta globally
   model <<- model
   #theta <<- theta
-  BF <- Bsplines_2D(Z, df = c(sqrt(K), sqrt(K)))
-  basis <<- lapply(1:K, function(k) {
-    Reduce("rbind", lapply(1:S, \(s) BF[s, k] * diag(n)))
-  })
-  BFTest <- Bsplines_2D(ZTest, df = c(sqrt(K), sqrt(K)))
-  basisTest <<- lapply(1:K, function(k) {
-    Reduce("rbind", lapply(1:STest, \(s) BFTest[s, k] * diag(nTest)))
-  })
+  BF <<- Bsplines_2D(Z, df = c(sqrt(K), sqrt(K)))
+  #basis <<- lapply(1:K, function(k) {
+  #  Reduce("rbind", lapply(1:S, \(s) BF[s, k] * diag(n)))
+  #})
+  BFTest <<- Bsplines_2D(ZTest, df = c(sqrt(K), sqrt(K)))
+  #basisTest <<- lapply(1:K, function(k) {
+  #  Reduce("rbind", lapply(1:STest, \(s) BFTest[s, k] * diag(nTest)))
+  #})
   
   # MCMC chain properties
   nIter <- nBurn + nIter
@@ -74,20 +74,12 @@ mcmc <- function(X, Z, Y, D, K,
   beta[ , 1] <- starting$beta
   
   # Base of covariance matrix for updating sigma2 and tau2
-  B <<- baseVariance(theta = starting$theta, D = D)
-  Sigma <<- Reduce("+", lapply(1:K, \(k) starting$sigma2[k] * B[[k]])) +
-    CBFull +
-    #starting$sigb2 * exp(-starting$thb * DXFull) +
-    starting$tau2 * diag(n * S)
+  C.eta <<- var.eta(sigma2 = starting$sigma2, theta = starting$theta, D = D, BF = BF)
+  Sigma <<- C.eta + CBFull + starting$tau2 * diag(n * S)
   
   # Base of covariance matrix for predictions
-  BTest <- lapply(1:K, \(k) tcrossprod(basisTest[[k]] %*% exp(-starting$theta[k] * DTest), basisTest[[k]]))
-  SigmaTest <<- Reduce("+", lapply(1:K, function(k) {
-    starting$sigma2[k] * BTest[[k]]
-  })) +
-    CBTestFull +
-    #starting$sigb2 * exp(-starting$thb * DXTestFull) +
-    starting$tau2 * diag(STest * nTest)
+  C.eta.test <- var.eta(sigma2 = starting$sigma2, theta = starting$theta, D = DTest, BF = BFTest)
+  SigmaTest <<- C.eta.test + CBTestFull + starting$tau2 * diag(STest * nTest)
   
   # Initial predictions for test subjects
   YPreds <- matrix(data = NA, nrow = nTest * STest, ncol = nIter)
@@ -159,6 +151,7 @@ mcmc <- function(X, Z, Y, D, K,
     if(runif(1) < exp(MHratio)) {
       trSigma2[, i] <- propTrSigma2
       Sigma <<- SigmaProp
+      C.eta <<- C.eta.prop
       acceptSigma2 <- acceptSigma2 + 1
     } else {
       trSigma2[, i] <- trSigma2[, i - 1]
@@ -183,7 +176,7 @@ mcmc <- function(X, Z, Y, D, K,
     if(runif(1) < exp(MHratio)) {
       trTheta[, i] <- propTrTheta
       Sigma <<- SigmaProp
-      B <<- BProp
+      C.eta <<- C.eta.prop
       acceptTheta <- acceptTheta + 1
     } else {
       trTheta[, i] <- trTheta[, i - 1]
@@ -222,11 +215,11 @@ mcmc <- function(X, Z, Y, D, K,
     
     ### Gibbs update (beta) ###
     
-    SigmaInv <- solve(Sigma)
-    SigmaBeta <- solve(crossprod(A, SigmaInv %*% A) + diag(p+1))
-    meanBeta <- SigmaBeta %*% crossprod(A, SigmaInv %*% Y)
-    beta[ , i] <- t(rmvnorm(1, meanBeta, SigmaBeta))
-    #beta[ , i] <- c(5, 2, -4)
+    #SigmaInv <- solve(Sigma)
+    #SigmaBeta <- solve(crossprod(A, SigmaInv %*% A) + diag(p+1))
+    #meanBeta <- SigmaBeta %*% crossprod(A, SigmaInv %*% Y)
+    #beta[ , i] <- t(rmvnorm(1, meanBeta, SigmaBeta))
+    beta[ , i] <- c(5, 2, -4)
     
     #cat(paste0("finished beta: ", round(beta[ , i], 2), "\n"))
     #cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[ , i - 1]), 3), "\n"))
@@ -242,9 +235,8 @@ mcmc <- function(X, Z, Y, D, K,
                        (exp(trSigb2[j]) * exp(-gInv(trThb[j]) * DTest)) *
                        matrix(X0Test[ , j], nrow = nTest, ncol = nTest, byrow = T))
     CBTestFull <<- diag(STest) %x% Reduce("+", DBTest)
-    SigmaTest <<- Reduce("+", lapply(1:K, function(k) {
-      exp(trSigma2[k, i]) * BTest[[k]]
-    })) + CBTestFull + exp(trTau2[i]) * diag(STest * nTest)
+    C.eta.test <- var.eta(sigma2 = exp(trSigma2[ , i]), theta = gInv(trTheta[ , i]), D = DTest, BF = BFTest)
+    SigmaTest <<- C.eta.test + CBTestFull + exp(trTau2[i])  * diag(STest * nTest)
     YPreds[ , i] <- t(rmvnorm(1, mean = ATest %*% beta[ , i], sigma = SigmaTest))
   }
   #cat(paste0("MH Ratio is ", exp(MHratio), "\n"))
