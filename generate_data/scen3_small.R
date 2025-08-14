@@ -21,14 +21,14 @@ p <- 2
 
 # Covariance parameters for beta
 trueSigb2 <- seq(0.5, 1, length = p + 1)
-trueThb <- seq(0.5, 1, length = p + 1)
+trueThb <- seq(1, 2, length = p + 1)
 
 # Covariance parameters for global covariates (each length K)
 trueSigma2 <- seq(5, 10, length = K)
 trueTheta <- seq(0.1, 0.5, length = K)
 
 # Error variance
-trueTau2 <- 0.5
+trueTau2 <- 0.2
 
 # Regression coefficients
 #trueBeta <- c(1, 0.5, -1)

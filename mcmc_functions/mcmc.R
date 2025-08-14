@@ -237,7 +237,9 @@ mcmc <- function(X, Z, Y, D, K,
     CBTestFull <<- diag(STest) %x% Reduce("+", DBTest)
     C.eta.test <- var.eta(sigma2 = exp(trSigma2[ , i]), theta = gInv(trTheta[ , i]), D = DTest, BF = BFTest)
     SigmaTest <<- C.eta.test + CBTestFull + exp(trTau2[i])  * diag(STest * nTest)
-    YPreds[ , i] <- t(rmvnorm(1, mean = ATest %*% beta[ , i], sigma = SigmaTest))
+    XBTest <- rep(1, STest) %x% rowSums(X0Test * test$B)
+    #YPreds[ , i] <- t(rmvnorm(1, mean = ATest %*% beta[ , i], sigma = SigmaTest))
+    YPreds[ , i] <- t(rmvnorm(1, mean = XBTest, sigma = SigmaTest))
   }
   #cat(paste0("MH Ratio is ", exp(MHratio), "\n"))
   #cat(paste0("Last TrTau2 was ", trTau2[i-1]), "\n")
