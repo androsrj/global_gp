@@ -229,7 +229,7 @@ if (scen %in% which.scens) {
                  theta = seq(0.4, 0.7, length = K),
                  sigb2 = seq(0.6, 0.8, length = q),
                  thb = seq(2.2, 2.4, length = q),
-                 tau2 = 0.5)
+                 tau2 = 0.8)
   starting <- list(sigma2 = runif(K, 10, 100),
                    theta = rep(.25, K),
                    sigb2 = rep(1, q),
@@ -275,7 +275,7 @@ if (scen %in% which.scens) {
                  theta = seq(0.5, 0.8, length = K),
                  sigb2 = seq(0.6, 0.8, length = q),
                  thb = seq(2.4, 2.7, length = q),
-                 tau2 = 0.45)
+                 tau2 = 0.8)
   starting <- list(sigma2 = runif(K, 1, 10),
                    theta = rep(2, K),
                    sigb2 = rep(1, q),
