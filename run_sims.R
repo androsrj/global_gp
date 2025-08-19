@@ -12,6 +12,7 @@ library(fields)
 library(parallel) 
 library(doParallel)
 library(foreach)
+library(Matrix)
 nReps <- nCores <- 10
 set.seed(999)
 which.scens <- 5:6
@@ -50,7 +51,7 @@ if (scen %in% which.scens) {
                    sigb2 = rep(0.5, q),
                    thb = rep(0.2, q),
                    tau2 = 0.1,
-                   beta = rep(0, 3))
+                   beta = rep(0, n*q))
   cl <- makeCluster(nCores)
   registerDoParallel(cl)
   obj <- foreach(i = 1:nCores, .packages = c("mvtnorm", "splines", "fields")) %dopar% run.mcmc(i)

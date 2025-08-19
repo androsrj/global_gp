@@ -20,6 +20,7 @@ mcmc <- function(X, Z, Y, D, K,
   p <<- ncol(X)
   X0 <<- cbind(rep(1, n), X)
   X0Test <<- cbind(rep(1, nTest), XTest)
+  q <<- ncol(X0)
   #DXFull <<- matrix(1, S, S) %x% rdist(scale(X))
   #DXTestFull <<- matrix(1, STest, STest) %x% rdist(scale(XTest))
   DB <- lapply(1:(p+1), \(j) matrix(X0[ , j], nrow = n, ncol = n) *
@@ -58,7 +59,7 @@ mcmc <- function(X, Z, Y, D, K,
   trSigma2 <- trTheta <- matrix(0, nrow = K, ncol = nIter)
   trThb <- trSigb2 <- matrix(0, nrow = p + 1, ncol = nIter)
   trTau2 <- numeric(nIter) # Transformed parameters
-  beta <- matrix(0, nrow = p+1, ncol = nIter)
+  beta <- matrix(0, nrow = n * q, ncol = nIter)
   acceptTau2 <- 0 # Track acceptance rates
   acceptSigma2 <- 0
   acceptSigb2 <- 0
@@ -72,6 +73,7 @@ mcmc <- function(X, Z, Y, D, K,
   trThb[, 1] <- g(starting$thb)
   trTau2[1] <- log(starting$tau2)
   beta[ , 1] <- starting$beta
+  current.beta <- matrix(beta[ , 1], ncol = q)
   
   # Base of covariance matrix for updating sigma2 and tau2
   C.eta <<- var.eta(sigma2 = starting$sigma2, theta = starting$theta, D = D, BF = BF)
@@ -83,7 +85,22 @@ mcmc <- function(X, Z, Y, D, K,
   
   # Initial predictions for test subjects
   YPreds <- matrix(data = NA, nrow = nTest * STest, ncol = nIter)
-  YPreds[ , 1] <- t(rmvnorm(1, mean = ATest %*% beta[ , 1], sigma = SigmaTest))
+  #YPreds[ , 1] <- t(rmvnorm(1, mean = ATest %*% beta[ , 1], sigma = SigmaTest))
+  XBTest <- rep(1, STest) %x% rowSums(X0Test * test$B)
+  YPreds[ , 1] <- t(rmvnorm(1, mean = XBTest, sigma = SigmaTest))
+  
+  # Permutation matrix (for sampling beta)
+  mat <- matrix(c(rep(1:q, each = n), rep(1:n, times = q)), ncol = 2)
+  new.order <- order(mat[, 2], mat[, 1])
+  P <<- diag(n*q)[new.order, ]
+  
+  # Diagonal version of X (for sampling beta)
+  X2 <- matrix(0, n, n * q)
+  for (j in seq_len(n)) {
+    cols <- ((j - 1) * q + 1):(j * q)
+    X2[j, cols] <- X0[j, ]
+  }
+  X2 <<- X2
   
   # Run Gibbs/Metropolis for one chain
   for (i in 2:nIter) {
@@ -100,7 +117,7 @@ mcmc <- function(X, Z, Y, D, K,
                              trSigma2[ , i - 1],
                              trTheta[ , i - 1],
                              trTau2[i - 1],
-                             beta[ , i - 1])
+                             current.beta)
     #cat(paste0("MH Ratio is ", round(exp(MHratio), 2), "\n"))
     if(runif(1) < exp(MHratio)) {
       trSigb2[ , i] <- propTrSigb2
@@ -123,7 +140,7 @@ mcmc <- function(X, Z, Y, D, K,
                            trTheta[ , i - 1],
                            trSigb2[ , i],
                            trTau2[i - 1],
-                           beta[ , i - 1])
+                           current.beta)
     
     if(runif(1) < exp(MHratio)) {
       trThb[ , i] <- propTrThb
@@ -146,7 +163,7 @@ mcmc <- function(X, Z, Y, D, K,
                               trThb[i],
                               trTheta[ , i - 1],
                               trTau2[i - 1],
-                              beta[ , i - 1])
+                              current.beta)
     
     if(runif(1) < exp(MHratio)) {
       trSigma2[, i] <- propTrSigma2
@@ -171,7 +188,7 @@ mcmc <- function(X, Z, Y, D, K,
                              trSigb2[i],
                              trThb[i],
                              trTau2[i - 1],
-                             beta[ , i - 1])
+                             current.beta)
     
     if(runif(1) < exp(MHratio)) {
       trTheta[, i] <- propTrTheta
@@ -197,7 +214,7 @@ mcmc <- function(X, Z, Y, D, K,
                             trThb[i],
                             trSigma2[ , i],
                             trTheta[ , i],
-                            beta[ , i - 1])
+                            current.beta)
     #if (is.na(MHratio)) {
     #  break
     #}
@@ -215,11 +232,30 @@ mcmc <- function(X, Z, Y, D, K,
     
     ### Gibbs update (beta) ###
     
+    sigb2 <- exp(trSigb2[ , i])
+    thb <- gInv(trThb[ , i])
+    tau2 <- exp(trTau2[i])
+    
+    # Big B
+    Sigma.q.inv <- lapply(1:q, \(j) solve(sigb2[j] * exp(-thb[j] * D)))
+    Sigma.inv <<- as.matrix(bdiag(Sigma.q.inv))
+    big.B <- solve(S * crossprod(X2 %*% P) / tau2 + Sigma.inv)
+    
+    # Little b
+    little.b <- Reduce("+", lapply(1:S, function(s) {
+      ind <- ((s-1)*n+1):(s*n)
+      Y2 <- Y[ind, ]
+      crossprod(X2 %*% P, Y2) / tau2
+    }))
+    
+    mu <- big.B %*% little.b
+    beta[ , i] <- rmvnorm(1, mean = mu, sigma = big.B)
+    current.beta <- matrix(beta[ , i], ncol = q)
+    
     #SigmaInv <- solve(Sigma)
     #SigmaBeta <- solve(crossprod(A, SigmaInv %*% A) + diag(p+1))
     #meanBeta <- SigmaBeta %*% crossprod(A, SigmaInv %*% Y)
     #beta[ , i] <- t(rmvnorm(1, meanBeta, SigmaBeta))
-    beta[ , i] <- c(5, 2, -4)
     
     #cat(paste0("finished beta: ", round(beta[ , i], 2), "\n"))
     #cat(paste0("Log likelihood is ", round(logLik(Sigma, beta[ , i - 1]), 3), "\n"))

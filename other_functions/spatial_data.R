@@ -51,12 +51,18 @@ spatialData <- function(n, X, Z, K,
   CB <- lapply(1:q, \(j) sigb2[j] * exp(-thb[j] * D))
   CXB <- Reduce("+", lapply(1:q, \(j) matrix(X0[ , j], nrow = n, ncol = n) * CB[[j]] *
                               matrix(X0[ , j], nrow = n, ncol = n, byrow = T)))
-  B <- Reduce("cbind", lapply(1:q, \(j) t(rmvnorm(1, sigma = CB[[j]])))) + matrix(beta, nrow = n, ncol = q, byrow = TRUE)
+  lon <- U[ , 1]
+  lat <- U[ , 2]
+  beta.surf <- cbind(
+    lon - lat,
+    lon + lat - 100,
+    2 * lon - lat - 50
+  )
+  B <- Reduce("cbind", lapply(1:q, \(j) t(rmvnorm(1, sigma = CB[[j]])))) + beta.surf
   XB <- rep(1, S) %x% rowSums(X0 * B)
   
   # Final covariance matrix for Y
   Sigma <- matrix(1, S, S) %x% CXB + C.eta + tau2 * diag(n * S)
-  #cat(min(eigen(Sigma)$values))
   
   # Generate Y
   Y <- t(rmvnorm(1, mean = XB, sigma = Sigma))
