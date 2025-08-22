@@ -136,7 +136,7 @@ mcmc <- function(X, Z, Y, D, K,
     } else {
       trSigb2[ , i] <- trSigb2[ , i - 1]
     }
-    
+    trSigb2[ , i] <- log(c(0.5, 0.75, 1))
     ### Metropolis update (theta_b) ###
     propTrThb <- rnorm(p + 1, mean = trThb[ , i - 1], sd = sdThb)
     MHratio <- logRatioThb(propTrThb,
@@ -156,7 +156,7 @@ mcmc <- function(X, Z, Y, D, K,
     } else {
       trThb[ , i] <- trThb[ , i - 1]
     }
-    
+    trThb[ , i] <- g(seq(0.02, 0.10, length = 3))
     ### Metropolis update (sigma2) ###
     propTrSigma2 <- rnorm(K, mean = trSigma2[ , i - 1], sd = sdSigma2)
     MHratio <- logRatioSigma2(propTrSigma2,
