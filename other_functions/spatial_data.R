@@ -62,7 +62,8 @@ spatialData <- function(n, X, Z, K,
   XB <- rep(1, S) %x% rowSums(X0 * B)
   
   # Final covariance matrix for Y
-  Sigma <- matrix(1, S, S) %x% CXB + C.eta + tau2 * diag(n * S)
+  #Sigma <- matrix(1, S, S) %x% CXB + C.eta + tau2 * diag(n * S)
+  Sigma <- C.eta + tau2 * diag(n * S)
   
   # Generate Y
   Y <- t(rmvnorm(1, mean = XB, sigma = Sigma))

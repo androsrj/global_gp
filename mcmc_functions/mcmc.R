@@ -23,10 +23,14 @@ mcmc <- function(X, Z, Y, D, K,
   q <<- ncol(X0)
   #DXFull <<- matrix(1, S, S) %x% rdist(scale(X))
   #DXTestFull <<- matrix(1, STest, STest) %x% rdist(scale(XTest))
-  DB <- lapply(1:(p+1), \(j) matrix(X0[ , j], nrow = n, ncol = n) *
+  DB <- lapply(1:q, \(j) matrix(X0[ , j], nrow = n, ncol = n) *
                  (starting$sigb2[j] * exp(-starting$thb[j] * D)) *
                  matrix(X0[ , j], nrow = n, ncol = n, byrow = T))
   CBFull <<- matrix(1, S, S) %x% Reduce("+", DB)
+  DBTest <- lapply(1:q, \(j) matrix(X0Test[ , j], nrow = nTest, ncol = nTest) *
+                     (starting$sigb2[j] * exp(-starting$thb[j] * DTest)) *
+                     matrix(X0Test[ , j], nrow = nTest, ncol = nTest, byrow = T))
+  CBTestFull <<- matrix(1, S, S) %x% Reduce("+", DBTest)
   
   # Save model type and theta globally
   model <<- model
@@ -39,6 +43,28 @@ mcmc <- function(X, Z, Y, D, K,
   #basisTest <<- lapply(1:K, function(k) {
   #  Reduce("rbind", lapply(1:STest, \(s) BFTest[s, k] * diag(nTest)))
   #})
+  
+  # Permutation matrix (for sampling beta)
+  mat <- matrix(c(rep(1:q, each = n), rep(1:n, times = q)), ncol = 2)
+  new.order <- order(mat[, 2], mat[, 1])
+  P <<- diag(n*q)[new.order, ]
+  mat <- matrix(c(rep(1:q, each = nTest), rep(1:nTest, times = q)), ncol = 2)
+  new.order <- order(mat[, 2], mat[, 1])
+  PTest <<- diag(nTest*q)[new.order, ]
+  
+  # Diagonal version of X (for sampling beta)
+  X2 <- matrix(0, n, n * q)
+  for (j in seq_len(n)) {
+    cols <- ((j - 1) * q + 1):(j * q)
+    X2[j, cols] <- X0[j, ]
+  }
+  X2 <<- X2
+  X2Test <- matrix(0, nTest, nTest * q)
+  for (j in seq_len(nTest)) {
+    cols <- ((j - 1) * q + 1):(j * q)
+    X2Test[j, cols] <- X0Test[j, ]
+  }
+  X2Test <<- X2Test
   
   # MCMC chain properties
   nIter <- nBurn + nIter
@@ -71,9 +97,30 @@ mcmc <- function(X, Z, Y, D, K,
   trSigb2[, 1] <- log(starting$sigb2)
   trThb[, 1] <- g(starting$thb)
   trTau2[1] <- log(starting$tau2)
-  beta[ , 1] <- starting$beta
-  beta.test[ , 1] <- rnorm(nTest * q)
+  
+  # Initial values of beta
+  Sigma.q.inv <- lapply(1:q, \(j) solve(starting$sigb2[j] * exp(-starting$thb[j] * D)))
+  Sigma.inv <- as.matrix(bdiag(Sigma.q.inv))
+  big.B <- solve(S * crossprod(X2 %*% P) / starting$tau2 + Sigma.inv)
+  little.b <- Reduce("+", lapply(1:S, function(s) {
+    ind <- ((s-1)*n+1):(s*n)
+    Y2 <- Y[ind, ]
+    crossprod(X2 %*% P, Y2) / starting$tau2
+  }))
+  mu <- big.B %*% little.b
+  beta[ , 1] <- big.B %*% little.b
   current.beta <- matrix(beta[ , 1], ncol = q)
+  
+  # Initial values of beta.test
+  Sigma.q.inv <- lapply(1:q, \(j) solve(starting$sigb2[j] * exp(-starting$thb[j] * DTest)))
+  Sigma.inv <- as.matrix(bdiag(Sigma.q.inv))
+  big.B <- solve(STest * crossprod(X2Test %*% PTest) / starting$tau2 + Sigma.inv)
+  little.b <- Reduce("+", lapply(1:STest, function(s) {
+    ind <- ((s-1)*nTest+1):(s*nTest)
+    Y2Test <- YTest[ind, ]
+    crossprod(X2Test %*% PTest, Y2Test) / starting$tau2
+  }))
+  beta.test[ , 1] <- big.B %*% little.b
   current.beta.test <<- matrix(beta.test[ , 1], ncol = q)
   
   # Base of covariance matrix for updating sigma2 and tau2
@@ -89,28 +136,6 @@ mcmc <- function(X, Z, Y, D, K,
   XBTest <<- rep(1, STest) %x% rowSums(X0Test * current.beta.test)
   YPreds[ , 1] <- t(rmvnorm(1, mean = XBTest, sigma = SigmaTest))
   
-  # Permutation matrix (for sampling beta)
-  mat <- matrix(c(rep(1:q, each = n), rep(1:n, times = q)), ncol = 2)
-  new.order <- order(mat[, 2], mat[, 1])
-  P <<- diag(n*q)[new.order, ]
-  mat <- matrix(c(rep(1:q, each = nTest), rep(1:nTest, times = q)), ncol = 2)
-  new.order <- order(mat[, 2], mat[, 1])
-  PTest <<- diag(nTest*q)[new.order, ]
-  
-  # Diagonal version of X (for sampling beta)
-  X2 <- matrix(0, n, n * q)
-  for (j in seq_len(n)) {
-    cols <- ((j - 1) * q + 1):(j * q)
-    X2[j, cols] <- X0[j, ]
-  }
-  X2 <<- X2
-  X2Test <- matrix(0, nTest, nTest * q)
-  for (j in seq_len(nTest)) {
-    cols <- ((j - 1) * q + 1):(j * q)
-    X2Test[j, cols] <- X0Test[j, ]
-  }
-  X2Test <<- X2Test
-  
   # Run Gibbs/Metropolis for one chain
   for (i in 2:nIter) {
     
@@ -120,6 +145,7 @@ mcmc <- function(X, Z, Y, D, K,
     
     ### Metropolis update (sigma2_b) ###
     propTrSigb2 <- rnorm(p + 1, mean = trSigb2[ , i - 1], sd = sdSigb2)
+    #propTrSigb2 <- log(c(0.5, 0.75, 1))
     MHratio <- logRatioSigb2(propTrSigb2,
                              trSigb2[ , i - 1],
                              trThb[ , i - 1],
@@ -128,6 +154,7 @@ mcmc <- function(X, Z, Y, D, K,
                              trTau2[i - 1],
                              current.beta)
     if(runif(1) < exp(MHratio)) {
+    #if (i == 2) {
       trSigb2[ , i] <- propTrSigb2
       Sigma <<- SigmaProp
       DB <<- DBNew
@@ -136,9 +163,10 @@ mcmc <- function(X, Z, Y, D, K,
     } else {
       trSigb2[ , i] <- trSigb2[ , i - 1]
     }
-    trSigb2[ , i] <- log(c(0.5, 0.75, 1))
+    
     ### Metropolis update (theta_b) ###
     propTrThb <- rnorm(p + 1, mean = trThb[ , i - 1], sd = sdThb)
+    #propTrThb <- g(seq(0.02, 0.10, length = 3))
     MHratio <- logRatioThb(propTrThb,
                            trThb[ , i - 1],
                            trSigma2[ , i - 1],
@@ -146,8 +174,8 @@ mcmc <- function(X, Z, Y, D, K,
                            trSigb2[ , i],
                            trTau2[i - 1],
                            current.beta)
-    
     if(runif(1) < exp(MHratio)) {
+    #if (i == 2) {
       trThb[ , i] <- propTrThb
       Sigma <<- SigmaProp
       DB <<- DBNew
@@ -156,7 +184,7 @@ mcmc <- function(X, Z, Y, D, K,
     } else {
       trThb[ , i] <- trThb[ , i - 1]
     }
-    trThb[ , i] <- g(seq(0.02, 0.10, length = 3))
+    
     ### Metropolis update (sigma2) ###
     propTrSigma2 <- rnorm(K, mean = trSigma2[ , i - 1], sd = sdSigma2)
     MHratio <- logRatioSigma2(propTrSigma2,
@@ -222,7 +250,7 @@ mcmc <- function(X, Z, Y, D, K,
     
     # Big B
     Sigma.q.inv <- lapply(1:q, \(j) solve(sigb2[j] * exp(-thb[j] * D)))
-    Sigma.inv <<- as.matrix(bdiag(Sigma.q.inv))
+    Sigma.inv <- as.matrix(bdiag(Sigma.q.inv))
     big.B <- solve(S * crossprod(X2 %*% P) / tau2 + Sigma.inv)
     
     # Little b
@@ -239,8 +267,8 @@ mcmc <- function(X, Z, Y, D, K,
     # Update for beta for test data
     # Big B
     Sigma.q.inv <- lapply(1:q, \(j) solve(sigb2[j] * exp(-thb[j] * DTest)))
-    Sigma.inv <<- as.matrix(bdiag(Sigma.q.inv))
-    big.B <- solve(S * crossprod(X2Test %*% PTest) / tau2 + Sigma.inv)
+    Sigma.inv <- as.matrix(bdiag(Sigma.q.inv))
+    big.B <- solve(STest * crossprod(X2Test %*% PTest) / tau2 + Sigma.inv)
     
     # Little b
     little.b <- Reduce("+", lapply(1:STest, function(s) {
@@ -254,8 +282,12 @@ mcmc <- function(X, Z, Y, D, K,
     current.beta.test <<- matrix(beta.test[ , i], ncol = q)
     
     # Sample from posterior predictive for YTest
-    C.eta.test <- var.eta(sigma2 = exp(trSigma2[ , i]), theta = gInv(trTheta[ , i]), D = DTest, BF = BFTest)
-    SigmaTest <<- C.eta.test + exp(trTau2[i])  * diag(STest * nTest)
+    DBTest <- lapply(1:q, \(j) matrix(X0Test[ , j], nrow = nTest, ncol = nTest) *
+                       (sigb2[j] * exp(-thb[j] * DTest)) *
+                       matrix(X0Test[ , j], nrow = nTest, ncol = nTest, byrow = T))
+    CBTestFull <<- diag(STest) %x% Reduce("+", DBTest)
+    C.eta.test <- var.eta(sigma2 = sigma2, theta = theta, D = DTest, BF = BFTest)
+    SigmaTest <<- CBTestFull + C.eta.test + tau2  * diag(STest * nTest)
     XBTest <<- rep(1, STest) %x% rowSums(X0Test * current.beta.test)
     YPreds[ , i] <- t(rmvnorm(1, mean = XBTest, sigma = SigmaTest))
   }
