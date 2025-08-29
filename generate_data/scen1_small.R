@@ -1,6 +1,6 @@
 source("../other_functions/spatial_data.R")
 source("../other_functions/bsplines_2_3D.R")
-mySeed <- 45219
+mySeed <- 45213
 
 # Sample sizes
 # Can have a "small" dataset with n = 100 and nTest = 25
@@ -29,11 +29,6 @@ trueTheta <- seq(0.1, 0.5, length = K)
 
 # Error variance
 trueTau2 <- 0.2
-
-# Regression coefficients
-#trueBeta <- c(1, 0.5, -1)
-trueBeta <- c(5, 2, -4)
-
 
 ##########################
 # Generate training data #

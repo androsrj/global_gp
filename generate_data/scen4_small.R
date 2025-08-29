@@ -1,6 +1,6 @@
 source("../other_functions/spatial_data.R")
 source("../other_functions/bsplines_2_3D.R")
-mySeed <- 45213
+mySeed <- 45218
 
 # Sample sizes
 # Can have a "small" dataset with n = 100 and nTest = 25
@@ -30,11 +30,6 @@ trueTheta <- seq(0.1, 0.5, length = K)
 # Error variance
 trueTau2 <- 2
 
-# Regression coefficients
-#trueBeta <- c(1, 0.5, -1)
-trueBeta <- c(5, 2, -4)
-
-
 ##########################
 # Generate training data #
 set.seed(mySeed)
@@ -49,7 +44,6 @@ train <- spatialData(n = n,
                      sigma2 = trueSigma2, 
                      theta = trueTheta, 
                      tau2 = trueTau2, 
-                     beta = trueBeta,
                      range = c(0, 100))
 saveRDS(train, file = "../data/small/scen4/train.RDS")
 
@@ -71,7 +65,6 @@ test <- spatialData(n = nTest,
                     sigma2 = trueSigma2, 
                     theta = trueTheta, 
                     tau2 = trueTau2, 
-                    beta = trueBeta,
                     range = c(0, 100))
 sd(test$Y)
 test$index <- indexTest

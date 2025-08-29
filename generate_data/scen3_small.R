@@ -30,11 +30,6 @@ trueTheta <- seq(0.1, 0.5, length = K)
 # Error variance
 trueTau2 <- 0.2
 
-# Regression coefficients
-#trueBeta <- c(1, 0.5, -1)
-trueBeta <- c(5, 2, -4)
-
-
 ##########################
 # Generate training data #
 set.seed(mySeed)
@@ -49,7 +44,6 @@ train <- spatialData(n = n,
                      sigma2 = trueSigma2, 
                      theta = trueTheta, 
                      tau2 = trueTau2, 
-                     beta = trueBeta,
                      range = c(0, 100))
 saveRDS(train, file = "../data/small/scen3/train.RDS")
 
@@ -71,7 +65,6 @@ test <- spatialData(n = nTest,
                     sigma2 = trueSigma2, 
                     theta = trueTheta, 
                     tau2 = trueTau2, 
-                    beta = trueBeta,
                     range = c(0, 100))
 sd(test$Y)
 test$index <- indexTest
