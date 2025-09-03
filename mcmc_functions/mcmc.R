@@ -126,9 +126,11 @@ mcmc <- function(X, Z, Y, D, K,
   # Base of covariance matrix for updating sigma2 and tau2
   C.eta <<- var.eta(sigma2 = starting$sigma2, theta = starting$theta, D = D, BF = BF)
   Sigma <<- C.eta + CBFull + starting$tau2 * diag(n * S)
+  #Sigma <<- C.eta + starting$tau2 * diag(n * S)
   
   # Base of covariance matrix for predictions
   C.eta.test <- var.eta(sigma2 = starting$sigma2, theta = starting$theta, D = DTest, BF = BFTest)
+  #SigmaTest <<- CBTestFull + C.eta.test + starting$tau2 * diag(STest * nTest)
   SigmaTest <<- C.eta.test + starting$tau2 * diag(STest * nTest)
   
   # Initial predictions for test subjects
@@ -166,7 +168,7 @@ mcmc <- function(X, Z, Y, D, K,
     
     ### Metropolis update (theta_b) ###
     propTrThb <- rnorm(p + 1, mean = trThb[ , i - 1], sd = sdThb)
-    #propTrThb <- g(seq(0.02, 0.10, length = 3))
+    #propTrThb <- g(seq(0.05, 0.10, length = 3))
     MHratio <- logRatioThb(propTrThb,
                            trThb[ , i - 1],
                            trSigma2[ , i - 1],
@@ -287,7 +289,8 @@ mcmc <- function(X, Z, Y, D, K,
                        matrix(X0Test[ , j], nrow = nTest, ncol = nTest, byrow = T))
     CBTestFull <<- diag(STest) %x% Reduce("+", DBTest)
     C.eta.test <- var.eta(sigma2 = sigma2, theta = theta, D = DTest, BF = BFTest)
-    SigmaTest <<- CBTestFull + C.eta.test + tau2  * diag(STest * nTest)
+    #SigmaTest <<- CBTestFull + C.eta.test + tau2  * diag(STest * nTest)
+    SigmaTest <- C.eta.test + tau2 * diag(STest * nTest)
     XBTest <<- rep(1, STest) %x% rowSums(X0Test * current.beta.test)
     YPreds[ , i] <- t(rmvnorm(1, mean = XBTest, sigma = SigmaTest))
   }
