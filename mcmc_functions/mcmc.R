@@ -5,7 +5,7 @@ mcmc <- function(X, Z, Y, D, K,
                  starting,
                  propSD,
                  model = c("full_gp", "mpp", "sparse_gpp")[1],
-                 nIter = 1000, nBurn = 100, nThin = 2) {
+                 nIter = 1000, nBurn = 100, nThin = 2, nReport = 100) {
   
   # Dimensions
   S <<- nrow(Z)
@@ -141,7 +141,7 @@ mcmc <- function(X, Z, Y, D, K,
   # Run Gibbs/Metropolis for one chain
   for (i in 2:nIter) {
     
-    if (i %% 10 == 0) {
+    if (i %% nReport == 0) {
       cat(paste0("Beginning iteration ", i, ".\n"))
     }
     

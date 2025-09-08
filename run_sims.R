@@ -14,14 +14,14 @@ library(doParallel)
 library(foreach)
 library(Matrix)
 nReps <- nCores <- 10
-set.seed(9827)
-which.scens <- 4
+set.seed(9994)
+which.scens <- 1:6
 
 run.mcmc <- function(rep) {
   results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                   starting = starting,
                   propSD = propSD,
-                  nIter = 500, nBurn = 500, nThin=2,
+                  nIter = 2000, nBurn = 1000, nThin=2,
                   model = "full_gp")
   return(results)
 }
@@ -42,15 +42,15 @@ if (scen %in% which.scens) {
   K <- 9
   q <- ncol(X) + 1
   propSD <- list(sigma2 = seq(0.2, 0.3, length = K),
-                 theta = seq(0.5, 0.7, length = K),
-                 sigb2 = seq(0.4, 0.6, length = q),
-                 thb = seq(0.1, 0.2, length = q),
+                 theta = seq(0.7, 1.0, length = K),
+                 sigb2 = seq(0.3, 0.4, length = q),
+                 thb = seq(0.01, 0.1, length = q),
                  tau2 = 0.3)
   starting <- list(sigma2 = rep(50, K),
                    theta = rep(.25, K),
-                   sigb2 = rep(0.5, q),
+                   sigb2 = rep(0.2, q),
                    thb = rep(0.2, q),
-                   tau2 = 0.1)
+                   tau2 = 2)
   #cl <- makeCluster(nCores)
   #registerDoParallel(cl)
   #obj <- foreach(i = 1:nCores, .packages = c("mvtnorm", "splines", "fields", "Matrix")) %dopar% run.mcmc(i)
@@ -90,16 +90,16 @@ if (scen %in% which.scens) {
   D <- train$D; DTest <- test$D
   K <- 9
   q <- ncol(X) + 1
-  propSD <- list(sigma2 = seq(0.2, 0.4, length = K),
-                 theta = seq(0.7, 0.9, length = K),
-                 sigb2 = seq(0.4, 0.6, length = q),
-                 thb = seq(8, 10, length = q),
+  propSD <- list(sigma2 = seq(0.2, 0.3, length = K),
+                 theta = seq(0.7, 1.2, length = K),
+                 sigb2 = seq(0.3, 0.4, length = q),
+                 thb = seq(0.4, 0.5, length = q),
                  tau2 = 0.25)
-  starting <- list(sigma2 = runif(K, 1, 10),
+  starting <- list(sigma2 = rep(10, K),
                    theta = rep(.25, K),
-                   sigb2 = rep(5, q),
+                   sigb2 = rep(0.1, q),
                    thb = rep(0.2, q), 
-                   tau2 = 0.1)
+                   tau2 = 1.5)
   #cl <- makeCluster(nCores)
   #registerDoParallel(cl)
   #obj <- foreach(i = 1:nCores, .packages = c("mvtnorm", "splines", "fields", "Matrix")) %dopar% run.mcmc(i)
@@ -143,12 +143,12 @@ if (scen %in% which.scens) {
                  theta = seq(0.5, 0.7, length = K),
                  sigb2 = seq(0.5, 0.7, length = q),
                  thb = seq(0.9, 1.1, length = q),
-                 tau2 = 0.3)
-  starting <- list(sigma2 = runif(K, 1, 10),
+                 tau2 = 0.2)
+  starting <- list(sigma2 = rep(10, K),
                    theta = rep(.25, K),
-                   sigb2 = rep(1, q),
+                   sigb2 = rep(0.1, q),
                    thb = rep(2, q), 
-                   tau2 = 0.3)
+                   tau2 = 2)
   #cl <- makeCluster(nCores)
   #registerDoParallel(cl)
   #obj <- foreach(i = 1:nCores, .packages = c("mvtnorm", "splines", "fields", "Matrix")) %dopar% run.mcmc(i)
@@ -195,9 +195,9 @@ if (scen %in% which.scens) {
                  tau2 = 0.2)
   starting <- list(sigma2 = runif(K, 1, 10),
                    theta = rep(.25, K),
-                   sigb2 = rep(1, q),
+                   sigb2 = rep(0.1, q),
                    thb = rep(0.2, q),  
-                   tau2 = 1.5)
+                   tau2 = 5)
   #cl <- makeCluster(nCores)
   #registerDoParallel(cl)
   #obj <- foreach(i = 1:nCores, .packages = c("mvtnorm", "splines", "fields", "Matrix")) %dopar% run.mcmc(i)
@@ -238,15 +238,15 @@ if (scen %in% which.scens) {
   K <- 9
   q <- ncol(X) + 1
   propSD <- list(sigma2 = seq(0.15, 0.2, length = K),
-                 theta = seq(0.4, 0.7, length = K),
-                 sigb2 = seq(0.6, 0.8, length = q),
+                 theta = seq(0.3, 0.5, length = K),
+                 sigb2 = seq(0.4, 0.6, length = q),
                  thb = seq(2.2, 2.4, length = q),
-                 tau2 = 0.8)
-  starting <- list(sigma2 = runif(K, 10, 100),
+                 tau2 = 0.5)
+  starting <- list(sigma2 = rep(20, K),
                    theta = rep(.25, K),
-                   sigb2 = rep(1, q),
+                   sigb2 = rep(0.2, q),
                    thb = rep(0.2, q), 
-                   tau2 = 0.1)
+                   tau2 = 2)
   #cl <- makeCluster(nCores)
   #registerDoParallel(cl)
   #obj <- foreach(i = 1:nCores, .packages = c("mvtnorm", "splines", "fields", "Matrix")) %dopar% run.mcmc(i)
@@ -290,12 +290,12 @@ if (scen %in% which.scens) {
                  theta = seq(0.5, 0.8, length = K),
                  sigb2 = seq(0.6, 0.8, length = q),
                  thb = seq(2.4, 2.7, length = q),
-                 tau2 = 0.8)
+                 tau2 = 0.3)
   starting <- list(sigma2 = runif(K, 1, 10),
                    theta = rep(2, K),
-                   sigb2 = rep(1, q),
+                   sigb2 = rep(0.1, q),
                    thb = rep(0.2, q), 
-                   tau2 = 0.1)
+                   tau2 = 2)
   #cl <- makeCluster(nCores)
   #registerDoParallel(cl)
   #obj <- foreach(i = 1:nCores, .packages = c("mvtnorm", "splines", "fields", "Matrix")) %dopar% run.mcmc(i)
