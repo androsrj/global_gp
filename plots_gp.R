@@ -1,106 +1,102 @@
 library(ggplot2)
-nScen <- 11
-nReps <- 2
+library(MBA)
+library(fields)
+library(latex2exp)
+
+nScen <- 6
+nReps <- 1
 line.type <- 2
 line.width <- 4
+nTest <- 25
 
-# Density plots for beta0
-pdf("figures/gp/beta0_gp.pdf")
-par(mfrow = c(3,4))
+# Surface plots for true beta surfaces
+test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
+beta0.true <- test$U[ , 1] - test$U[ , 2]
+beta1.true <- test$U[ , 1] + test$U[ , 2] - 100
+beta2.true <- 2 * test$U[ , 1] - test$U[ , 2] - 50
+
+pdf("figures/gp/beta_true.pdf", width = 10, height = 3)
+par(mfrow = c(1,3), mar = c(5, 5, 4, 8) + 0.2)
+
+# Beta0
+mba.data.true <- data.frame(test$U, beta0.true)
+mba.interp.true <- mba.surf(mba.data.true, no.X=100, no.Y=100, extend=TRUE)
+image.plot(mba.interp.true$xyz.est, main = TeX("True surface ($\\beta_0$)"),
+           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
+           axis.args = list(cex.axis = 1.5))
+
+# Beta1
+mba.data.true <- data.frame(test$U, beta1.true)
+mba.interp.true <- mba.surf(mba.data.true, no.X=100, no.Y=100, extend=TRUE)
+image.plot(mba.interp.true$xyz.est, main = TeX("True surface ($\\beta_1$)"),
+           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
+           axis.args = list(cex.axis = 1.5))
+
+# Beta2
+mba.data.true <- data.frame(test$U, beta2.true)
+mba.interp.true <- mba.surf(mba.data.true, no.X=100, no.Y=100, extend=TRUE)
+image.plot(mba.interp.true$xyz.est, main = TeX("True surface ($\\beta_2$)"),
+           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
+           axis.args = list(cex.axis = 1.5))
+
+dev.off()
+
+# Surface plots for beta0
+pdf("figures/gp/beta0_gp.pdf", width = 8, height = 6)
+par(mfrow = c(2,3), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)
-  beta0_samples <- results[[1]]$paramSamples$beta[1,]
-  hist(beta0_samples, 
-       xlab = paste0("Scenario ", i),
-       main = "",
-       xlim = c(-2.5, 4),
-       breaks = 10)
-  abline(v = 1, lty = line.type, lwd = line.width, col = "skyblue4")
-  mtext("Beta_0 Samples", side = 3, line = - 2, outer = TRUE)
+  test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
+  beta0.means <- results$posteriorMeans$beta.test[1:nTest]
+  mba.data <- data.frame(test$U, beta0.means)
+  mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
+  image(mba.interp$xyz.est, main = paste0("Scen. ", i), 
+        col = tim.colors(64), cex.main = 1.5)
+  mtext(TeX("$\\beta_0"), side = 3, line = 1, outer = TRUE, cex = 1.5)
 }
 dev.off()
 
-# Density plots for beta1
-pdf("figures/gp/beta1_gp.pdf")
-par(mfrow = c(3,4))
+# Surface plots for beta1
+pdf("figures/gp/beta1_gp.pdf", width = 8, height = 6)
+par(mfrow = c(2,3), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)
-  beta1_samples <- results[[1]]$paramSamples$beta[2,]
-  hist(beta1_samples, 
-       xlab = paste0("Scenario ", i),
-       main = "",
-       xlim = c(-1.5, 2))
-  abline(v = 0.5, lty = line.type, lwd = line.width, col = "skyblue4")
-  mtext("Beta_1 Samples", side = 3, line = - 2, outer = TRUE)
+  test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
+  beta1.means <- results$posteriorMeans$beta.test[(nTest+1):(2*nTest)]
+  mba.data <- data.frame(test$U, beta1.means)
+  mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
+  image(mba.interp$xyz.est, main = paste0("Scen. ", i), 
+        col = tim.colors(64), cex.main = 1.5)
+  mtext(TeX("$\\beta_1"), side = 3, line = 1, outer = TRUE, cex = 1.5)
 }
 dev.off()
 
-# Density plots for beta2
-pdf("figures/gp/beta2_gp.pdf")
-par(mfrow = c(3,4))
+# Surface plots for beta2
+pdf("figures/gp/beta2_gp.pdf", width = 8, height = 6)
+par(mfrow = c(2,3), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)
-  beta2_samples <- results[[1]]$paramSamples$beta[3,]
-  hist(beta2_samples, 
-       xlab = paste0("Scenario ", i),
-       main = "",
-       xlim = c(-2, 1.5),
-       breaks = 10)
-  abline(v = -1, lty = line.type, lwd = line.width, col = "skyblue4")
-  mtext("Beta_2 Samples", side = 3, line = - 2, outer = TRUE)
+  test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
+  beta2.means <- results$posteriorMeans$beta.test[(2*nTest+1):(3*nTest)]
+  mba.data <- data.frame(test$U, beta2.means)
+  mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
+  image(mba.interp$xyz.est, main = paste0("Scen. ", i), 
+        col = tim.colors(64), cex.main = 1.5)
+  mtext(TeX("$\\beta_2"), side = 3, line = 1, outer = TRUE, cex = 1.5)
 }
 dev.off()
-
-# Density plots for theta_f
-#pdf("figures/gp/thf_gp.pdf")
-#par(mfrow = c(3,4))
-#for (i in 1:nScen) {
-#  path <- paste0("objects/small_scen", i, ".RDS") 
-#  results <- readRDS(path)
-#  thf_samples <- results[[1]]$paramSamples$thf
-#  if (i == 2) {
-#    true_thf <- 10
-#  } else {
-#    true_thf = 1
-#  }
-#  hist(thf_samples, 
-#       xlab = paste0("Scenario ", i),
-#       main = "")
-#  abline(v = true_thf, lty = line.type, lwd = line.width, col = "skyblue4")
-#  mtext("Theta_f Samples", side = 3, line = - 2, outer = TRUE)
-#}
-#dev.off()
-
-# Density plots for sigf2
-#pdf("figures/gp/sigf2_gp.pdf")
-#par(mfrow = c(3,4))
-#for (i in 1:nScen) {
-#  path <- paste0("objects/small_scen", i, ".RDS") 
-#  results <- readRDS(path)
-#  sigf2_samples <- results[[2]]$paramSamples$sigf2
-#  if (i == 3) {
-#    true_sigf2 <- 20
-#  } else {
-#    true_sigf2 <- 5
-#  }
-#  hist(sigf2_samples, 
-#       xlab = paste0("Scenario ", i),
-#       main = "")
-#  abline(v = true_sigf2, lty = line.type, lwd = line.width, col = "skyblue4")
-#  mtext("Sigma2_f Samples", side = 3, line = - 2, outer = TRUE)
-#}
-#dev.off()
 
 # Density plots for tau2
-pdf("figures/gp/tau2_gp.pdf")
-par(mfrow = c(3,4))
+pdf("figures/gp/tau2_gp.pdf", width = 8, height = 6)
+par(mfrow = c(2,3))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)
-  tau2_samples <- results[[1]]$paramSamples$tau2
+  #tau2_samples <- results[[1]]$paramSamples$tau2
+  tau2_samples <- results$paramSamples$tau2
   if (i == 4) {
     true_tau2 <- 2
   } else {
@@ -108,11 +104,13 @@ for (i in 1:nScen) {
   }
   hist(tau2_samples, 
        xlab = paste0("Scenario ", i),
-       main = "")
-  abline(v = true_tau2, lty = line.type, lwd = line.width, col = "skyblue4")
-  mtext("Tau2 Samples", side = 3, line = - 2, outer = TRUE)
+       main = "", ylab = "", cex.lab = 1.75)
+  abline(v = true_tau2, lty = line.type, lwd = line.width, col = "blue")
+  mtext(TeX("$\\tau^2$"), side = 3, line = -2.5, outer = TRUE, cex = 1.5)
 }
 dev.off()
+
+
 
 ### BOXPLOTS FOR PREDICTIVE DIAGNOSTICS ###
 

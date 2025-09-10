@@ -1,9 +1,88 @@
 library(ggplot2)
 library(spBayes)
-nScen <- 11
-nReps <- 2
+library(MBA)
+library(fields)
+library(latex2exp)
+nScen <- 6
+nReps <- 3
 line.type <- 2
 line.width <- 4
+nTest <- 25
+
+# Surface plots for beta0
+pdf("figures/svc/beta0_svc.pdf", width = 8, height = 6)
+par(mfrow = c(2,3), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
+for (i in 1:nScen) {
+  path <- paste0("objects/svc_scen", i, ".RDS") 
+  results <- readRDS(path)
+  test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
+  beta.mu <- mean(results[[1]]$preds$p.beta.recover.samples[ , 1])
+  w.mu <- apply(results[[1]]$preds$p.w.predictive.samples[1:nTest, ], 1, mean)
+  beta0.means <- beta.mu + w.mu
+  mba.data <- data.frame(test$U, beta0.means)
+  mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
+  image(mba.interp$xyz.est, main = paste0("Scen. ", i), 
+        col = tim.colors(64), cex.main = 1.5)
+  mtext(TeX("$\\beta_0"), side = 3, line = 1, outer = TRUE, cex = 1.5)
+}
+dev.off()
+
+# Surface plots for beta1
+pdf("figures/svc/beta1_svc.pdf", width = 8, height = 6)
+par(mfrow = c(2,3), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
+for (i in 1:nScen) {
+  path <- paste0("objects/svc_scen", i, ".RDS") 
+  results <- readRDS(path)
+  test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
+  beta.mu <- mean(results[[1]]$preds$p.beta.recover.samples[ , 2])
+  w.mu <- apply(results[[1]]$preds$p.w.predictive.samples[(nTest+1):(2*nTest), ], 1, mean)
+  beta1.means <- beta.mu + w.mu
+  mba.data <- data.frame(test$U, beta1.means)
+  mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
+  image(mba.interp$xyz.est, main = paste0("Scen. ", i), 
+        col = tim.colors(64), cex.main = 1.5)
+  mtext(TeX("$\\beta_1"), side = 3, line = 1, outer = TRUE, cex = 1.5)
+}
+dev.off()
+
+# Surface plots for beta2
+pdf("figures/svc/beta2_svc.pdf", width = 8, height = 6)
+par(mfrow = c(2,3), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
+for (i in 1:nScen) {
+  path <- paste0("objects/svc_scen", i, ".RDS") 
+  results <- readRDS(path)
+  test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
+  beta.mu <- mean(results[[1]]$preds$p.beta.recover.samples[ , 3])
+  w.mu <- apply(results[[1]]$preds$p.w.predictive.samples[(2*nTest+1):(3*nTest), ], 1, mean)
+  beta2.means <- beta.mu + w.mu
+  mba.data <- data.frame(test$U, beta2.means)
+  mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
+  image(mba.interp$xyz.est, main = paste0("Scen. ", i), 
+        col = tim.colors(64), cex.main = 1.5)
+  mtext(TeX("$\\beta_2"), side = 3, line = 1, outer = TRUE, cex = 1.5)
+}
+dev.off()
+
+# Density plots for tau2
+pdf("figures/svc/tau2_svc.pdf", width = 8, height = 6)
+par(mfrow = c(2,3))
+for (i in 1:nScen) {
+  path <- paste0("objects/svc_scen", i, ".RDS") 
+  results <- readRDS(path)
+  tau2_samples <- results[[1]]$model$p.theta.samples[ , 4]
+  if (i == 4) {
+    true_tau2 <- 2
+  } else {
+    true_tau2 <- 0.2
+  }
+  hist(tau2_samples, 
+       xlab = paste0("Scenario ", i),
+       main = "", ylab = "", cex.lab = 1.75)
+  abline(v = true_tau2, lty = line.type, lwd = line.width, col = "blue")
+  mtext(TeX("$\\tau^2$"), side = 3, line = -2.5, outer = TRUE, cex = 1.5)
+}
+dev.off()
+
 
 # Density plots for beta0
 pdf("figures/svc/beta0_svc.pdf")
@@ -17,7 +96,7 @@ for (i in 1:nScen) {
        main = "",
        xlim = c(0, 6),
        breaks = 10)
-  abline(v = 1, lty = line.type, lwd = line.width, col = "skyblue4")
+  abline(v = 1, lty = line.type, lwd = line.width, col = "blue")
   mtext("Beta_0 Samples", side = 3, line = - 2, outer = TRUE)
 }
 dev.off()
@@ -70,7 +149,7 @@ for (i in 1:nScen) {
   hist(tau2_samples, 
        xlab = paste0("Scenario ", i),
        main = "")
-  abline(v = true_tau2, lty = line.type, lwd = line.width, col = "skyblue4")
+  abline(v = true_tau2, lty = line.type, lwd = line.width, col = "blue")
   mtext("Tau2 Samples", side = 3, line = - 2, outer = TRUE)
 }
 dev.off()
@@ -90,13 +169,11 @@ for (i in 1:nScen) {
     rmse_vec <- cvg_vec <- len_vec <- numeric(STest)
     for (k in 1:STest) {
       truth <- test$Y[(nTest*(k-1)+1):(nTest*k), ]
-      m.3.pred <- spPredict(results[[j]], pred.covars = cbind(rep(1, nTest), test$X),
-                            pred.coords=test$U + rnorm(50, 0, 0.0001), thin=10,
-                            joint=TRUE, n.omp.threads=4, verbose=FALSE)
-      preds <- apply(m.3.pred$p.y.predictive.samples, 1, mean)
+      pred.samples <- results[[j]]$preds$p.y.predictive.samples
+      preds <- apply(pred.samples, 1, mean)
       rmse_vec[k] <- sqrt(mean((truth - preds)^2))
-      lower <- apply(m.3.pred$p.y.predictive.samples, 1, quantile, .025)
-      upper <- apply(m.3.pred$p.y.predictive.samples, 1, quantile, .975)
+      lower <- apply(pred.samples, 1, quantile, .025)
+      upper <- apply(pred.samples, 1, quantile, .975)
       cvg_vec[k] <- mean(lower < truth & upper > truth)
       len_vec[k] <- mean(upper - lower)
     }

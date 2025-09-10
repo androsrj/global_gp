@@ -1,5 +1,6 @@
 # SOURCES
-source("mcmc_functions/slosh_mcmc.R") # Metropolis-Gibbs Sampler
+#source("mcmc_functions/slosh_mcmc.R") # Metropolis-Gibbs Sampler
+source("mcmc_functions/mcmc.R") # Metropolis-Gibbs Sampler
 source("mcmc_functions/priors.R")
 source("mcmc_functions/jacobians.R")
 source("mcmc_functions/likelihood.R")
@@ -8,6 +9,7 @@ source("other_functions/helper_functions.R") # Other misc functions (not part of
 source("other_functions/bsplines_2_3D.R")
 library(fields)
 library(ggplot2)
+library(Matrix)
 
 load("data/slosh/flood_data.RData")
 
@@ -60,24 +62,26 @@ flood.test <- list(X=XTest, Z=ZTest, Y=YTest, U=UTest, D=DTest)
 save(flood.train, flood.test, file = "data/slosh/flood_subset.RData")
 
 K <- 9
-propSD <- list(sigf2 = 0.4,
-               thf = 0.3,
+#q <- ncol(X) + ncol(Z) + 1
+q <- ncol(X) + 1
+propSD <- list(sigb2 = seq(0.4, 0.6, length = q),
+               thb = seq(0.3, 0.5, length = q),
                sigma2 = seq(0.4, 0.6, length = K),
                tau2 = 0.2,
                theta = seq(0.5, 0.8, length = K))
 starting <- list(sigma2 = seq(0.01, 0.1, length = K),
                  theta = rep(0.5, K),
-                 sigf2 = 1,
-                 thf = 0.2, 
+                 sigb2 = rep(1, q),
+                 thb = rep(0.2, q), 
                  tau2 = 0.1,
                  beta = rep(0,7))
 
 cat("Setup complete \n")
-results<- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
-               starting = starting,
-               propSD = propSD,
-               nIter = 5000, nBurn = 5000, nThin=2,
-               model = "full_gp")
+results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
+                starting = starting,
+                propSD = propSD,
+                nIter = 50, nBurn = 50, nThin = 2, nReport = 10,
+                model = "full_gp")
 saveRDS(results, file = "objects/slosh.RDS")
 
 #theta

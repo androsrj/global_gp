@@ -3,7 +3,7 @@ source("other_functions/helper_functions.R")
 
 run.svc <- function(scen, nReps) {
   d.max <- max(iDist(train$U))
-  r <- 2
+  r <- 3
   n <- nrow(train$X)
   nTest <- nrow(test$X)
   priors <- list("phi.Unif"=list(rep(3/(0.75*d.max), r), rep(3/(0.001*d.max), r)),
@@ -16,15 +16,24 @@ run.svc <- function(scen, nReps) {
   
   results <- vector("list", nReps)
   for (i in 1:nReps) {
-    m.3 <- spSVC(train$Y[1:nrow(train$X),] ~ train$X, coords=train$U,
-                 starting=starting, svc.cols=c(1,2),
-                 tuning=tuning, priors=priors, cov.model="exponential",
-                 n.samples=n.samples, n.report=5000, n.omp.threads=4)
     
-    m.3 <- spRecover(m.3, start=floor(0.5*n.samples), thin=2,
-                     n.omp.threads=4, verbose=FALSE)
+    # Train original model
+    m.1 <- spSVC(train$Y[1:nrow(train$X),] ~ train$X, coords = train$U,
+                 starting = starting, svc.cols = 1:3,
+                 tuning = tuning, priors = priors, cov.model = "exponential",
+                 n.samples = n.samples, n.report = 5000, n.omp.threads = 4)
     
-    results[[i]] <- m.3
+    # Recover SVC coefficients (training data)
+    m.2 <- spRecover(m.1, start = floor(0.5*n.samples), thin=2,
+                     n.omp.threads = 4, verbose = FALSE)
+    
+    # Estimate SVC coefficients (testing data)
+    m.3 <- spPredict(m.2, pred.coords = test$U + runif(50, -1e6, 1e6), 
+                     pred.covars = cbind(rep(1, nTest), test$X))
+    
+    # Save
+    results[[i]] <- list(model = m.2, 
+                         preds = m.3)
   }
   saveRDS(results, paste0("objects/svc_scen", scen, ".RDS"))
   return(paste0("Completed Scenario ", scen))
