@@ -4,7 +4,7 @@ library(MBA)
 library(fields)
 library(latex2exp)
 nScen <- 6
-nReps <- 3
+nReps <- 10
 line.type <- 2
 line.width <- 4
 nTest <- 25
@@ -83,76 +83,6 @@ for (i in 1:nScen) {
 }
 dev.off()
 
-
-# Density plots for beta0
-pdf("figures/svc/beta0_svc.pdf")
-par(mfrow = c(3,4))
-for (i in 1:nScen) {
-  path <- paste0("objects/svc_scen", i, ".RDS") 
-  results <- readRDS(path)
-  beta0_samples <- results[[1]]$p.beta.recover.samples[, 1]
-  hist(beta0_samples, 
-       xlab = paste0("Scenario ", i),
-       main = "",
-       xlim = c(0, 6),
-       breaks = 10)
-  abline(v = 1, lty = line.type, lwd = line.width, col = "blue")
-  mtext("Beta_0 Samples", side = 3, line = - 2, outer = TRUE)
-}
-dev.off()
-
-# Density plots for beta1
-pdf("figures/svc/beta1_svc.pdf")
-par(mfrow = c(3,4))
-for (i in 1:nScen) {
-  path <- paste0("objects/svc_scen", i, ".RDS") 
-  results <- readRDS(path)
-  beta1_samples <- results[[1]]$p.beta.recover.samples[, 2]
-  hist(beta1_samples, 
-       xlab = paste0("Scenario ", i),
-       main = "",
-       xlim = c(-0.5, 1))
-  abline(v = 0.5, lty = line.type, lwd = line.width, col = "skyblue4")
-  mtext("Beta_1 Samples", side = 3, line = - 2, outer = TRUE)
-}
-dev.off()
-
-# Density plots for beta2
-pdf("figures/svc/beta2_svc.pdf")
-par(mfrow = c(3,4))
-for (i in 1:nScen) {
-  path <- paste0("objects/svc_scen", i, ".RDS") 
-  results <- readRDS(path)
-  beta2_samples <- results[[1]]$p.beta.recover.samples[, 3]
-  hist(beta2_samples, 
-       xlab = paste0("Scenario ", i),
-       main = "",
-       xlim = c(-1.5, -0.5),
-       breaks = 10)
-  abline(v = -1, lty = line.type, lwd = line.width, col = "skyblue4")
-  mtext("Beta_2 Samples", side = 3, line = - 2, outer = TRUE)
-}
-dev.off()
-
-# Density plots for tau2
-pdf("figures/svc/tau2_svc.pdf")
-par(mfrow = c(3,4))
-for (i in 1:nScen) {
-  path <- paste0("objects/svc_scen", i, ".RDS") 
-  results <- readRDS(path)
-  tau2_samples <- results[[1]]$p.theta.samples[, 3]
-  if (i == 4) {
-    true_tau2 <- 2
-  } else {
-    true_tau2 = 0.2
-  }
-  hist(tau2_samples, 
-       xlab = paste0("Scenario ", i),
-       main = "")
-  abline(v = true_tau2, lty = line.type, lwd = line.width, col = "blue")
-  mtext("Tau2 Samples", side = 3, line = - 2, outer = TRUE)
-}
-dev.off()
 
 ### BOXPLOTS FOR PREDICTIVE DIAGNOSTICS ###
 
