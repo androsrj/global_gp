@@ -28,7 +28,7 @@ run.svc <- function(scen, nReps) {
                      n.omp.threads = 4, verbose = FALSE)
     
     # Estimate SVC coefficients (testing data)
-    m.3 <- spPredict(m.2, pred.coords = test$U + runif(50, -1e6, 1e6), 
+    m.3 <- spPredict(m.2, pred.coords = test$U + runif(50, -1e-6, 1e-6), 
                      pred.covars = cbind(rep(1, nTest), test$X))
     
     # Save
