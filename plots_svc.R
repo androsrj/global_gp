@@ -128,6 +128,7 @@ df <- data.frame(RMSE = rmse,
 ggplot(df, aes(x = Scenario, y = Coverage, group = Scenario, fill = Scenario)) + 
   geom_boxplot() +
   theme_bw() +
+  scale_y_continuous(limits = c(0.75, 0.95)) + 
   labs(title = "Interval Coverage (95%) for SVC",
        x = "", y = "")
 ggsave("figures/svc/coverage_svc.pdf")
@@ -136,6 +137,7 @@ ggsave("figures/svc/coverage_svc.pdf")
 ggplot(df, aes(x = Scenario, y = Length, group = Scenario, fill = Scenario)) + 
   geom_boxplot() +
   theme_bw() + 
+  scale_y_continuous(limits = c(150, 225)) + 
   labs(title = "Interval Length (95%) for SVC",
        x = "", y = "")
 ggsave("figures/svc/length_svc.pdf")
