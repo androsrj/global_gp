@@ -88,6 +88,7 @@ dev.off()
 
 # Get diagnostics (rmse, coverage, length)
 rmse <- cvg <- len <- c()
+std.dev <- rep(0, nScen)
 for (i in 1:nScen) { 
   path <- paste0("objects/svc_scen", i, ".RDS") 
   results <- readRDS(path)
@@ -115,6 +116,7 @@ for (i in 1:nScen) {
     cvg <- c(cvg, cvg_vec)
     len <- c(len, len_vec)
   }
+  std.dev[i] <- sd(test$Y)
 }
 
 # Organize data
@@ -146,6 +148,6 @@ ggsave("figures/svc/length_svc.pdf")
 avg.rmse <- aggregate(data = df, RMSE ~ Scenario, mean)
 avg.cvg <- aggregate(data = df, Coverage ~ Scenario, mean)[, 2]
 avg.length <- aggregate(data = df, Length ~ Scenario, mean)[, 2]
-cbind(avg.rmse, avg.cvg, avg.length)
+cbind(avg.rmse, std.dev, avg.cvg, avg.length)
 
 
