@@ -3,7 +3,7 @@ library(fields)
 # Function to simulate spatial data
 spatialData <- function(n, X, Z, 
                         sigb2, thb, sigma2, theta, tau2, beta,
-                        U = NULL, range = c(0, 10), dims = 2, eps=1e-6,
+                        U = NULL, range = c(0, 10), dims = 2,
                         covariance = "exponential", intercept = TRUE) {
   
   # Sample the locations and put them into an n-by-dims matrix

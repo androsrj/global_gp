@@ -141,3 +141,11 @@ ggplot(df, aes(x = Scenario, y = Length, group = Scenario, fill = Scenario)) +
   labs(title = "Interval Length (95%) for SVC",
        x = "", y = "")
 ggsave("figures/svc/length_svc.pdf")
+
+# Table for RMSE, coverage, and length
+avg.rmse <- aggregate(data = df, RMSE ~ Scenario, mean)
+avg.cvg <- aggregate(data = df, Coverage ~ Scenario, mean)[, 2]
+avg.length <- aggregate(data = df, Length ~ Scenario, mean)[, 2]
+cbind(avg.rmse, avg.cvg, avg.length)
+
+
