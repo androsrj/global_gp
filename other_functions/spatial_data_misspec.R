@@ -1,4 +1,5 @@
 library(fields)
+library(Matrix)
 
 # Function to simulate spatial data
 spatialData <- function(n, X, Z, 
@@ -31,13 +32,12 @@ spatialData <- function(n, X, Z,
   } else {
     stop("Covariance function must be either exponential or exp_squared.")
   }
-  #C <- sigma2 * exp(- theta * D)
   CZ <- sigma2 * exp(-theta * DZ)
   
   # Sample h, which is a GP between both the locations U and global covariates Z
-  h <- t(rmvnorm(1, sigma = CZ))
+  #h <- t(rmvnorm(1, sigma = CZ))
   
-  # Sample beta
+  # Covariance - beta
   n <- nrow(X)
   if (intercept == TRUE) {
     X0 <- cbind(rep(1, n), X)
@@ -45,16 +45,25 @@ spatialData <- function(n, X, Z,
     X0 <-  X
   }
   q <- ncol(X0)
-  DB <- lapply(1:q, \(j) matrix(X0[ , j], nrow = n, ncol = n) * 
-                 (sigb2[j] * exp(-thb[j] * D)) *
-                 matrix(X0[ , j], nrow = n, ncol = n, byrow = T))
-  CB <- Reduce("+", DB)
-  B <- t(rmvnorm(q, sigma = CB)) + matrix(beta, nrow = n, ncol = q, byrow = TRUE)
-  XB <- rep(1, S) %x% (X0 %*% beta)
+  CB <- lapply(1:q, \(j) sigb2[j] * exp(-thb[j] * D))
+  CXB <- Reduce("+", lapply(1:q, \(j) matrix(X0[ , j], nrow = n, ncol = n) * CB[[j]] *
+                              matrix(X0[ , j], nrow = n, ncol = n, byrow = T)))
+  lon <- U[ , 1]
+  lat <- U[ , 2]
+  beta.surf <- cbind(
+    lon - lat,
+    lon + lat - 100,
+    2 * lon - lat - 50
+  )
+  B <- Reduce("cbind", lapply(1:q, \(j) t(rmvnorm(1, sigma = CB[[j]])))) + beta.surf
+  XB <- rep(1, S) %x% rowSums(X0 * B)
+  
+  # Final covariance matrix for Y
+  Sigma <- CZ + tau2 * diag(n * S)
   
   # Generate Y
-  Y <- XB + h + rnorm(n * S, 0, sqrt(tau2))
+  Y <- t(rmvnorm(1, mean = XB, sigma = Sigma))
   
   # Return data
-  return(list(X = X, Z = Z, Y = Y, B = B, h = as.vector(h), D = D, U = U))
+  return(list(X = X, Z = Z, Y = Y, B = B, D = D, U = U))
 }

@@ -18,20 +18,15 @@ p <- 2
 # Need to play around with these
 
 # Covariance parameters for beta
-trueSigb2 <- seq(3, 5, length = p + 1)
-trueThb <- seq(15, 20, length = p + 1)
+trueSigb2 <- seq(0.5, 1, length = p + 1)
+trueThb <- seq(0.5, 1, length = p + 1)
 
 # Covariance parameters for global covariates (each length K)
-trueSigma2 <- 50
-trueTheta <- 1
+trueSigma2 <- 5
+trueTheta <- 0.1
 
 # Error variance
 trueTau2 <- 0.2
-
-# Regression coefficients
-trueBeta <- c(1, 0.5, -1)
-
-
 
 ##########################
 # Generate training data #
@@ -46,7 +41,6 @@ train <- spatialData(n = n,
                      sigma2 = trueSigma2, 
                      theta = trueTheta, 
                      tau2 = trueTau2, 
-                     beta = trueBeta,
                      range = c(0, 100))
 saveRDS(train, file = "../data/small/scen9/train.RDS")
 
@@ -67,7 +61,6 @@ test <- spatialData(n = nTest,
                     sigma2 = trueSigma2, 
                     theta = trueTheta, 
                     tau2 = trueTau2, 
-                    beta = trueBeta,
                     range = c(0, 100))
 test$index <- indexTest
 saveRDS(test, file = "../data/small/scen9/test.RDS")
