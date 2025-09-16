@@ -4,13 +4,13 @@ library(fields)
 library(latex2exp)
 
 nScen <- 6
-nReps <- 1
+nReps <- 10
 line.type <- 2
 line.width <- 4
 nTest <- 25
 
 # Surface plots for true beta surfaces
-test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
+test <- readRDS(paste0("data/small/scen", 1, "/test.RDS"))
 beta0.true <- test$U[ , 1] - test$U[ , 2]
 beta1.true <- test$U[ , 1] + test$U[ , 2] - 100
 beta2.true <- 2 * test$U[ , 1] - test$U[ , 2] - 50
@@ -46,7 +46,7 @@ pdf("figures/gp/beta0_gp.pdf", width = 8, height = 6)
 par(mfrow = c(2,3), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
-  results <- readRDS(path)
+  results <- readRDS(path)[[1]]
   test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
   beta0.means <- results$posteriorMeans$beta.test[1:nTest]
   mba.data <- data.frame(test$U, beta0.means)
@@ -62,7 +62,7 @@ pdf("figures/gp/beta1_gp.pdf", width = 8, height = 6)
 par(mfrow = c(2,3), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
-  results <- readRDS(path)
+  results <- readRDS(path)[[1]]
   test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
   beta1.means <- results$posteriorMeans$beta.test[(nTest+1):(2*nTest)]
   mba.data <- data.frame(test$U, beta1.means)
@@ -78,7 +78,7 @@ pdf("figures/gp/beta2_gp.pdf", width = 8, height = 6)
 par(mfrow = c(2,3), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
-  results <- readRDS(path)
+  results <- readRDS(path)[[1]]
   test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
   beta2.means <- results$posteriorMeans$beta.test[(2*nTest+1):(3*nTest)]
   mba.data <- data.frame(test$U, beta2.means)
@@ -94,8 +94,7 @@ pdf("figures/gp/tau2_gp.pdf", width = 8, height = 6)
 par(mfrow = c(2,3))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
-  results <- readRDS(path)
-  #tau2_samples <- results[[1]]$paramSamples$tau2
+  results <- readRDS(path)[[1]]
   tau2_samples <- results$paramSamples$tau2
   if (i == 4) {
     true_tau2 <- 2
