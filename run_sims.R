@@ -15,7 +15,7 @@ library(foreach)
 library(Matrix)
 nReps <- nCores <- 10
 set.seed(9994)
-which.scens <- 6
+which.scens <- 9:10
 
 run.mcmc <- function(rep) {
   results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
@@ -335,9 +335,9 @@ if (scen %in% which.scens) {
   D <- train$D; DTest <- test$D
   K <- 9
   q <- ncol(X) + 1
-  propSD <- list(sigma2 = seq(0.2, 0.3, length = K),
-                 theta = seq(0.7, 1.0, length = K),
-                 sigb2 = seq(0.3, 0.4, length = q),
+  propSD <- list(sigma2 = seq(0.6, 0.9, length = K),
+                 theta = seq(1, 1.5, length = K),
+                 sigb2 = seq(0.3, 0.5, length = q),
                  thb = seq(0.01, 0.1, length = q),
                  tau2 = 0.3)
   starting <- list(sigma2 = rep(50, K),
@@ -345,28 +345,28 @@ if (scen %in% which.scens) {
                    sigb2 = rep(0.2, q),
                    thb = rep(0.2, q),
                    tau2 = 2)
-  #cl <- makeCluster(nCores)
-  #registerDoParallel(cl)
-  #obj <- foreach(i = 1:nCores, .packages = c("mvtnorm", "splines", "fields", "Matrix")) %dopar% run.mcmc(i)
-  #stopCluster(cl)
-  obj <- run.mcmc(1)
+  cl <- makeCluster(nCores)
+  registerDoParallel(cl)
+  obj <- foreach(i = 1:nCores, .packages = c("mvtnorm", "splines", "fields", "Matrix")) %dopar% run.mcmc(i)
+  stopCluster(cl)
+  #obj <- run.mcmc(1)
   saveRDS(obj, file = paste0("objects/small_scen", scen, ".RDS"))
-  #acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
+  acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
   cat(paste0("Finished Scenario ", scen, " with average acceptance of: "))
-  #print(acc)
-  print(obj$acceptance)
+  print(acc)
+  #print(obj$acceptance)
   cat(paste0("And posterior means of: "))
-  print(obj$posteriorMeans)
+  print(obj[[1]]$posteriorMeans)
   cat("And RMSE of: ")
-  rmse <- sqrt(mean((obj$preds[2,] - test$Y)^2))
+  rmse <- sqrt(mean((obj[[1]]$preds[2,] - test$Y)^2))
   print(rmse)
   cat("Compared to the test data SD of:")
   sd.test <- round(sd(test$Y), 3)
   print(sd.test)
   cat("Average prediction interval width of: ")
-  print(mean(obj$preds[3,] - obj$preds[1,]))
+  print(mean(obj[[1]]$preds[3,] - obj[[1]]$preds[1,]))
   cat("With average coverage of: ")
-  print(mean(obj$preds[3,] > test$Y & obj$preds[1,] < test$Y))
+  print(mean(obj[[1]]$preds[3,] > test$Y & obj[[1]]$preds[1,] < test$Y))
 }
 
 ##### SCENARIO 8 #####
@@ -384,9 +384,9 @@ if (scen %in% which.scens) {
   D <- train$D; DTest <- test$D
   K <- 9
   q <- ncol(X) + 1
-  propSD <- list(sigma2 = seq(0.2, 0.3, length = K),
+  propSD <- list(sigma2 = seq(0.7, 1.0, length = K),
                  theta = seq(0.7, 1.2, length = K),
-                 sigb2 = seq(0.3, 0.4, length = q),
+                 sigb2 = seq(0.4, 0.5, length = q),
                  thb = seq(0.4, 0.5, length = q),
                  tau2 = 0.25)
   starting <- list(sigma2 = rep(10, K),
@@ -394,28 +394,28 @@ if (scen %in% which.scens) {
                    sigb2 = rep(0.1, q),
                    thb = rep(0.2, q), 
                    tau2 = 1.5)
-  #cl <- makeCluster(nCores)
-  #registerDoParallel(cl)
-  #obj <- foreach(i = 1:nCores, .packages = c("mvtnorm", "splines", "fields", "Matrix")) %dopar% run.mcmc(i)
-  #stopCluster(cl)
-  obj <- run.mcmc(1)
+  cl <- makeCluster(nCores)
+  registerDoParallel(cl)
+  obj <- foreach(i = 1:nCores, .packages = c("mvtnorm", "splines", "fields", "Matrix")) %dopar% run.mcmc(i)
+  stopCluster(cl)
+  #obj <- run.mcmc(1)
   saveRDS(obj, file = paste0("objects/small_scen", scen, ".RDS"))
-  #acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
+  acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
   cat(paste0("Finished Scenario ", scen, " with average acceptance of: "))
-  #print(acc)
-  print(obj$acceptance)
+  print(acc)
+  #print(obj$acceptance)
   cat(paste0("And posterior means of: "))
-  print(obj$posteriorMeans)
+  print(obj[[1]]$posteriorMeans)
   cat("And RMSE of: ")
-  rmse <- sqrt(mean((obj$preds[2,] - test$Y)^2))
+  rmse <- sqrt(mean((obj[[1]]$preds[2,] - test$Y)^2))
   print(rmse)
   cat("Compared to the test data SD of:")
   sd.test <- round(sd(test$Y), 3)
   print(sd.test)
   cat("Average prediction interval width of: ")
-  print(mean(obj$preds[3,] - obj$preds[1,]))
+  print(mean(obj[[1]]$preds[3,] - obj[[1]]$preds[1,]))
   cat("With average coverage of: ")
-  print(mean(obj$preds[3,] > test$Y & obj$preds[1,] < test$Y))
+  print(mean(obj[[1]]$preds[3,] > test$Y & obj[[1]]$preds[1,] < test$Y))
 }
 
 ##### SCENARIO 9 #####
@@ -433,8 +433,8 @@ if (scen %in% which.scens) {
   D <- train$D; DTest <- test$D
   K <- 9
   q <- ncol(X) + 1
-  propSD <- list(sigma2 = seq(0.2, 0.4, length = K),
-                 theta = seq(0.5, 0.7, length = K),
+  propSD <- list(sigma2 = seq(0.4, 0.6, length = K),
+                 theta = seq(0.7, 0.9, length = K),
                  sigb2 = seq(0.5, 0.7, length = q),
                  thb = seq(0.9, 1.1, length = q),
                  tau2 = 0.2)
@@ -443,28 +443,28 @@ if (scen %in% which.scens) {
                    sigb2 = rep(0.1, q),
                    thb = rep(2, q), 
                    tau2 = 2)
-  #cl <- makeCluster(nCores)
-  #registerDoParallel(cl)
-  #obj <- foreach(i = 1:nCores, .packages = c("mvtnorm", "splines", "fields", "Matrix")) %dopar% run.mcmc(i)
-  #stopCluster(cl)
-  obj <- run.mcmc(1)
+  cl <- makeCluster(nCores)
+  registerDoParallel(cl)
+  obj <- foreach(i = 1:nCores, .packages = c("mvtnorm", "splines", "fields", "Matrix")) %dopar% run.mcmc(i)
+  stopCluster(cl)
+  #obj <- run.mcmc(1)
   saveRDS(obj, file = paste0("objects/small_scen", scen, ".RDS"))
-  #acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
+  acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
   cat(paste0("Finished Scenario ", scen, " with average acceptance of: "))
-  #print(acc)
-  print(obj$acceptance)
+  print(acc)
+  #print(obj$acceptance)
   cat(paste0("And posterior means of: "))
-  print(obj$posteriorMeans)
+  print(obj[[1]]$posteriorMeans)
   cat("And RMSE of: ")
-  rmse <- sqrt(mean((obj$preds[2,] - test$Y)^2))
+  rmse <- sqrt(mean((obj[[1]]$preds[2,] - test$Y)^2))
   print(rmse)
   cat("Compared to the test data SD of:")
   sd.test <- round(sd(test$Y), 3)
   print(sd.test)
   cat("Average prediction interval width of: ")
-  print(mean(obj$preds[3,] - obj$preds[1,]))
+  print(mean(obj[[1]]$preds[3,] - obj[[1]]$preds[1,]))
   cat("With average coverage of: ")
-  print(mean(obj$preds[3,] > test$Y & obj$preds[1,] < test$Y))
+  print(mean(obj[[1]]$preds[3,] > test$Y & obj[[1]]$preds[1,] < test$Y))
 }
 
 ##### SCENARIO 10 #####
@@ -482,7 +482,7 @@ if (scen %in% which.scens) {
   D <- train$D; DTest <- test$D
   K <- 9
   q <- ncol(X) + 1
-  propSD <- list(sigma2 = seq(0.3, 0.5, length = K),
+  propSD <- list(sigma2 = seq(0.5, 0.7, length = K),
                  theta = seq(1.4, 1.6, length = K),
                  sigb2 = seq(0.4, 0.6, length = q),
                  thb = seq(1.2, 1.4, length = q),
@@ -492,27 +492,27 @@ if (scen %in% which.scens) {
                    sigb2 = rep(0.1, q),
                    thb = rep(0.2, q),  
                    tau2 = 5)
-  #cl <- makeCluster(nCores)
-  #registerDoParallel(cl)
-  #obj <- foreach(i = 1:nCores, .packages = c("mvtnorm", "splines", "fields", "Matrix")) %dopar% run.mcmc(i)
-  #stopCluster(cl)
-  obj <- run.mcmc(1)
+  cl <- makeCluster(nCores)
+  registerDoParallel(cl)
+  obj <- foreach(i = 1:nCores, .packages = c("mvtnorm", "splines", "fields", "Matrix")) %dopar% run.mcmc(i)
+  stopCluster(cl)
+  #obj <- run.mcmc(1)
   saveRDS(obj, file = paste0("objects/small_scen", scen, ".RDS"))
-  #acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
+  acc <- apply(sapply(1:nReps, \(i) unlist(obj[[i]]$acceptance)), 1, mean)
   cat(paste0("Finished Scenario ", scen, " with average acceptance of: "))
-  #print(acc)
-  print(obj$acceptance)
+  print(acc)
+  #print(obj$acceptance)
   cat(paste0("And posterior means of: "))
-  print(obj$posteriorMeans)
+  print(obj[[1]]$posteriorMeans)
   cat("And RMSE of: ")
-  rmse <- sqrt(mean((obj$preds[2,] - test$Y)^2))
+  rmse <- sqrt(mean((obj[[1]]$preds[2,] - test$Y)^2))
   print(rmse)
   cat("Compared to the test data SD of:")
   sd.test <- round(sd(test$Y), 3)
   print(sd.test)
   cat("Average prediction interval width of: ")
-  print(mean(obj$preds[3,] - obj$preds[1,]))
+  print(mean(obj[[1]]$preds[3,] - obj[[1]]$preds[1,]))
   cat("With average coverage of: ")
-  print(mean(obj$preds[3,] > test$Y & obj$preds[1,] < test$Y))
+  print(mean(obj[[1]]$preds[3,] > test$Y & obj[[1]]$preds[1,] < test$Y))
 }
 

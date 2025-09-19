@@ -3,7 +3,7 @@ library(MBA)
 library(fields)
 library(latex2exp)
 
-nScen <- 6
+nScen <- 10
 nReps <- 10
 line.type <- 2
 line.width <- 4
@@ -42,8 +42,8 @@ image.plot(mba.interp.true$xyz.est, main = TeX("True surface ($\\beta_2$)"),
 dev.off()
 
 # Surface plots for beta0
-pdf("figures/gp/beta0_gp.pdf", width = 8, height = 6)
-par(mfrow = c(2,3), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
+pdf("figures/gp/beta0_gp.pdf", width = 10, height = 4)
+par(mfrow = c(2,5), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)[[1]]
@@ -58,8 +58,8 @@ for (i in 1:nScen) {
 dev.off()
 
 # Surface plots for beta1
-pdf("figures/gp/beta1_gp.pdf", width = 8, height = 6)
-par(mfrow = c(2,3), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
+pdf("figures/gp/beta1_gp.pdf", width = 10, height = 4)
+par(mfrow = c(2,5), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)[[1]]
@@ -74,8 +74,8 @@ for (i in 1:nScen) {
 dev.off()
 
 # Surface plots for beta2
-pdf("figures/gp/beta2_gp.pdf", width = 8, height = 6)
-par(mfrow = c(2,3), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
+pdf("figures/gp/beta2_gp.pdf", width = 10, height = 4)
+par(mfrow = c(2,5), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)[[1]]
@@ -90,8 +90,8 @@ for (i in 1:nScen) {
 dev.off()
 
 # Density plots for tau2
-pdf("figures/gp/tau2_gp.pdf", width = 8, height = 6)
-par(mfrow = c(2,3))
+pdf("figures/gp/tau2_gp.pdf", width = 10, height = 4)
+par(mfrow = c(2,5))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)[[1]]

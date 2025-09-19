@@ -3,7 +3,7 @@ library(spBayes)
 library(MBA)
 library(fields)
 library(latex2exp)
-nScen <- 6
+nScen <- 10
 nReps <- 10
 line.type <- 2
 line.width <- 4
