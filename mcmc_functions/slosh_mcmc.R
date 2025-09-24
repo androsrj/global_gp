@@ -13,17 +13,19 @@ mcmc <- function(X, Z, Y, D, K,
   STest <<- nrow(ZTest)
   nTest <<- length(YTest) / STest
   K <<- K
-  A <<- as.matrix(cbind(matrix(1, n, 1), Z[rep(1:S, each = n), ], X))
-  ATest <<- as.matrix(cbind(matrix(1, nTest, 1), ZTest[rep(1:STest, each = nTest), ], XTest))
-  p <<- ncol(X)
+  A <<- as.matrix(cbind(rep(1, n), X, Z[rep(1:S, each = n), ]))
+  ATest <<- as.matrix(cbind(rep(1, nTest), XTest, ZTest[rep(1:STest, each = nTest), ]))
+  X0 <<- as.matrix(cbind(rep(1, n), X))
+  X0Test <<- as.matrix(cbind(rep(1, nTest), XTest))
+  p <<- ncol(X0)
   q <<- ncol(A)
-  DB <- lapply(1:q, \(j) matrix(A[ , j], nrow = n*S, ncol = n*S) *
+  DB <- lapply(1:p, \(j) matrix(X0[ , j], nrow = n, ncol = n) *
                  (starting$sigb2[j] * exp(-starting$thb[j] * D)) *
-                 matrix(A[ , j], nrow = n*S, ncol = n*S, byrow = T))
+                 matrix(X0[ , j], nrow = n, ncol = n, byrow = T))
   CBFull <<- matrix(1, S, S) %x% Reduce("+", DB)
-  DBTest <- lapply(1:q, \(j) matrix(ATest[ , j], nrow = nTest, ncol = nTest) *
+  DBTest <- lapply(1:p, \(j) matrix(X0Test[ , j], nrow = nTest, ncol = nTest) *
                      (starting$sigb2[j] * exp(-starting$thb[j] * DTest)) *
-                     matrix(ATest[ , j], nrow = nTest*STest, ncol = nTest*STest, byrow = T))
+                     matrix(X0Test[ , j], nrow = nTest, ncol = nTest, byrow = T))
   CBTestFull <<- matrix(1, S, S) %x% Reduce("+", DBTest)
   
   # Save model type and theta globally
@@ -34,12 +36,12 @@ mcmc <- function(X, Z, Y, D, K,
   BFTest <<- Bsplines_2D(ZTest, df = c(sqrt(K), sqrt(K)))
   
   # Permutation matrix (for sampling beta)
-  mat <- matrix(c(rep(1:q, each = n), rep(1:n, times = q)), ncol = 2)
+  mat <- matrix(c(rep(1:p, each = n), rep(1:n, times = p)), ncol = 2)
   new.order <- order(mat[, 2], mat[, 1])
-  P <<- diag(n*q)[new.order, ]
-  mat <- matrix(c(rep(1:q, each = nTest), rep(1:nTest, times = q)), ncol = 2)
+  P <<- diag(n*p)[new.order, ]
+  mat <- matrix(c(rep(1:p, each = nTest), rep(1:nTest, times = p)), ncol = 2)
   new.order <- order(mat[, 2], mat[, 1])
-  PTest <<- diag(nTest*q)[new.order, ]
+  PTest <<- diag(nTest*p)[new.order, ]
   
   # Diagonal version of X (for sampling beta)
   A2 <- matrix(0, n, n * q)
@@ -68,7 +70,7 @@ mcmc <- function(X, Z, Y, D, K,
   
   # Initialize vectors for MCMC
   trSigma2 <- trTheta <- matrix(0, nrow = K, ncol = nIter)
-  trThb <- trSigb2 <- matrix(0, nrow = p + 1, ncol = nIter)
+  trThb <- trSigb2 <- matrix(0, nrow = p, ncol = nIter)
   trTau2 <- numeric(nIter)
   beta <- matrix(0, nrow = n * q, ncol = nIter)
   beta.test <- matrix(0, nrow = nTest * q, ncol = nIter)
@@ -88,8 +90,8 @@ mcmc <- function(X, Z, Y, D, K,
   trTau2[1] <- log(starting$tau2)
   
   # Initial values of beta
-  Sigma.q.inv <- lapply(1:q, \(j) solve(starting$sigb2[j] * exp(-starting$thb[j] * D)))
-  Sigma.inv <- as.matrix(bdiag(Sigma.q.inv))
+  Sigma.p.inv <- lapply(1:p, \(j) solve(starting$sigb2[j] * exp(-starting$thb[j] * D)))
+  Sigma.inv <- as.matrix(bdiag(Sigma.p.inv))
   big.B <- solve(S * crossprod(A2 %*% P) / starting$tau2 + Sigma.inv)
   little.b <- Reduce("+", lapply(1:S, function(s) {
     ind <- ((s-1)*n+1):(s*n)

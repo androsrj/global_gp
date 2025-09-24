@@ -14,7 +14,7 @@ library(Matrix)
 load("data/slosh/flood_data.RData")
 
 mySeed <- 1234
-which.Z <- c(1:5)
+which.Z <- c(1:2)
 n <- 100
 nTest <- 25
 S <- 10
@@ -37,21 +37,19 @@ ggplot(data = coords, aes(x=x, y=y, col=elev_meters)) +
 ggplot(data = coords.subset, aes(x=x, y=y, fill=elev_meters)) + 
   geom_tile()
 
-#source("coastlines.R")
+source("coastlines.R")
 
 set.seed(mySeed)
 which.points <- sample(nrow(coords.subset), n + nTest)
 train.index <- which.points[1:n]
 test.index <- which.points[(n+1):(n+nTest)]
 
-X <- cbind(coords.subset$elev_meters[train.index], 
-           coords.subset$dist.east[train.index])
+X <- as.matrix(coords.subset$elev_meters[train.index])
 Z <- inputs[train.storms, which.Z]
 Y <- matrix(c(t(as.matrix(out.subset[train.storms, train.index]))), ncol = 1)
 U <- coords.subset[train.index, 1:2]
 D <- fields::rdist(U)
-XTest <- cbind(coords.subset$elev_meters[test.index], 
-               coords.subset$dist.east[test.index])
+XTest <- as.matrix(coords.subset$elev_meters[test.index])
 ZTest <- inputs[test.storms, which.Z]
 YTest <- matrix(c(t(as.matrix(out.subset[test.storms, test.index]))), ncol = 1)
 UTest <- coords.subset[test.index, 1:2]
@@ -59,7 +57,7 @@ DTest <- fields::rdist(UTest)
 
 flood.train <- list(X=X, Z=Z, Y=Y, U=U, D=D)
 flood.test <- list(X=XTest, Z=ZTest, Y=YTest, U=UTest, D=DTest)
-save(flood.train, flood.test, file = "data/slosh/flood_subset.RData")
+#save(flood.train, flood.test, file = "data/slosh/flood_subset.RData")
 
 K <- 9
 #q <- ncol(X) + ncol(Z) + 1
@@ -80,7 +78,7 @@ cat("Setup complete \n")
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 starting = starting,
                 propSD = propSD,
-                nIter = 50, nBurn = 50, nThin = 2, nReport = 10,
+                nIter = 1000, nBurn = 500, nThin = 2, nReport = 100,
                 model = "full_gp")
 saveRDS(results, file = "objects/slosh.RDS")
 
@@ -125,3 +123,4 @@ cat(paste0("Mean interval score: ", round(mean(scores), 3), "\n"))
 
 crps
 cat(paste0("Mean CRPS: ", round(mean(crps), 3), "\n"))
+
