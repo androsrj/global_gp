@@ -78,7 +78,7 @@ cat("Setup complete \n")
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 starting = starting,
                 propSD = propSD,
-                nIter = 1000, nBurn = 500, nThin = 2, nReport = 100,
+                nIter = 3000, nBurn = 1000, nThin = 2, nReport = 100,
                 model = "full_gp")
 saveRDS(results, file = "objects/slosh.RDS")
 
