@@ -13,7 +13,7 @@ library(Matrix)
 
 load("data/slosh/flood_data.RData")
 
-mySeed <- 1234
+mySeed <- 123456
 which.Z <- c(1:2)
 n <- 100
 nTest <- 25
