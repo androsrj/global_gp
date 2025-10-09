@@ -49,8 +49,8 @@ train <- spatialData(n = n,
                      tau2 = trueTau2, 
                      beta = trueBeta,
                      range = c(0, 100))
-saveRDS(train, file = "../data/small/scen10/train.RDS")
-
+saveRDS(train, file = "../data/small/scen11/train.RDS")
+sd(train$Y)
 set.seed(mySeed)
 indexTest <- sample(n, nTest)
 U <- train$U[indexTest, ]
@@ -72,5 +72,5 @@ test <- spatialData(n = nTest,
                     beta = trueBeta,
                     range = c(0, 100))
 test$index <- indexTest
-saveRDS(test, file = "../data/small/scen10/test.RDS")
-
+saveRDS(test, file = "../data/small/scen11/test.RDS")
+sd(test$Y)

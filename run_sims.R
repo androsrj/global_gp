@@ -15,7 +15,7 @@ library(foreach)
 library(Matrix)
 nReps <- nCores <- 10
 set.seed(9994)
-which.scens <- 9:10
+which.scens <- 11
 
 run.mcmc <- function(rep) {
   results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
