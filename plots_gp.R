@@ -157,3 +157,73 @@ avg.rmse <- aggregate(data = df, RMSE ~ Scenario, mean)
 avg.cvg <- aggregate(data = df, Coverage ~ Scenario, mean)[, 2]
 avg.length <- aggregate(data = df, Length ~ Scenario, mean)[, 2]
 cbind(avg.rmse, std.dev, avg.cvg, avg.length)
+
+# Scenario 11
+
+# Surface plots for true beta surfaces
+test <- readRDS(paste0("data/small/scen", 11, "/test.RDS"))
+beta0.true <- test$B[ , 1]
+beta1.true <- test$B[ , 2]
+beta2.true <- test$B[ , 3]
+
+pdf("figures/gp/beta_true_11.pdf", width = 10, height = 3)
+par(mfrow = c(1,3), mar = c(5, 5, 4, 8) + 0.2)
+
+# Beta0
+mba.data.true <- data.frame(test$U, beta0.true)
+mba.interp.true <- mba.surf(mba.data.true, no.X=100, no.Y=100, extend=TRUE)
+image.plot(mba.interp.true$xyz.est, main = TeX("True surface ($\\beta_0$)"),
+           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
+           axis.args = list(cex.axis = 1.5))
+
+# Beta1
+mba.data.true <- data.frame(test$U, beta1.true)
+mba.interp.true <- mba.surf(mba.data.true, no.X=100, no.Y=100, extend=TRUE)
+image.plot(mba.interp.true$xyz.est, main = TeX("True surface ($\\beta_1$)"),
+           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
+           axis.args = list(cex.axis = 1.5))
+
+# Beta2
+mba.data.true <- data.frame(test$U, beta2.true)
+mba.interp.true <- mba.surf(mba.data.true, no.X=100, no.Y=100, extend=TRUE)
+image.plot(mba.interp.true$xyz.est, main = TeX("True surface ($\\beta_2$)"),
+           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
+           axis.args = list(cex.axis = 1.5))
+
+dev.off()
+
+# Plot beta estimated surfaces for scen 11
+path <- paste0("objects/small_scen", 11, ".RDS") 
+results <- readRDS(path)[[1]]
+test <- readRDS(paste0("data/small/scen", 11, "/test.RDS"))
+
+pdf("figures/gp/beta_scen11.pdf", width = 10, height = 3)
+par(mfrow = c(1,3), mar = c(5, 5, 4, 8) + 0.2)
+
+# Beta0
+beta0.means <- results$posteriorMeans$beta.test[1:nTest]
+mba.data <- data.frame(test$U, beta0.means)
+mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
+image.plot(mba.interp$xyz.est, main = TeX("Estimated Surface $\\beta_0"), 
+           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
+           col = tim.colors(64), cex.main = 1.5)
+
+# Beta1
+beta1.means <- results$posteriorMeans$beta.test[(nTest+1):(2*nTest)]
+mba.data <- data.frame(test$U, beta1.means)
+mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
+image.plot(mba.interp$xyz.est, main = TeX("Estimated Surface $\\beta_1"), 
+           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
+           col = tim.colors(64), cex.main = 1.5)
+
+# Beta2
+beta2.means <- results$posteriorMeans$beta.test[(2*nTest+1):(3*nTest)]
+mba.data <- data.frame(test$U, beta2.means)
+mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
+image.plot(mba.interp$xyz.est, main = TeX("Estimated Surface $\\beta_2"), 
+           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
+           col = tim.colors(64), cex.main = 1.5)
+
+dev.off()
+
+
