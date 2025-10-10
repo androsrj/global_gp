@@ -6,7 +6,7 @@ mySeed <- 45213
 # Can have a "small" dataset with n = 100 and nTest = 25
 # Then a "large" dataset with n = 500 and nTest = 100
 n <- 100
-nTest <- 25
+nTest <- 100
 
 # Number of subjects - can probably leave these alone
 S <- 10
@@ -52,17 +52,17 @@ train <- spatialData(n = n,
 saveRDS(train, file = "../data/small/scen11/train.RDS")
 sd(train$Y)
 set.seed(mySeed)
-indexTest <- sample(n, nTest)
-U <- train$U[indexTest, ]
+#indexTest <- sample(n, nTest)
+#U <- train$U[indexTest, ]
 
 # Generate testing data
-set.seed(mySeed)
+set.seed(mySeed + 1)
 XTest <- matrix(runif(nTest*p, 0, 10), nrow = nTest, ncol = p)
 ZTest <- matrix(runif(2 * STest, 0, 100), ncol = 2)
 test <- spatialData(n = nTest, 
                     X = XTest, 
                     Z = ZTest,
-                    U = U,
+                    #U = U,
                     K = K,
                     sigb2 = trueSigb2,
                     thb = trueThb,
@@ -71,6 +71,6 @@ test <- spatialData(n = nTest,
                     tau2 = trueTau2, 
                     beta = trueBeta,
                     range = c(0, 100))
-test$index <- indexTest
+#test$index <- indexTest
 saveRDS(test, file = "../data/small/scen11/test.RDS")
 sd(test$Y)
