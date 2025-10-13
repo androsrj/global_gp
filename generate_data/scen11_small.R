@@ -6,7 +6,7 @@ mySeed <- 45213
 # Can have a "small" dataset with n = 100 and nTest = 25
 # Then a "large" dataset with n = 500 and nTest = 100
 n <- 100
-nTest <- 100
+nTest <- 50
 
 # Number of subjects - can probably leave these alone
 S <- 10
@@ -20,7 +20,7 @@ p <- 2
 # Need to play around with these
 
 # Covariance parameters for beta
-trueSigb2 <- seq(0.5, 1, length = p + 1)
+trueSigb2 <- seq(5, 10, length = p + 1)
 trueThb <- seq(0.1, 0.2, length = p + 1)
 
 # Covariance parameters for global covariates (each length K)
