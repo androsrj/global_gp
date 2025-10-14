@@ -214,21 +214,24 @@ mba.data <- data.frame(test$U, beta0.means)
 mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
 image.plot(mba.interp$xyz.est, main = TeX("Estimated Surface $\\beta_0"), 
            cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
-           zlim = beta0.lims, col = tim.colors(64), cex.main = 1.5)
+           zlim = beta0.lims, col = tim.colors(64),
+	   axis.args = list(cex.axis = 1.5))
 
 # Beta1
 mba.data <- data.frame(test$U, beta1.means)
 mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
 image.plot(mba.interp$xyz.est, main = TeX("Estimated Surface $\\beta_1"), 
            cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
-           zlim = beta1.lims, col = tim.colors(64), cex.main = 1.5)
+           zlim = beta1.lims, col = tim.colors(64),
+	   axis.args = list(cex.axis = 1.5))
 
 # Beta2
 mba.data <- data.frame(test$U, beta2.means)
 mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
 image.plot(mba.interp$xyz.est, main = TeX("Estimated Surface $\\beta_2"), 
            cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
-           zlim = beta2.lims, col = tim.colors(64), cex.main = 1.5)
+           zlim = beta2.lims, col = tim.colors(64),
+	   axis.args = list(cex.axis = 1.5))
 
 dev.off()
 
