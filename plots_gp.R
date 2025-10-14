@@ -7,10 +7,10 @@ nScen <- 10
 nReps <- 10
 line.type <- 2
 line.width <- 4
-nTest <- 25
 
 # Surface plots for true beta surfaces
 test <- readRDS(paste0("data/small/scen", 1, "/test.RDS"))
+nTest <- nrow(test$B)
 beta0.true <- test$U[ , 1] - test$U[ , 2]
 beta1.true <- test$U[ , 1] + test$U[ , 2] - 100
 beta2.true <- 2 * test$U[ , 1] - test$U[ , 2] - 50
@@ -164,6 +164,7 @@ cbind(avg.rmse, std.dev, avg.cvg, avg.length)
 path <- paste0("objects/small_scen", 11, ".RDS") 
 results <- readRDS(path)[[1]]
 test <- readRDS(paste0("data/small/scen", 11, "/test.RDS"))
+nTest <- nrow(test$B)
 beta0.true <- test$B[ , 1]
 beta1.true <- test$B[ , 2]
 beta2.true <- test$B[ , 3]
