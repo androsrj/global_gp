@@ -282,7 +282,12 @@ mcmc <- function(X, Z, Y, D, K,
     mu.test <<- big.B %*% little.b
     beta.test[ , i] <- rmvnorm(1, mean = mu.test, sigma = big.B)
     current.beta.test <<- matrix(beta.test[ , i], ncol = q)
-    
+    if (i %% nReport == 0) {
+    cat(apply(current.beta.test, 2, min))
+    cat("\n")
+    cat(apply(current.beta.test, 2, max))
+    cat("\n")
+    }
     # Sample from posterior predictive for YTest
     DBTest <- lapply(1:q, \(j) matrix(X0Test[ , j], nrow = nTest, ncol = nTest) *
                        (sigb2[j] * exp(-thb[j] * DTest)) *

@@ -53,12 +53,12 @@ spatialData <- function(n, X, Z, K,
                               matrix(X0[ , j], nrow = n, ncol = n, byrow = T)))
   lon <- U[ , 1]
   lat <- U[ , 2]
-  beta.list <- vector("list", length = q)
-  for (j in 1:q) {
-    beta.list[[j]] <- t(mvtnorm::rmvnorm(1, sigma = CB[[j]]))
-  }
-  beta.surf <- Reduce("cbind", beta.list)
-  B <- Reduce("cbind", lapply(1:q, \(j) t(rmvnorm(1, sigma = CB[[j]])))) + beta.surf
+  #beta.list <- vector("list", length = q)
+  #for (j in 1:q) {
+  #  beta.list[[j]] <- t(mvtnorm::rmvnorm(1, sigma = CB[[j]]))
+  #}
+  #beta.surf <- Reduce("cbind", beta.list)
+  B <- Reduce("cbind", lapply(1:q, \(j) t(rmvnorm(1, sigma = CB[[j]]))))
   XB <- rep(1, S) %x% rowSums(X0 * B)
   
   # Final covariance matrix for Y
