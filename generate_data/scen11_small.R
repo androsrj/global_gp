@@ -20,7 +20,7 @@ p <- 2
 # Need to play around with these
 
 # Covariance parameters for beta
-trueSigb2 <- seq(0.5, 1.0, length = p + 1)
+trueSigb2 <- seq(5, 10, length = p + 1)
 trueThb <- seq(0.1, 0.2, length = p + 1)
 
 # Covariance parameters for global covariates (each length K)
