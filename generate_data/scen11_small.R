@@ -1,6 +1,6 @@
 source("../other_functions/spatial_data_scen11.R")
 source("../other_functions/bsplines_2_3D.R")
-mySeed <- 4528
+mySeed <- 45298
 
 # Sample sizes
 # Can have a "small" dataset with n = 100 and nTest = 25
@@ -20,7 +20,7 @@ p <- 2
 # Need to play around with these
 
 # Covariance parameters for beta
-trueSigb2 <- seq(5, 10, length = p + 1)
+trueSigb2 <- seq(0.5, 1.0, length = p + 1)
 trueThb <- seq(0.1, 0.2, length = p + 1)
 
 # Covariance parameters for global covariates (each length K)

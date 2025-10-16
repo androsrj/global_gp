@@ -21,7 +21,7 @@ run.mcmc <- function(rep) {
   results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                   starting = starting,
                   propSD = propSD,
-                  nIter = 1000, nBurn = 500, nThin=2,
+                  nIter = 10000, nBurn = 5000, nThin=2,
                   model = "full_gp")
   return(results)
 }
