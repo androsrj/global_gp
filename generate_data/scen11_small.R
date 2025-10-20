@@ -6,7 +6,7 @@ mySeed <- 45298
 # Can have a "small" dataset with n = 100 and nTest = 25
 # Then a "large" dataset with n = 500 and nTest = 100
 n <- 100
-nTest <- 50
+nTest <- 100
 
 # Number of subjects - can probably leave these alone
 S <- 10
