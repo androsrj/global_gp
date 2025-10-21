@@ -3,12 +3,12 @@ library(MBA)
 library(fields)
 library(latex2exp)
 
-nScen <- 10
+nScen <- 12
 nReps <- 10
 line.type <- 2
 line.width <- 4
 
-# Surface plots for true beta surfaces
+# Surface plots for true beta surfaces (scenarios 1-10)
 test <- readRDS(paste0("data/small/scen", 1, "/test.RDS"))
 nTest <- nrow(test$B)
 beta0.true <- test$U[ , 1] - test$U[ , 2]
@@ -41,9 +41,42 @@ image.plot(mba.interp.true$xyz.est, main = TeX("True surface ($\\beta_2$)"),
 
 dev.off()
 
+# Surface plots for true beta surfaces (scenarios 11-12)
+test <- readRDS(paste0("data/small/scen", 11, "/test.RDS"))
+nTest <- nrow(test$B)
+beta0.true <- test$B[ , 1]
+beta1.true <- test$B[ , 2]
+beta2.true <- test$B[ , 3]
+
+pdf("figures/gp/beta_true_2.pdf", width = 10, height = 3)
+par(mfrow = c(2,3), mar = c(5, 5, 4, 8) + 0.2)
+
+# Beta0
+mba.data.true <- data.frame(test$U, beta0.true)
+mba.interp.true <- mba.surf(mba.data.true, no.X=100, no.Y=100, extend=TRUE)
+image.plot(mba.interp.true$xyz.est, main = TeX("True surface ($\\beta_0$)"),
+           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
+           axis.args = list(cex.axis = 1.5))
+
+# Beta1
+mba.data.true <- data.frame(test$U, beta1.true)
+mba.interp.true <- mba.surf(mba.data.true, no.X=100, no.Y=100, extend=TRUE)
+image.plot(mba.interp.true$xyz.est, main = TeX("True surface ($\\beta_1$)"),
+           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
+           axis.args = list(cex.axis = 1.5))
+
+# Beta2
+mba.data.true <- data.frame(test$U, beta2.true)
+mba.interp.true <- mba.surf(mba.data.true, no.X=100, no.Y=100, extend=TRUE)
+image.plot(mba.interp.true$xyz.est, main = TeX("True surface ($\\beta_2$)"),
+           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
+           axis.args = list(cex.axis = 1.5))
+
+dev.off()
+
 # Surface plots for beta0
 pdf("figures/gp/beta0_gp.pdf", width = 10, height = 4)
-par(mfrow = c(2,5), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
+par(mfrow = c(3, 4), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)[[1]]
@@ -59,7 +92,7 @@ dev.off()
 
 # Surface plots for beta1
 pdf("figures/gp/beta1_gp.pdf", width = 10, height = 4)
-par(mfrow = c(2,5), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
+par(mfrow = c(3, 4), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)[[1]]
@@ -75,7 +108,7 @@ dev.off()
 
 # Surface plots for beta2
 pdf("figures/gp/beta2_gp.pdf", width = 10, height = 4)
-par(mfrow = c(2,5), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
+par(mfrow = c(3, 4), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)[[1]]
@@ -91,7 +124,7 @@ dev.off()
 
 # Density plots for tau2
 pdf("figures/gp/tau2_gp.pdf", width = 10, height = 4)
-par(mfrow = c(2,5))
+par(mfrow = c(3, 4))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)[[1]]
@@ -157,82 +190,3 @@ avg.rmse <- aggregate(data = df, RMSE ~ Scenario, mean)
 avg.cvg <- aggregate(data = df, Coverage ~ Scenario, mean)[, 2]
 avg.length <- aggregate(data = df, Length ~ Scenario, mean)[, 2]
 cbind(avg.rmse, std.dev, avg.cvg, avg.length)
-
-# Scenario 11
-
-# Read in data and model results
-path <- paste0("objects/small_scen", 12, ".RDS") 
-results <- readRDS(path)[[1]]
-test <- readRDS(paste0("data/small/scen", 12, "/test.RDS"))
-nTest <- nrow(test$B)
-beta0.true <- test$B[ , 1]
-beta1.true <- test$B[ , 2]
-beta2.true <- test$B[ , 3]
-beta0.means <- results$posteriorMeans$beta.test[1:nTest]
-beta1.means <- results$posteriorMeans$beta.test[(nTest+1):(2*nTest)]
-beta2.means <- results$posteriorMeans$beta.test[(2*nTest+1):(3*nTest)]
-
-# Make legend limits for plots
-expand.by <- 1.2
-beta0.lims <- c(min(c(beta0.true, beta0.means)), max(c(beta0.true, beta0.means))) * expand.by
-beta1.lims <- c(min(c(beta1.true, beta1.means)), max(c(beta1.true, beta1.means))) * expand.by
-beta2.lims <- c(min(c(beta2.true, beta2.means)), max(c(beta2.true, beta2.means))) * expand.by
-
-# Surface plots for true beta surfaces
-pdf("figures/gp/beta_true_12.pdf", width = 10, height = 3)
-par(mfrow = c(1,3), mar = c(5, 5, 4, 8) + 0.2)
-
-# Beta0
-mba.data.true <- data.frame(test$U, beta0.true)
-mba.interp.true <- mba.surf(mba.data.true, no.X=100, no.Y=100, extend=TRUE)
-image.plot(mba.interp.true$xyz.est, main = TeX("True surface ($\\beta_0$)"),
-           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
-           zlim = beta0.lims, axis.args = list(cex.axis = 1.5))
-
-# Beta1
-mba.data.true <- data.frame(test$U, beta1.true)
-mba.interp.true <- mba.surf(mba.data.true, no.X=100, no.Y=100, extend=TRUE)
-image.plot(mba.interp.true$xyz.est, main = TeX("True surface ($\\beta_1$)"),
-           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
-           zlim = beta1.lims, axis.args = list(cex.axis = 1.5))
-
-# Beta2
-mba.data.true <- data.frame(test$U, beta2.true)
-mba.interp.true <- mba.surf(mba.data.true, no.X=100, no.Y=100, extend=TRUE)
-image.plot(mba.interp.true$xyz.est, main = TeX("True surface ($\\beta_2$)"),
-           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
-           zlim = beta2.lims, axis.args = list(cex.axis = 1.5))
-
-dev.off()
-
-# Plot beta estimated surfaces for scen 11
-pdf("figures/gp/beta_scen12.pdf", width = 10, height = 3)
-par(mfrow = c(1,3), mar = c(5, 5, 4, 8) + 0.2)
-
-# Beta0
-mba.data <- data.frame(test$U, beta0.means)
-mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
-image.plot(mba.interp$xyz.est, main = TeX("Estimated Surface $\\beta_0"), 
-           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
-           zlim = beta0.lims, col = tim.colors(64),
-	   axis.args = list(cex.axis = 1.5))
-
-# Beta1
-mba.data <- data.frame(test$U, beta1.means)
-mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
-image.plot(mba.interp$xyz.est, main = TeX("Estimated Surface $\\beta_1"), 
-           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
-           zlim = beta1.lims, col = tim.colors(64),
-	   axis.args = list(cex.axis = 1.5))
-
-# Beta2
-mba.data <- data.frame(test$U, beta2.means)
-mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
-image.plot(mba.interp$xyz.est, main = TeX("Estimated Surface $\\beta_2"), 
-           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
-           zlim = beta2.lims, col = tim.colors(64),
-	   axis.args = list(cex.axis = 1.5))
-
-dev.off()
-
-
