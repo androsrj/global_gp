@@ -82,7 +82,7 @@ dev.off()
 ##### SURFACE PLOTS FOR BETAS (ALL SCENARIOS) #####
 
 # Surface plots for beta0
-pdf("figures/gp/beta0_gp.pdf", width = 10, height = 4)
+pdf("figures/gp/beta0_gp.pdf", width = 9, height = 6)
 par(mfrow = c(3, 4), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
@@ -99,7 +99,7 @@ for (i in 1:nScen) {
 dev.off()
 
 # Surface plots for beta1
-pdf("figures/gp/beta1_gp.pdf", width = 10, height = 4)
+pdf("figures/gp/beta1_gp.pdf", width = 9, height = 6)
 par(mfrow = c(3, 4), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
@@ -116,7 +116,7 @@ for (i in 1:nScen) {
 dev.off()
 
 # Surface plots for beta2
-pdf("figures/gp/beta2_gp.pdf", width = 10, height = 4)
+pdf("figures/gp/beta2_gp.pdf", width = 9, height = 6)
 par(mfrow = c(3, 4), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
