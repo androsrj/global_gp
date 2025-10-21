@@ -161,9 +161,9 @@ cbind(avg.rmse, std.dev, avg.cvg, avg.length)
 # Scenario 11
 
 # Read in data and model results
-path <- paste0("objects/small_scen", 11, ".RDS") 
+path <- paste0("objects/small_scen", 12, ".RDS") 
 results <- readRDS(path)[[1]]
-test <- readRDS(paste0("data/small/scen", 11, "/test.RDS"))
+test <- readRDS(paste0("data/small/scen", 12, "/test.RDS"))
 nTest <- nrow(test$B)
 beta0.true <- test$B[ , 1]
 beta1.true <- test$B[ , 2]
@@ -179,7 +179,7 @@ beta1.lims <- c(min(c(beta1.true, beta1.means)), max(c(beta1.true, beta1.means))
 beta2.lims <- c(min(c(beta2.true, beta2.means)), max(c(beta2.true, beta2.means))) * expand.by
 
 # Surface plots for true beta surfaces
-pdf("figures/gp/beta_true_11.pdf", width = 10, height = 3)
+pdf("figures/gp/beta_true_12.pdf", width = 10, height = 3)
 par(mfrow = c(1,3), mar = c(5, 5, 4, 8) + 0.2)
 
 # Beta0
@@ -206,7 +206,7 @@ image.plot(mba.interp.true$xyz.est, main = TeX("True surface ($\\beta_2$)"),
 dev.off()
 
 # Plot beta estimated surfaces for scen 11
-pdf("figures/gp/beta_scen11.pdf", width = 10, height = 3)
+pdf("figures/gp/beta_scen12.pdf", width = 10, height = 3)
 par(mfrow = c(1,3), mar = c(5, 5, 4, 8) + 0.2)
 
 # Beta0
