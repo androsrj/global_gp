@@ -133,7 +133,7 @@ for (i in 1:nScen) {
 dev.off()
 
 # Density plots for tau2
-pdf("figures/gp/tau2_gp.pdf", width = 10, height = 4)
+pdf("figures/gp/tau2_gp.pdf", width = 9, height = 6)
 par(mfrow = c(3, 4))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 

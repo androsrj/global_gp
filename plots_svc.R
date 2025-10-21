@@ -72,7 +72,7 @@ for (i in 1:nScen) {
   path <- paste0("objects/svc_scen", i, ".RDS") 
   results <- readRDS(path)
   tau2_samples <- results[[1]]$model$p.theta.samples[ , 4]
-  if (i == 4) {
+  if (i == 4 | i == 12) {
     true_tau2 <- 2
   } else {
     true_tau2 <- 0.2
