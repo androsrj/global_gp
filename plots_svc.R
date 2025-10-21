@@ -3,19 +3,19 @@ library(spBayes)
 library(MBA)
 library(fields)
 library(latex2exp)
-nScen <- 10
+nScen <- 12
 nReps <- 10
 line.type <- 2
 line.width <- 4
-nTest <- 25
 
 # Surface plots for beta0
-pdf("figures/svc/beta0_svc.pdf", width = 10, height = 4)
-par(mfrow = c(2,5), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
+pdf("figures/svc/beta0_svc.pdf", width = 9, height = 6)
+par(mfrow = c(3, 4), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/svc_scen", i, ".RDS") 
   results <- readRDS(path)
   test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
+  nTest <- nrow(test$B)
   beta.mu <- mean(results[[1]]$preds$p.beta.recover.samples[ , 1])
   w.mu <- apply(results[[1]]$preds$p.w.predictive.samples[1:nTest, ], 1, mean)
   beta0.means <- beta.mu + w.mu
@@ -28,12 +28,13 @@ for (i in 1:nScen) {
 dev.off()
 
 # Surface plots for beta1
-pdf("figures/svc/beta1_svc.pdf", width = 10, height = 4)
-par(mfrow = c(2,5), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
+pdf("figures/svc/beta1_svc.pdf", width = 9, height = 6)
+par(mfrow = c(3, 4), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/svc_scen", i, ".RDS") 
   results <- readRDS(path)
   test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
+  nTest <- nrow(test$B)
   beta.mu <- mean(results[[1]]$preds$p.beta.recover.samples[ , 2])
   w.mu <- apply(results[[1]]$preds$p.w.predictive.samples[(nTest+1):(2*nTest), ], 1, mean)
   beta1.means <- beta.mu + w.mu
@@ -46,12 +47,13 @@ for (i in 1:nScen) {
 dev.off()
 
 # Surface plots for beta2
-pdf("figures/svc/beta2_svc.pdf", width = 10, height = 4)
-par(mfrow = c(2,5), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
+pdf("figures/svc/beta2_svc.pdf", width = 9, height = 6)
+par(mfrow = c(3, 4), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/svc_scen", i, ".RDS") 
   results <- readRDS(path)
   test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
+  nTest <- nrow(test$B)
   beta.mu <- mean(results[[1]]$preds$p.beta.recover.samples[ , 3])
   w.mu <- apply(results[[1]]$preds$p.w.predictive.samples[(2*nTest+1):(3*nTest), ], 1, mean)
   beta2.means <- beta.mu + w.mu
@@ -64,8 +66,8 @@ for (i in 1:nScen) {
 dev.off()
 
 # Density plots for tau2
-pdf("figures/svc/tau2_svc.pdf", width = 10, height = 4)
-par(mfrow = c(2,5))
+pdf("figures/svc/tau2_svc.pdf", width = 9, height = 6)
+par(mfrow = c(3, 4))
 for (i in 1:nScen) {
   path <- paste0("objects/svc_scen", i, ".RDS") 
   results <- readRDS(path)
@@ -93,6 +95,7 @@ for (i in 1:nScen) {
   path <- paste0("objects/svc_scen", i, ".RDS") 
   results <- readRDS(path)
   test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
+  nTest <- nrow(test$B)
   STest <- nrow(test$Z)
   nTest <- nrow(test$X)
   a <- .05
