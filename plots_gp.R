@@ -16,7 +16,7 @@ beta1.true <- test$U[ , 1] + test$U[ , 2] - 100
 beta2.true <- 2 * test$U[ , 1] - test$U[ , 2] - 50
 
 pdf("figures/gp/beta_true.pdf", width = 10, height = 3)
-par(mfrow = c(1,3), mar = c(5, 5, 4, 8) + 0.2)
+par(mfrow = c(1,3), mar = c(5, 5, 4, 8) + 0.2, oma = c(2, 0, 0, 0))
 
 # Beta0
 mba.data.true <- data.frame(test$U, beta0.true)
@@ -39,17 +39,19 @@ image.plot(mba.interp.true$xyz.est, main = TeX("True surface ($\\beta_2$)"),
            cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
            axis.args = list(cex.axis = 1.5))
 
+# Main title below
+mtext("Scenarios 1-10      ", side = 1, outer = TRUE, line = -1, cex = 1.3)
 dev.off()
 
 # Surface plots for true beta surfaces (scenarios 11-12)
-test <- readRDS(paste0("data/small/scen", 11, "/test.RDS"))
+scen <- 11
+test <- readRDS(paste0("data/small/scen", scen, "/test.RDS"))
 nTest <- nrow(test$B)
 beta0.true <- test$B[ , 1]
 beta1.true <- test$B[ , 2]
 beta2.true <- test$B[ , 3]
-
 pdf("figures/gp/beta_true_2.pdf", width = 10, height = 3)
-par(mfrow = c(2,3), mar = c(5, 5, 4, 8) + 0.2)
+par(mfrow = c(1, 3), mar = c(5, 5, 4, 8) + 0.2, oma = c(2, 0, 0, 0))
 
 # Beta0
 mba.data.true <- data.frame(test$U, beta0.true)
@@ -72,7 +74,12 @@ image.plot(mba.interp.true$xyz.est, main = TeX("True surface ($\\beta_2$)"),
            cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
            axis.args = list(cex.axis = 1.5))
 
+# Main title below
+mtext("Scenarios 11-12    ", side = 1, outer = TRUE, line = -1, cex = 1.3)
 dev.off()
+
+
+##### SURFACE PLOTS FOR BETAS (ALL SCENARIOS) #####
 
 # Surface plots for beta0
 pdf("figures/gp/beta0_gp.pdf", width = 10, height = 4)
@@ -81,6 +88,7 @@ for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)[[1]]
   test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
+  nTest <- nrow(test$B)
   beta0.means <- results$posteriorMeans$beta.test[1:nTest]
   mba.data <- data.frame(test$U, beta0.means)
   mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
@@ -97,6 +105,7 @@ for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)[[1]]
   test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
+  nTest <- nrow(test$B)
   beta1.means <- results$posteriorMeans$beta.test[(nTest+1):(2*nTest)]
   mba.data <- data.frame(test$U, beta1.means)
   mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
@@ -113,6 +122,7 @@ for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)[[1]]
   test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
+  nTest <- nrow(test$B)
   beta2.means <- results$posteriorMeans$beta.test[(2*nTest+1):(3*nTest)]
   mba.data <- data.frame(test$U, beta2.means)
   mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
@@ -128,13 +138,13 @@ par(mfrow = c(3, 4))
 for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)[[1]]
-  tau2_samples <- results$paramSamples$tau2
-  if (i == 4) {
+  tau2.samples <- results$paramSamples$tau2
+  if (i == 4 | i == 12) {
     true_tau2 <- 2
   } else {
     true_tau2 = 0.2
   }
-  hist(tau2_samples, 
+  hist(tau2.samples, 
        xlab = paste0("Scenario ", i),
        main = "", ylab = "", cex.lab = 1.75)
   abline(v = true_tau2, lty = line.type, lwd = line.width, col = "blue")
@@ -153,6 +163,7 @@ for (i in 1:nScen) {
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)
   test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
+  nTest <- nrow(test$B)
   preds <- lapply(1:nReps, \(j) results[[j]]$preds[2,])
   lower <- lapply(1:nReps, \(j) results[[j]]$preds[1,])
   upper <- lapply(1:nReps, \(j) results[[j]]$preds[3,])
