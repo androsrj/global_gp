@@ -10,6 +10,7 @@ results <- data.frame(
   length = numeric(nScen)
 )
 for (i in scens) {
+  cat(paste0("Beginning scenario ", i, "\n"))
   train <- readRDS(paste0("../data/small/scen", i, "/train.RDS"))
   test <- readRDS(paste0("../data/small/scen", i,"/test.RDS"))
   nSubj <- nrow(train$Z)
