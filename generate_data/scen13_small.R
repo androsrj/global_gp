@@ -28,7 +28,7 @@ trueSigma2 <- seq(5, 10, length = K)
 trueTheta <- seq(0.1, 0.5, length = K)
 
 # Error variance
-trueTau2 <- 2
+trueTau2 <- 0.2
 
 # Beta
 trueBeta <- rep(0, p+1)

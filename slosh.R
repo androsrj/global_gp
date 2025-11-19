@@ -13,7 +13,7 @@ library(Matrix)
 
 load("data/slosh/flood_data.RData")
 
-mySeed <- 1927
+mySeed <- 1928
 which.Z <- c(1,3)
 n <- 100
 nTest <- 25
@@ -21,9 +21,13 @@ S <- 10
 STest <- 10
 
 set.seed(mySeed)
-which.storms <- sample(4000, S + STest)
+temp <- as.matrix(out)[ , which(coords$X <-74.82 & coords$x > -74.84 & coords$y < 39.07 & coords$y > 39.05)]
+zeros <- apply(temp, 1, \(x) sum(x == 0))
+which.storms <- sample(which(zeros < 100), S + STest)
 train.storms <- which.storms[1:S]
 test.storms <- which.storms[(S+1):(S+STest)]
+cat(train.storms)
+cat(test.storms)
 
 subsample <- coords$x < -74.82 & coords$x > -74.84 & coords$y < 39.07 & coords$y > 39.05
 coords.subset <- coords[subsample, ]
@@ -78,7 +82,7 @@ cat("Setup complete \n")
 results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                 starting = starting,
                 propSD = propSD,
-                nIter = 3000, nBurn = 1000, nThin = 2, nReport = 100,
+                nIter = 10000, nBurn = 5000, nThin = 2, nReport = 100,
                 model = "full_gp")
 saveRDS(results, file = "objects/slosh.RDS")
 
@@ -100,7 +104,7 @@ for (i in 1:STest) {
   rmse[i] <- sqrt(mean((truth - pred)^2))
   lower <- pmax(0, results$preds[1, (nTest*(i-1)+1):(i*nTest)])
   upper <- results$preds[3, (nTest*(i-1)+1):(i*nTest)]
-  cvg[i] <- mean(lower < truth & upper > truth)
+  cvg[i] <- mean(lower <= truth & upper >= truth)
   width[i] <- mean(upper - lower)
   scores[i] <- mean((upper - lower) + 
                       2/a * (lower - truth) * (truth < lower) + 
