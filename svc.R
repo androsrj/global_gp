@@ -96,9 +96,9 @@ nReps <- 10
 
 
 # Scenario 10
-#train <- readRDS("data/small/scen10/train.RDS")
-#test <- readRDS("data/small/scen10/test.RDS")
-#run.svc(10, nReps)
+train <- readRDS("data/small/scen10/train.RDS")
+test <- readRDS("data/small/scen10/test.RDS")
+run.svc(10, nReps)
 
 # Scenario 11
 #train <- readRDS("data/small/scen11/train.RDS")
@@ -111,8 +111,8 @@ nReps <- 10
 #run.svc(12, nReps)
 
 # Scenario 13
-train <- readRDS("data/small/scen13/train.RDS")
-test <- readRDS("data/small/scen13/test.RDS")
-run.svc(13, nReps)
+#train <- readRDS("data/small/scen13/train.RDS")
+#test <- readRDS("data/small/scen13/test.RDS")
+#run.svc(13, nReps)
 
 
