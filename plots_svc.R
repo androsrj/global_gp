@@ -81,7 +81,7 @@ for (i in 1:nScen) {
        xlab = paste0("Scenario ", i),
        main = "", ylab = "", cex.lab = 1.75)
   abline(v = true_tau2, lty = line.type, lwd = line.width, col = "blue")
-  mtext(TeX("$\\tau^2$"), side = 3, line = -2.5, outer = TRUE, cex = 1.5)
+  mtext(TeX("$\\tau^2$"), side = 3, line = -1, outer = TRUE, cex = 1.5)
 }
 dev.off()
 
