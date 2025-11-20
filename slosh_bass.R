@@ -5,7 +5,7 @@ library(ggplot2)
 library(spBayes)
 library(BASS)
 
-load("data/flood_data.RData")
+load("data/slosh/flood_data.RData")
 
 mySeed <- 1234
 n <- 100

@@ -2,7 +2,7 @@ library(fields)
 library(spBayes)
 library(refund)
 source("other_functions/helper_functions.R")
-nScen <- 6
+nScen <- 13
 scenarios <- 1:nScen
 
 # Which models do you want diagnostics for?

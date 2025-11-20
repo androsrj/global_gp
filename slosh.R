@@ -61,7 +61,7 @@ DTest <- fields::rdist(UTest)
 
 flood.train <- list(X=X, Z=Z, Y=Y, U=U, D=D)
 flood.test <- list(X=XTest, Z=ZTest, Y=YTest, U=UTest, D=DTest)
-#save(flood.train, flood.test, file = "data/slosh/flood_subset.RData")
+save(flood.train, flood.test, file = "data/slosh/flood_subset.RData")
 
 K <- 9
 #q <- ncol(X) + ncol(Z) + 1

@@ -1,6 +1,6 @@
 library(GWmodel)
-nScen <- 12
-scens <- 1:nScen
+nScen <- 13
+scens <- 13
 
 results <- data.frame(
   scen = scens,

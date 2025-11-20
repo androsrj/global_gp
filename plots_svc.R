@@ -3,14 +3,14 @@ library(spBayes)
 library(MBA)
 library(fields)
 library(latex2exp)
-nScen <- 12
+nScen <- 13
 nReps <- 10
 line.type <- 2
 line.width <- 4
 
 # Surface plots for beta0
-pdf("figures/svc/beta0_svc.pdf", width = 9, height = 6)
-par(mfrow = c(3, 4), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
+pdf("figures/svc/beta0_svc.pdf", width = 12, height = 4)
+par(mfrow = c(2, 7), mar = c(3, 2, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/svc_scen", i, ".RDS") 
   results <- readRDS(path)
@@ -28,8 +28,8 @@ for (i in 1:nScen) {
 dev.off()
 
 # Surface plots for beta1
-pdf("figures/svc/beta1_svc.pdf", width = 9, height = 6)
-par(mfrow = c(3, 4), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
+pdf("figures/svc/beta1_svc.pdf", width = 12, height = 4)
+par(mfrow = c(2, 7), mar = c(3, 2, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/svc_scen", i, ".RDS") 
   results <- readRDS(path)
@@ -47,8 +47,8 @@ for (i in 1:nScen) {
 dev.off()
 
 # Surface plots for beta2
-pdf("figures/svc/beta2_svc.pdf", width = 9, height = 6)
-par(mfrow = c(3, 4), mar = c(3, 4, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
+pdf("figures/svc/beta2_svc.pdf", width = 12, height = 4)
+par(mfrow = c(2, 7), mar = c(3, 2, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/svc_scen", i, ".RDS") 
   results <- readRDS(path)
@@ -66,8 +66,8 @@ for (i in 1:nScen) {
 dev.off()
 
 # Density plots for tau2
-pdf("figures/svc/tau2_svc.pdf", width = 9, height = 6)
-par(mfrow = c(3, 4))
+pdf("figures/svc/tau2_svc.pdf", width = 12, height = 4)
+par(mfrow = c(2, 7), mar = c(3, 2, 2, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in 1:nScen) {
   path <- paste0("objects/svc_scen", i, ".RDS") 
   results <- readRDS(path)

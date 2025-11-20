@@ -2,8 +2,9 @@ library(fields)
 library(spBayes)
 library(refund)
 source("other_functions/helper_functions.R")
-nScen <- 5
-scenarios <- 7:(6+nScen)
+nScen <- 13
+#scenarios <- 7:(6+nScen)
+scenarios <- 1:nScen
 
 # Which models do you want diagnostics for?
 GGP <- TRUE
