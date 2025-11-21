@@ -28,6 +28,7 @@ apply(fit$beta.UB, 1, mean)
 pred <- predict(object = fit, newdata = dfl[test.index,])
 sqrt(mean((pred - Y[test.index, ])^2))
 sd(flood.test$Y)
+saveRDS(pred, file = "objects/slosh_fosr_preds.RDS")
 
 #lims <- c(-15, 15)
 #pdf("figures/subj1_fosr.pdf")

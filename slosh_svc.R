@@ -45,6 +45,7 @@ m.3 <- spRecover(m.3, start=floor(0.5*n.samples), thin=2,
                  n.omp.threads=4, verbose=FALSE)
 
 rmse <- cvg <- len <- numeric(STest)
+svc.preds <- matrix(0, nrow = STest, ncol = nTest)
 for (k in 1:STest) {
   truth <- YTest[(nTest*(k-1)+1):(nTest*k), ]
   m.3.pred <- spPredict(m.3, pred.covars = cbind(rep(1, nTest), XTest),
@@ -56,6 +57,7 @@ for (k in 1:STest) {
   upper <- apply(m.3.pred$p.y.predictive.samples, 1, quantile, .975)
   cvg[k] <- mean(lower < truth & upper > truth)
   len[k] <- mean(upper - lower)
+  svc.preds[k, ] <- preds
 }
 
 cat(paste0("YTest Standard Dev: ", round(sd(YTest), 3), "\n"))
@@ -68,3 +70,7 @@ cat(paste0("Mean coverage: ", round(mean(cvg), 3), "\n"))
 
 len
 cat(paste0("Mean width: ", round(mean(len), 3), "\n"))
+
+# Save predictions to use in plots later
+saveRDS(svc.preds, file = "objects/slosh_svc_preds.RDS")
+
