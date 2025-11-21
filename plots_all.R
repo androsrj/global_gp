@@ -5,62 +5,77 @@ library(latex2exp)
 
 line.type <- 2
 line.width <- 4
-which.scens <- c(1, 4, 7, 10)
-nScen <- length(which.scens)
+which.scens1 <- c(1, 4, 7)
+which.scens2 <- 11:13
+nScen <- length(which.scens1) + length(which.scens2)
 
-# Beta0
-pdf("figures/new/beta0.pdf", width = 5, height = 12)
-layout.matrix <- matrix(c(1, 1, 
-                          1, 1,
+
+#################################
+############# Beta0 #############
+#################################
+
+pdf("figures/new/beta0.pdf", width = 5.5, height = 12)
+layout.matrix <- matrix(c(1, 5, 
                           2, 6,
                           3, 7,
-                          4, 8,
-                          5, 9), nrow = 6, ncol = 2, byrow = TRUE)
+                          4, 8), nrow = 4, ncol = 2, byrow = TRUE)
 layout(layout.matrix)
 
-# Scens 1-10
+# Data for scens 1-10
 test <- readRDS(paste0("data/small/scen", 1, "/test.RDS"))
 nTest <- nrow(test$B)
 beta0.true <- test$U[ , 1] - test$U[ , 2]
 
-# True beta0
-par(mar = c(5, 6.5, 7, 5))
+# True beta0, scens 1-10
+par(mar = c(3, 3, 5.5, 2) + 0.1)
 mba.data.true <- data.frame(test$U, beta0.true)
 mba.interp.true <- mba.surf(mba.data.true, no.X=100, no.Y=100, extend=TRUE)
-image(mba.interp.true$xyz.est, main = TeX("True surface ($\\beta_0$)"),
-      cex.main = 2.5, cex.lab = 1.5, cex.axis = 1.5, 
+image(mba.interp.true$xyz.est, main = "(Scenarios 1 - 10)",
+      cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
       col = tim.colors(64))
+mtext(TeX("True surface of $\\beta_0$"), side = 3, line = 3.5)
 
-# GP
-par(mar = c(2, 4, 3, 1))
-for (i in which.scens) {
-  path.gp <- paste0("objects/small_scen", i, ".RDS") 
-  results.gp <- readRDS(path.gp)[[1]]
+# Est. beta, scens 1, 4, 7
+par(mar = c(3, 3, 3, 2) + 0.1)
+for (i in which.scens1) {
+  path <- paste0("objects/small_scen", i, ".RDS") 
+  results <- readRDS(path)[[1]]
   test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
   nTest <- nrow(test$B)
-  beta0.means <- results.gp$posteriorMeans$beta.test[1:nTest]
+  beta0.means <- results$posteriorMeans$beta.test[1:nTest]
   mba.data <- data.frame(test$U, beta0.means)
   mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
-  image(mba.interp$xyz.est, main = "fGP", 
+  image(mba.interp$xyz.est, main = paste0("Scenario ", i), 
         col = tim.colors(64), cex.main = 1.5,
         axes = FALSE)
-  mtext(paste0("Scenario ", i), side = 2, line = 2)
 }
 
-# SVC
-par(mar = c(2, 2, 3, 3))
-for (i in which.scens) {
-  path <- paste0("objects/svc_scen", i, ".RDS") 
-  results <- readRDS(path)
+# Data for scens 11-13
+test <- readRDS(paste0("data/small/scen", 11, "/test.RDS"))
+nTest <- nrow(test$B)
+beta0.true <- test$B[ , 1]
+
+# True beta0, scens 11-13
+par(mar = c(3, 3, 5.5, 2) + 0.1)
+mba.data.true <- data.frame(test$U, beta0.true)
+mba.interp.true <- mba.surf(mba.data.true, no.X=100, no.Y=100, extend=TRUE)
+image(mba.interp.true$xyz.est, main = "(Scenarios 11 - 13)",
+      cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
+      col = tim.colors(64))
+mtext(TeX("True surface of $\\beta_0$"), side = 3, line = 3.5)
+
+# Est. beta, scens 11-13
+par(mar = c(3, 3, 3, 2) + 0.1)
+for (i in which.scens2) {
+  path <- paste0("objects/small_scen", i, ".RDS") 
+  results <- readRDS(path)[[1]]
   test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
   nTest <- nrow(test$B)
-  beta.mu <- mean(results[[1]]$preds$p.beta.recover.samples[ , 1])
-  w.mu <- apply(results[[1]]$preds$p.w.predictive.samples[1:nTest, ], 1, mean)
-  beta0.means <- beta.mu + w.mu
+  beta0.means <- results$posteriorMeans$beta.test[1:nTest]
   mba.data <- data.frame(test$U, beta0.means)
   mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
-  image(mba.interp$xyz.est, main = "SVC", 
-        col = tim.colors(64), cex.main = 1.5, 
+  image(mba.interp$xyz.est, main = paste0("Scenario ", i), 
+        col = tim.colors(64), cex.main = 1.5,
         axes = FALSE)
 }
 
@@ -68,59 +83,73 @@ dev.off()
 
 
 
-# Beta1
-pdf("figures/new/beta1.pdf", width = 5, height = 12)
-layout.matrix <- matrix(c(1, 1, 
-                          1, 1,
+
+#################################
+############# Beta1 #############
+#################################
+
+pdf("figures/new/beta1.pdf", width = 5.5, height = 12)
+layout.matrix <- matrix(c(1, 5, 
                           2, 6,
                           3, 7,
-                          4, 8,
-                          5, 9), nrow = 6, ncol = 2, byrow = TRUE)
+                          4, 8), nrow = 4, ncol = 2, byrow = TRUE)
 layout(layout.matrix)
 
-# Scens 1-10
+# Data for scens 1-10
 test <- readRDS(paste0("data/small/scen", 1, "/test.RDS"))
 nTest <- nrow(test$B)
 beta1.true <- test$U[ , 1] + test$U[ , 2] - 100
 
-# True beta0
-par(mar = c(5, 6.5, 7, 5))
+# True beta1, scens 1-10
+par(mar = c(3, 3, 5.5, 2) + 0.1)
 mba.data.true <- data.frame(test$U, beta1.true)
 mba.interp.true <- mba.surf(mba.data.true, no.X=100, no.Y=100, extend=TRUE)
-image(mba.interp.true$xyz.est, main = TeX("True surface ($\\beta_1$)"),
-      cex.main = 2.5, cex.lab = 1.5, cex.axis = 1.5, 
+image(mba.interp.true$xyz.est, main = "(Scenarios 1 - 10)",
+      cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
       col = tim.colors(64))
+mtext(TeX("True surface of $\\beta_1$"), side = 3, line = 3.5)
 
-# GP
-par(mar = c(2, 4, 3, 1))
-for (i in which.scens) {
-  path.gp <- paste0("objects/small_scen", i, ".RDS") 
-  results.gp <- readRDS(path.gp)[[1]]
+# Est. beta, scens 1, 4, 7
+par(mar = c(3, 3, 3, 2) + 0.1)
+for (i in which.scens1) {
+  path <- paste0("objects/small_scen", i, ".RDS") 
+  results <- readRDS(path)[[1]]
   test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
   nTest <- nrow(test$B)
-  beta1.means <- results.gp$posteriorMeans$beta.test[(nTest+1):(2*nTest)]
+  beta1.means <- results$posteriorMeans$beta.test[(nTest+1):(2*nTest)]
   mba.data <- data.frame(test$U, beta1.means)
   mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
-  image(mba.interp$xyz.est, main = "fGP", 
+  image(mba.interp$xyz.est, main = paste0("Scenario ", i), 
         col = tim.colors(64), cex.main = 1.5,
         axes = FALSE)
-  mtext(paste0("Scenario ", i), side = 2, line = 2)
 }
 
-# SVC
-par(mar = c(2, 2, 3, 3))
-for (i in which.scens) {
-  path <- paste0("objects/svc_scen", i, ".RDS") 
-  results <- readRDS(path)
+# Data for scens 11-13
+test <- readRDS(paste0("data/small/scen", 11, "/test.RDS"))
+nTest <- nrow(test$B)
+beta1.true <- test$B[ , 2]
+
+# True beta1, scens 11-13
+par(mar = c(3, 3, 5.5, 2) + 0.1)
+mba.data.true <- data.frame(test$U, beta1.true)
+mba.interp.true <- mba.surf(mba.data.true, no.X=100, no.Y=100, extend=TRUE)
+image(mba.interp.true$xyz.est, main = "(Scenarios 11 - 13)",
+      cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
+      col = tim.colors(64))
+mtext(TeX("True surface of $\\beta_1$"), side = 3, line = 3.5)
+
+# Est. beta, scens 11-13
+par(mar = c(3, 3, 3, 2) + 0.1)
+for (i in which.scens2) {
+  path <- paste0("objects/small_scen", i, ".RDS") 
+  results <- readRDS(path)[[1]]
   test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
   nTest <- nrow(test$B)
-  beta.mu <- mean(results[[1]]$preds$p.beta.recover.samples[ , 2])
-  w.mu <- apply(results[[1]]$preds$p.w.predictive.samples[(nTest+1):(2*nTest), ], 1, mean)
-  beta1.means <- beta.mu + w.mu
+  beta1.means <- results$posteriorMeans$beta.test[(nTest+1):(2*nTest)]
   mba.data <- data.frame(test$U, beta1.means)
   mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
-  image(mba.interp$xyz.est, main = "SVC", 
-        col = tim.colors(64), cex.main = 1.5, 
+  image(mba.interp$xyz.est, main = paste0("Scenario ", i), 
+        col = tim.colors(64), cex.main = 1.5,
         axes = FALSE)
 }
 
@@ -129,59 +158,73 @@ dev.off()
 
 
 
-# Beta2
-pdf("figures/new/beta2.pdf", width = 5, height = 12)
-layout.matrix <- matrix(c(1, 1, 
-                          1, 1,
+
+#################################
+############# Beta2 #############
+#################################
+
+pdf("figures/new/beta2.pdf", width = 5.5, height = 12)
+layout.matrix <- matrix(c(1, 5, 
                           2, 6,
                           3, 7,
-                          4, 8,
-                          5, 9), nrow = 6, ncol = 2, byrow = TRUE)
+                          4, 8), nrow = 4, ncol = 2, byrow = TRUE)
 layout(layout.matrix)
 
-# Scens 1-10
+# Data for scens 1-10
 test <- readRDS(paste0("data/small/scen", 1, "/test.RDS"))
 nTest <- nrow(test$B)
 beta2.true <- 2 * test$U[ , 1] - test$U[ , 2] - 50
 
-# True beta0
-par(mar = c(5, 6.5, 7, 5))
+# True beta2, scens 1-10
+par(mar = c(3, 3, 5.5, 2) + 0.1)
 mba.data.true <- data.frame(test$U, beta2.true)
 mba.interp.true <- mba.surf(mba.data.true, no.X=100, no.Y=100, extend=TRUE)
-image(mba.interp.true$xyz.est, main = TeX("True surface ($\\beta_2$)"),
-      cex.main = 2.5, cex.lab = 1.5, cex.axis = 1.5, 
+image(mba.interp.true$xyz.est, main = "(Scenarios 1 - 10)",
+      cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
       col = tim.colors(64))
+mtext(TeX("True surface of $\\beta_2$"), side = 3, line = 3.5)
 
-# GP
-par(mar = c(2, 4, 3, 1))
-for (i in which.scens) {
-  path.gp <- paste0("objects/small_scen", i, ".RDS") 
-  results.gp <- readRDS(path.gp)[[1]]
+# Est. beta, scens 1, 4, 7
+par(mar = c(3, 3, 3, 2) + 0.1)
+for (i in which.scens1) {
+  path <- paste0("objects/small_scen", i, ".RDS") 
+  results <- readRDS(path)[[1]]
   test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
   nTest <- nrow(test$B)
-  beta2.means <- results.gp$posteriorMeans$beta.test[(2*nTest+1):(3*nTest)]
+  beta2.means <- results$posteriorMeans$beta.test[(2*nTest+1):(3*nTest)]
   mba.data <- data.frame(test$U, beta2.means)
   mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
-  image(mba.interp$xyz.est, main = "fGP", 
+  image(mba.interp$xyz.est, main = paste0("Scenario ", i), 
         col = tim.colors(64), cex.main = 1.5,
         axes = FALSE)
-  mtext(paste0("Scenario ", i), side = 2, line = 2)
 }
 
-# SVC
-par(mar = c(2, 2, 3, 3))
-for (i in which.scens) {
-  path <- paste0("objects/svc_scen", i, ".RDS") 
-  results <- readRDS(path)
+# Data for scens 11-13
+test <- readRDS(paste0("data/small/scen", 11, "/test.RDS"))
+nTest <- nrow(test$B)
+beta2.true <- test$B[ , 3]
+
+# True beta0, scens 11-13
+par(mar = c(3, 3, 5.5, 2) + 0.1)
+mba.data.true <- data.frame(test$U, beta2.true)
+mba.interp.true <- mba.surf(mba.data.true, no.X=100, no.Y=100, extend=TRUE)
+image(mba.interp.true$xyz.est, main = "(Scenarios 11 - 13)",
+      cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
+      col = tim.colors(64))
+mtext(TeX("True surface of $\\beta_2$"), side = 3, line = 3.5)
+
+# Est. beta, scens 11-13
+par(mar = c(3, 3, 3, 2) + 0.1)
+for (i in which.scens2) {
+  path <- paste0("objects/small_scen", i, ".RDS") 
+  results <- readRDS(path)[[1]]
   test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
   nTest <- nrow(test$B)
-  beta.mu <- mean(results[[1]]$preds$p.beta.recover.samples[ , 3])
-  w.mu <- apply(results[[1]]$preds$p.w.predictive.samples[(2*nTest+1):(3*nTest), ], 1, mean)
-  beta2.means <- beta.mu + w.mu
+  beta2.means <- results$posteriorMeans$beta.test[(2*nTest+1):(3*nTest)]
   mba.data <- data.frame(test$U, beta2.means)
   mba.interp <- mba.surf(mba.data, no.X=100, no.Y=100, extend=TRUE)
-  image(mba.interp$xyz.est, main = "SVC", 
-        col = tim.colors(64), cex.main = 1.5, 
+  image(mba.interp$xyz.est, main = paste0("Scenario ", i), 
+        col = tim.colors(64), cex.main = 1.5,
         axes = FALSE)
 }
 
