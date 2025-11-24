@@ -233,7 +233,7 @@ dev.off()
 
 #### Posterior distributions of tau2 for each scenario
 # Density plots for tau2
-pdf("figures/new/tau2.pdf", width = 12, height = 4)
+pdf("figures/new/tau2.pdf", width = 10, height = 5)
 par(mfrow = c(2, 3), mar = c(4, 3, 3, 2) + 0.1, oma = c(0, 0, 4, 0))
 for (i in c(which.scens1, which.scens2)) {
   path <- paste0("objects/small_scen", i, ".RDS") 
