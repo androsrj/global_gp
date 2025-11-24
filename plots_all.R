@@ -229,3 +229,27 @@ for (i in which.scens2) {
 }
 
 dev.off()
+
+
+#### Posterior distributions of tau2 for each scenario
+# Density plots for tau2
+pdf("figures/new/tau2.pdf", width = 12, height = 4)
+par(mfrow = c(2, 3), mar = c(4, 3, 3, 2) + 0.1, oma = c(0, 0, 4, 0))
+for (i in c(which.scens1, which.scens2)) {
+  path <- paste0("objects/small_scen", i, ".RDS") 
+  results <- readRDS(path)[[1]]
+  tau2.samples <- results$paramSamples$tau2
+  if (i == 4 | i == 12) {
+    true_tau2 <- 2
+  } else {
+    true_tau2 = 0.2
+  }
+  hist(tau2.samples, 
+       xlab = paste0("Scenario ", i),
+       main = "", ylab = "", cex.lab = 1.75)
+  abline(v = true_tau2, lty = line.type, lwd = line.width, col = "blue")
+  mtext(TeX("Posterior Samples of $\\tau^2$"), side = 3, line = -1, outer = TRUE, cex = 1.5)
+}
+dev.off()
+
+
