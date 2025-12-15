@@ -1,5 +1,4 @@
-source("../other_functions/spatial_data.R")
-source("../other_functions/bsplines_2_3D.R")
+source("../other_functions/spatial_data_misspec.R")
 mySeed <- 45213
 
 # Sample sizes
@@ -12,8 +11,7 @@ nTest <- 25
 S <- 10
 STest <- 10
 
-# Number of BFE's and predictors - leave these alone
-K <- 9
+# Number of predictors
 p <- 2
 
 ### True parameter values ###
@@ -24,8 +22,8 @@ trueSigb2 <- seq(0.5, 1, length = p + 1)
 trueThb <- seq(0.1, 0.2, length = p + 1)
 
 # Covariance parameters for global covariates (each length K)
-trueSigma2 <- seq(5, 10, length = K)
-trueTheta <- seq(1, 5, length = K)
+trueSigma2 <- 5
+trueTheta <- 0.1
 
 # Error variance
 trueTau2 <- 0.2
@@ -38,15 +36,15 @@ Z <- matrix(runif(2 * S, 0, 100), ncol = 2)
 train <- spatialData(n = n, 
                      X = X,
                      Z = Z,
-                     K = K,
                      sigb2 = trueSigb2,
                      thb = trueThb,
                      sigma2 = trueSigma2, 
                      theta = trueTheta, 
                      tau2 = trueTau2, 
-                     range = c(0, 100))
-saveRDS(train, file = "../data/small/scen6/train.RDS")
-
+                     range = c(0, 100),
+                     zero.mean = FALSE)
+saveRDS(train, file = "../data/scen8/train.RDS")
+sd(train$Y)
 set.seed(mySeed)
 indexTest <- sample(n, nTest)
 U <- train$U[indexTest, ]
@@ -58,15 +56,14 @@ ZTest <- matrix(runif(2 * STest, 0, 100), ncol = 2)
 test <- spatialData(n = nTest, 
                     X = XTest, 
                     Z = ZTest,
-                    K = K,
                     U = U,
                     sigb2 = trueSigb2,
                     thb = trueThb,
                     sigma2 = trueSigma2, 
                     theta = trueTheta, 
                     tau2 = trueTau2, 
-                    range = c(0, 100))
-sd(test$Y)
+                    range = c(0, 100),
+                    zero.mean = FALSE)
 test$index <- indexTest
-saveRDS(test, file = "../data/small/scen6/test.RDS")
+saveRDS(test, file = "../data/scen8/test.RDS")
 

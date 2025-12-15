@@ -6,7 +6,8 @@ library(Matrix)
 spatialData <- function(n, X, Z, K,
                         sigb2, thb, sigma2, theta, tau2, beta,
                         U = NULL, range = c(0, 10), dims = 2,
-                        covariance = "exponential", intercept = TRUE) {
+                        covariance = "exponential", intercept = TRUE, 
+                        zero.mean = TRUE) {
   
   # Sample the locations and put them into an n-by-dims matrix
   # Unless the coordinates are pre-supplied
@@ -58,7 +59,13 @@ spatialData <- function(n, X, Z, K,
     lon + lat - 100,
     2 * lon - lat - 50
   )
-  B <- Reduce("cbind", lapply(1:q, \(j) t(rmvnorm(1, sigma = CB[[j]])))) + beta.surf
+  
+  if (zero.mean == TRUE) {
+    B <- Reduce("cbind", lapply(1:q, \(j) t(rmvnorm(1, sigma = CB[[j]]))))
+  } else {
+    B <- Reduce("cbind", lapply(1:q, \(j) t(rmvnorm(1, sigma = CB[[j]])))) + beta.surf
+  }
+  XB <- rep(1, S) %x% rowSums(X0 * B)
   XB <- rep(1, S) %x% rowSums(X0 * B)
   
   # Final covariance matrix for Y

@@ -19,7 +19,7 @@ p <- 2
 
 # Covariance parameters for beta
 trueSigb2 <- seq(0.5, 1, length = p + 1)
-trueThb <- seq(0.1, 0.2, length = p + 1)
+trueThb <- seq(0.5, 1, length = p + 1)
 
 # Covariance parameters for global covariates (each length K)
 trueSigma2 <- 5
@@ -42,8 +42,8 @@ train <- spatialData(n = n,
                      theta = trueTheta, 
                      tau2 = trueTau2, 
                      range = c(0, 100))
-saveRDS(train, file = "../data/small/scen7/train.RDS")
-
+saveRDS(train, file = "../data/scen7/train.RDS")
+sd(train$Y)
 set.seed(mySeed)
 indexTest <- sample(n, nTest)
 U <- train$U[indexTest, ]
@@ -63,5 +63,5 @@ test <- spatialData(n = nTest,
                     tau2 = trueTau2, 
                     range = c(0, 100))
 test$index <- indexTest
-saveRDS(test, file = "../data/small/scen7/test.RDS")
+saveRDS(test, file = "../data/scen7/test.RDS")
 

@@ -1,4 +1,4 @@
-source("../other_functions/spatial_data_scen11.R")
+source("../other_functions/spatial_data.R")
 source("../other_functions/bsplines_2_3D.R")
 mySeed <- 45298
 
@@ -49,7 +49,7 @@ train <- spatialData(n = n,
                      tau2 = trueTau2, 
                      beta = trueBeta,
                      range = c(0, 100))
-saveRDS(train, file = "../data/small/scen11/train.RDS")
+saveRDS(train, file = "../data/scen1/train.RDS")
 sd(train$Y)
 set.seed(mySeed)
 indexTest <- sample(n, nTest)
@@ -72,5 +72,5 @@ test <- spatialData(n = nTest,
                     beta = trueBeta,
                     range = c(0, 100))
 test$index <- indexTest
-saveRDS(test, file = "../data/small/scen11/test.RDS")
+saveRDS(test, file = "../data/scen1/test.RDS")
 sd(test$Y)

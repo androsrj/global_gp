@@ -13,13 +13,13 @@ nScen <- length(which.scens)
 ############# Beta0 #############
 #################################
 
-#pdf("figures/new/surf_plots_y.pdf", width = 5, height = 16)
+#pdf("figures/sims/surf_plots_y.pdf", width = 5, height = 16)
 #par(mar = c(2, 3, 3, 1), oma = c(0, 0, 4, 0), mfrow = c(nScen, 2))
 
 for (i in which.scens) {
   
   # True Y for given scenario
-  pdf(paste0("figures/new/y_true_scen", i, ".pdf"), width = 5, height = 3)
+  pdf(paste0("figures/sims/y_true_scen", i, ".pdf"), width = 5, height = 3)
   par(mar = c(2, 2, 1, 1))
   test <- readRDS(paste0("data/small/scen", i, "/test.RDS"))
   nTest <- nrow(test$B)
@@ -31,7 +31,7 @@ for (i in which.scens) {
   dev.off()
   
   # Estimated Y for given scenario
-  pdf(paste0("figures/new/y_pred_scen", i, ".pdf"), width = 5, height = 3)
+  pdf(paste0("figures/sims/y_pred_scen", i, ".pdf"), width = 5, height = 3)
   par(mar = c(2, 2, 1, 1))
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)[[1]]
@@ -58,7 +58,7 @@ for (i in which.scens) {
 #### Posterior distributions of tau2 for each scenario
 # Density plots for tau2
 for (i in which.scens) {
-  pdf(paste0("figures/new/tau2_scen", i, ".pdf"), width = 5, height = 4)
+  pdf(paste0("figures/sims/tau2_scen", i, ".pdf"), width = 5, height = 4)
   par(mar = c(2, 2, 1, 1))
   path <- paste0("objects/small_scen", i, ".RDS") 
   results <- readRDS(path)[[1]]
