@@ -9,12 +9,9 @@ which.scens <- c(1:8)
 nScen <- length(which.scens)
 #subj <- 1
 
-#################################
-############# Beta0 #############
-#################################
-
-#pdf("figures/sims/surf_plots_y.pdf", width = 5, height = 16)
-#par(mar = c(2, 3, 3, 1), oma = c(0, 0, 4, 0), mfrow = c(nScen, 2))
+####################################
+######## Surface plots of Y ########
+####################################
 
 for (i in which.scens) {
   
@@ -43,16 +40,7 @@ for (i in which.scens) {
   image.plot(mba.interp$xyz.est, main = "", 
         col = tim.colors(64), cex.main = 1.25)
   dev.off()
-  
-  # Label each column of plots
-  #mtext("True Surface of Y \n (Subject 1)", 
-  #      side = 3, line = 1, outer = TRUE, 
-  #      at = 0.27, cex = 1.1)
-  #mtext("Predicted Surface of Y \n (Subject 1)", 
-  #      side = 3, line = 1, outer = TRUE, 
-  #      at = 0.77, cex = 1.1)
 }
-
 
 
 #### Posterior distributions of tau2 for each scenario
@@ -63,7 +51,7 @@ for (i in which.scens) {
   path <- paste0("objects/fgp_scen", i, ".RDS") 
   results <- readRDS(path)[[1]]
   tau2.samples <- results$paramSamples$tau2
-  if (i == 4 | i == 10 | i == 12) {
+  if (i == 2) {
     true_tau2 <- 2
   } else {
     true_tau2 = 0.2
