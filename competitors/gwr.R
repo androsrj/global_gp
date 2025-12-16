@@ -1,6 +1,6 @@
 library(GWmodel)
-nScen <- 13
-scens <- 13
+scens <- 1:8
+nScen <- length(scens)
 
 results <- data.frame(
   scen = scens,
@@ -11,8 +11,8 @@ results <- data.frame(
 )
 for (i in scens) {
   cat(paste0("Beginning scenario ", i, "\n"))
-  train <- readRDS(paste0("../data/small/scen", i, "/train.RDS"))
-  test <- readRDS(paste0("../data/small/scen", i,"/test.RDS"))
+  train <- readRDS(paste0("../data/scen", i, "/train.RDS"))
+  test <- readRDS(paste0("../data/scen", i,"/test.RDS"))
   nSubj <- nrow(train$Z)
   n <- nrow(train$X)
   nTest <- nrow(test$X)
