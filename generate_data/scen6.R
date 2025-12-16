@@ -64,4 +64,4 @@ test <- spatialData(n = nTest,
                     range = c(0, 100))
 test$index <- indexTest
 saveRDS(test, file = "../data/scen6/test.RDS")
-
+sd(test$Y)

@@ -46,7 +46,7 @@ train <- spatialData(n = n,
                      tau2 = trueTau2, 
                      range = c(0, 100))
 saveRDS(train, file = "../data/scen3/train.RDS")
-
+sd(train$Y)
 set.seed(mySeed)
 indexTest <- sample(n, nTest)
 U <- train$U[indexTest, ]

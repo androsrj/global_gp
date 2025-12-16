@@ -15,13 +15,13 @@ library(foreach)
 library(Matrix)
 nReps <- nCores <- 10
 set.seed(9994)
-which.scens <- 13
+which.scens <- 1:8
 
 run.mcmc <- function(rep) {
   results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                   starting = starting,
                   propSD = propSD,
-                  nIter = 5000, nBurn = 2000, nThin=2,
+                  nIter = 2000, nBurn = 1000, nThin=2,
                   model = "full_gp")
   return(results)
 }
