@@ -45,11 +45,11 @@ ggplot(df, aes(x = Scenario, y = Length, group = Scenario, fill = Scenario)) +
 ggsave("figures/gp/length_gp.pdf")
 
 # Table for RMSE, coverage, and length
-avg.rmse <- aggregate(data = df, RMSE ~ Scenario, mean)
-avg.cvg <- aggregate(data = df, Coverage ~ Scenario, mean)[, 2]
-avg.length <- aggregate(data = df, Length ~ Scenario, mean)[, 2]
+avg.rmse <- aggregate(data = df, RMSE ~ Scenario, mean)[ , 2]
+avg.cvg <- aggregate(data = df, Coverage ~ Scenario, mean)[ , 2]
+avg.length <- aggregate(data = df, Length ~ Scenario, mean)[ , 2]
 cat("Predictive diagnostics for fGP: \n")
-cbind(avg.rmse, std.dev, avg.cvg, avg.length)
+data.frame(Scen = 1:nScen, std.dev, avg.rmse, avg.cvg, avg.length)
 
 
 ##########################################
@@ -114,9 +114,9 @@ ggplot(df, aes(x = Scenario, y = Length, group = Scenario, fill = Scenario)) +
 ggsave("figures/svc/length_svc.pdf")
 
 # Table for RMSE, coverage, and length
-avg.rmse <- aggregate(data = df, RMSE ~ Scenario, mean)
-avg.cvg <- aggregate(data = df, Coverage ~ Scenario, mean)[, 2]
-avg.length <- aggregate(data = df, Length ~ Scenario, mean)[, 2]
+avg.rmse <- aggregate(data = df, RMSE ~ Scenario, mean)[ , 2]
+avg.cvg <- aggregate(data = df, Coverage ~ Scenario, mean)[ , 2]
+avg.length <- aggregate(data = df, Length ~ Scenario, mean)[ , 2]
 cat("Diagnostics for SVC: \n")
-cbind(avg.rmse, std.dev, avg.cvg, avg.length)
+data.frame(Scen = 1:nScen, std.dev, avg.rmse, avg.cvg, avg.length)
 

@@ -1,5 +1,5 @@
 source("../other_functions/spatial_data_misspec.R")
-mySeed <- 45213
+mySeed <- 108
 
 # Sample sizes
 # Can have a "small" dataset with n = 100 and nTest = 25
