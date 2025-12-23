@@ -19,7 +19,8 @@ for (storm in 1:STest) {
   preds.svc <- slosh.svc[storm, ]
   slosh.fosr <- readRDS("objects/slosh_fosr_preds.RDS")
   preds.fosr <- unname(slosh.fosr[ , storm])
-  all.data <- c(true.y, preds.gp, preds.svc, preds.fosr)
+  preds.gwr <- readRDS("competitors/gwr_preds_subj1.RDS")
+  all.data <- c(true.y, preds.gp, preds.svc, preds.fosr, preds.gwr)
   
   color.lims <- 1.03 * c(min(all.data), max(all.data))
   
@@ -52,9 +53,17 @@ for (storm in 1:STest) {
              zlim = color.lims)
   
   # FOSR estimated water levels
-  mba.data.fosr <- data.frame(flood.test$U, preds.fosr)
-  mba.interp.fosr <- mba.surf(mba.data.fosr, no.X=100, no.Y=100, extend=TRUE)
-  image.plot(mba.interp.fosr$xyz.est, main = paste0("FOSR Estimated Water Levels - Storm ", storm),
+  #mba.data.fosr <- data.frame(flood.test$U, preds.fosr)
+  #mba.interp.fosr <- mba.surf(mba.data.fosr, no.X=100, no.Y=100, extend=TRUE)
+  #image.plot(mba.interp.fosr$xyz.est, main = paste0("FOSR Estimated Water Levels - Storm ", storm),
+  #           cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
+  #           axis.args = list(cex.axis = 1.5),
+  #           zlim = color.lims)
+  
+  # GWR estimated water levels
+  mba.data.gwr <- data.frame(flood.test$U, preds.gwr)
+  mba.interp.gwr <- mba.surf(mba.data.gwr, no.X=100, no.Y=100, extend=TRUE)
+  image.plot(mba.interp.gwr$xyz.est, main = paste0("GWR Estimated Water Levels - Storm ", storm),
              cex.main = 1.5, cex.lab = 1.5, cex.axis = 1.5, 
              axis.args = list(cex.axis = 1.5),
              zlim = color.lims)
