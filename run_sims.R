@@ -21,7 +21,7 @@ run.mcmc <- function(rep) {
   results <- mcmc(X = X, Z = Z, Y = Y, D = D, K = K,
                   starting = starting,
                   propSD = propSD,
-                  nIter = 1000, nBurn = 1000, nThin=2,
+                  nIter = 10000, nBurn = 10000, nThin=2,
                   model = "full_gp")
   return(results)
 }
@@ -110,18 +110,22 @@ if (scen %in% which.scens) {
   cat(paste0("Finished Scenario ", scen, " with average acceptance of: "))
   print(acc)
   #print(obj$acceptance)
-  cat(paste0("And posterior means of: "))
-  print(obj[[1]]$posteriorMeans)
+  #cat(paste0("And posterior means of: "))
+  #print(obj[[1]]$posteriorMeans)
   cat("And RMSE of: ")
-  rmse <- sqrt(mean((obj[[1]]$preds[2,] - test$Y)^2))
-  print(rmse)
+  rmse <- sapply(1:nReps, \(i) sqrt(mean((obj[[i]]$preds[2,] - test$Y)^2)))
+  print(mean(rmse))
   cat("Compared to the test data SD of:")
   sd.test <- round(sd(test$Y), 3)
   print(sd.test)
   cat("Average prediction interval width of: ")
-  print(mean(obj[[1]]$preds[3,] - obj[[1]]$preds[1,]))
+  width <- sapply(1:nReps, \(i) mean(obj[[i]]$preds[3,] - obj[[i]]$preds[1,]))
+  #print(mean(obj[[1]]$preds[3,] - obj[[1]]$preds[1,]))
+  print(mean(width))
   cat("With average coverage of: ")
-  print(mean(obj[[1]]$preds[3,] > test$Y & obj[[1]]$preds[1,] < test$Y))
+  cvg <- sapply(1:nReps, \(i) mean(obj[[i]]$preds[3,] > test$Y & obj[[i]]$preds[1,] < test$Y))
+  #print(mean(obj[[1]]$preds[3,] > test$Y & obj[[1]]$preds[1,] < test$Y))
+  print(mean(cvg))
 }
 
 ##### SCENARIO 3 #####

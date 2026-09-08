@@ -1,0 +1,152 @@
+Loading required package: spam
+Spam version 2.10-0 (2023-10-23) is loaded.
+Type 'help( Spam)' or 'demo( spam)' for a short introduction 
+and overview of this package.
+Help for individual functions is also obtained by adding the
+suffix '.spam' to the function name, e.g. 'help( chol.spam)'.
+
+Attaching package: ‘spam’
+
+The following objects are masked from ‘package:mvtnorm’:
+
+    rmvnorm, rmvt
+
+The following objects are masked from ‘package:base’:
+
+    backsolve, forwardsolve
+
+Loading required package: viridisLite
+Loading required package: RColorBrewer
+
+Try help(fields) to get started.
+Loading required package: foreach
+Loading required package: iterators
+
+Attaching package: ‘Matrix’
+
+The following object is masked from ‘package:spam’:
+
+    det
+
+Beginning iteration 100.
+-3.925984 -1.731344 -1.999147
+2.345956 2.031886 1.659474
+Beginning iteration 200.
+-2.663215 -1.585185 -2.503654
+2.142835 1.924679 1.826521
+Beginning iteration 300.
+-3.900371 -1.63714 -1.977475
+2.767854 1.927149 1.561504
+Beginning iteration 400.
+-4.068542 -1.318761 -2.243463
+2.511819 1.793359 1.70884
+Beginning iteration 500.
+-4.598396 -1.372598 -2.088449
+2.971155 1.664302 1.387171
+Beginning iteration 600.
+-4.9003 -1.492718 -1.993084
+2.573719 1.967149 1.563919
+Beginning iteration 700.
+-4.301053 -1.735888 -1.901851
+2.434422 1.789439 1.534433
+Beginning iteration 800.
+-3.743204 -1.422385 -2.391017
+2.951827 1.71473 1.807768
+Beginning iteration 900.
+-4.029533 -1.563451 -2.065692
+2.581149 1.888373 1.57833
+Beginning iteration 1000.
+-3.650395 -1.668411 -2.029671
+2.592119 1.931574 1.611256
+Beginning iteration 1100.
+-6.248157 -1.413626 -1.813266
+3.515453 1.775817 1.329846
+Beginning iteration 1200.
+-3.64955 -1.436794 -2.385286
+2.841315 1.96804 1.777157
+Beginning iteration 1300.
+-4.57396 -1.187136 -2.343675
+3.587591 1.601627 1.826137
+Beginning iteration 1400.
+-3.807236 -1.293275 -2.395863
+3.0024 1.936001 1.72889
+Beginning iteration 1500.
+-4.156196 -1.492789 -2.05254
+2.962398 1.997581 1.524974
+Beginning iteration 1600.
+-3.979992 -1.28936 -2.366762
+2.791941 1.710028 1.884034
+Beginning iteration 1700.
+-2.899763 -1.722076 -2.16351
+1.980758 2.10584 1.639309
+Beginning iteration 1800.
+-3.318727 -1.508366 -2.31907
+2.94049 1.867322 1.865417
+Beginning iteration 1900.
+-4.422936 -1.350851 -2.275812
+3.278725 1.774368 1.771099
+Beginning iteration 2000.
+-2.973902 -1.682359 -2.434064
+1.527755 2.287427 1.96815
+Beginning iteration 2100.
+-3.662425 -1.492132 -2.350164
+2.914653 1.691514 1.831595
+Beginning iteration 2200.
+-5.11094 -1.429077 -1.983075
+2.470213 1.707464 1.65245
+Beginning iteration 2300.
+-3.198153 -1.559231 -2.229537
+2.072649 2.077175 1.826112
+Beginning iteration 2400.
+-4.131335 -1.573181 -2.002562
+2.796987 1.962321 1.607971
+Beginning iteration 2500.
+-4.165845 -1.379516 -2.131731
+2.819008 1.646917 1.764567
+Beginning iteration 2600.
+-3.507166 -1.559226 -2.092325
+2.572363 1.797412 1.475153
+Beginning iteration 2700.
+-3.570884 -1.620031 -2.257107
+2.237221 1.955586 1.677216
+Beginning iteration 2800.
+-4.831344 -1.411296 -2.005594
+2.904002 1.694481 1.579707
+Beginning iteration 2900.
+-3.685639 -1.436464 -2.230257
+2.204894 1.932085 1.708789
+Beginning iteration 3000.
+-6.139489 -1.316011 -2.077027
+3.988939 1.646449 1.565535
+Beginning iteration 3100.
+-4.149504 -1.41564 -2.055782
+2.595322 1.708415 1.5964
+Beginning iteration 3200.
+-2.82659 -1.569055 -2.19449
+2.077237 1.968464 1.715179
+Beginning iteration 3300.
+-3.698802 -1.285904 -2.426978
+2.416472 1.77795 1.937068
+Beginning iteration 3400.
+-3.837406 -1.374993 -2.116141
+2.424018 1.781057 1.590595
+Beginning iteration 3500.
+-4.181432 -1.48789 -2.149448
+2.497607 1.8248 1.658385
+Beginning iteration 3600.
+-4.184795 -1.381893 -2.17285
+3.015657 1.818799 1.646938
+Beginning iteration 3700.
+-4.553478 -1.36154 -2.216006
+3.260202 1.702824 1.688044
+Beginning iteration 3800.
+-6.319401 -1.466896 -1.819789
+3.947698 1.813601 1.331435
+Beginning iteration 3900.
+-5.186758 -1.147828 -2.08969
+3.676865 1.448739 1.553062
+Beginning iteration 4000.
+-3.813985 -1.402971 -2.16158
+2.58091 2.057306 1.352278
+Time difference of 1.226686 hours
+Total time taken - 1 hours, 13 minutes, and 37 seconds.
