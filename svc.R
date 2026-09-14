@@ -89,3 +89,10 @@ test <- readRDS("data/scen8/test.RDS")
 run.svc(8, nReps)
 
 
+# Scenario 9
+train <- readRDS("data/scen9/train.RDS")
+train$X <- train$X[,-1]
+test <- readRDS("data/scen9/test.RDS")
+test$X <- test$X[,-1]
+run.svc(9, nReps)
+
