@@ -1,4 +1,6 @@
 library(GWmodel)
+library(scoringRules)
+library(scoringutils)
 scens <- 1:8
 nScen <- length(scens)
 
@@ -7,7 +9,8 @@ results <- data.frame(
   sd = numeric(nScen),
   rmse = numeric(nScen),
   coverage = numeric(nScen),
-  length = numeric(nScen)
+  length = numeric(nScen),
+  score = numeric(nScen)
 )
 for (i in scens) {
   cat(paste0("Beginning scenario ", i, "\n"))
@@ -17,7 +20,7 @@ for (i in scens) {
   n <- nrow(train$X)
   nTest <- nrow(test$X)
   
-  rmse <- cvg <- len <- numeric(nSubj)
+  rmse <- cvg <- len <- score <- numeric(nSubj)
   for (j in 1:nSubj) {
     train.index <- ((j-1)*n+1):(j*n)
     test.index <- ((j-1)*nTest+1):(j*nTest)
@@ -56,11 +59,12 @@ for (i in scens) {
     upper <- preds.test + qnorm(.975) * sqrt(preds.gwr$SDF@data$prediction_var)
     lower <- preds.test - qnorm(.975) * sqrt(preds.gwr$SDF@data$prediction_var)
     
-    # Check testing error
+    # Check testing error and other diagnostics
     y.true <- test$Y[test.index, ]
     rmse[j] <- sqrt(mean((y.true - preds.test)^2))
     cvg[j] <- mean(y.true < upper & y.true > lower)
     len[j] <- mean(upper - lower)
+    score[j] <- mean(scoringutils:::interval_score(y.true, lower, upper, interval_range = rep(95, length(y.true))))
     
     # Check RMSE for estimating beta surfaces on test data
     #beta0.est <- preds.gwr$SDF@data$Intercept_coef
@@ -81,7 +85,7 @@ for (i in scens) {
   }
   
   results[i, ] <- c(i, round(sd(test$Y), 2), round(mean(rmse), 2), 
-                    round(mean(cvg), 2), round(mean(len), 2))
+                    round(mean(cvg), 2), round(mean(len), 2), round(mean(score), 2))
 }
 results
 
