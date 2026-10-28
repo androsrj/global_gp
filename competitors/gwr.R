@@ -1,7 +1,7 @@
 library(GWmodel)
 library(scoringRules)
 library(scoringutils)
-scens <- 1:8
+scens <- 1:9
 nScen <- length(scens)
 
 results <- data.frame(
@@ -19,6 +19,11 @@ for (i in scens) {
   nSubj <- nrow(train$Z)
   n <- nrow(train$X)
   nTest <- nrow(test$X)
+
+  if (i == 9) {
+    train$X <- train$X[ , -1]
+    test$X <- test$X[ , -1]
+  }
   
   rmse <- cvg <- len <- score <- numeric(nSubj)
   for (j in 1:nSubj) {
@@ -84,8 +89,14 @@ for (i in scens) {
     #sd(test$B[ , 3])
   }
   
-  results[i, ] <- c(i, round(sd(test$Y), 2), round(mean(rmse), 2), 
-                    round(mean(cvg), 2), round(mean(len), 2), round(mean(score), 2))
+  if (i != 9) {
+    results[i, ] <- c(i, round(sd(test$Y), 2), round(mean(rmse), 2), 
+                      round(mean(cvg), 2), round(mean(len), 2), round(mean(score), 2))
+  } else {
+    results[i, ] <- c(i, round(sd(test$Y[1:nTest, ]), 2), round(rmse[1], 2), 
+                      round(cvg[1], 2), round(len[1], 2), round(score[1], 2))
+  }
+
 }
 results
 

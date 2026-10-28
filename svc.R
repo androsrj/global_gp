@@ -54,9 +54,9 @@ nReps <- 10
 
 
 # Scenario 3
-train <- readRDS("data/scen3/train.RDS")
-test <- readRDS("data/scen3/test.RDS")
-run.svc(3, nReps)
+#train <- readRDS("data/scen3/train.RDS")
+#test <- readRDS("data/scen3/test.RDS")
+#run.svc(3, nReps)
 
 
 # Scenario 4
@@ -90,9 +90,9 @@ run.svc(3, nReps)
 
 
 # Scenario 9
-#train <- readRDS("data/scen9/train.RDS")
-#train$X <- train$X[,-1]
-#test <- readRDS("data/scen9/test.RDS")
-#test$X <- test$X[,-1]
-#run.svc(9, nReps)
+train <- readRDS("data/scen9/train.RDS")
+train$X <- train$X[,-1]
+test <- readRDS("data/scen9/test.RDS")
+test$X <- test$X[,-1]
+run.svc(9, nReps)
 
